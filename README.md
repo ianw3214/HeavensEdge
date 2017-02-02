@@ -9,7 +9,7 @@ View the [devlog](devlog/list.md).
 ## OpenGL basics
 
   - [x] create a window
-  - [ ] draw shapes
+  - [x] draw shapes
   - [ ] load images
   - [ ] get inputs
 
