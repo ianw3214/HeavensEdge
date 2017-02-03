@@ -6,17 +6,10 @@ View the [devlog](devlog/list.md).
 
 ***
 
-## OpenGL basics
+## Devmap
 
-  - [x] create a window
-  - [x] draw shapes
-  - [ ] load images
-  - [ ] get inputs
-
-## Game Development
-
-  - [ ] game engine
-  - [ ] game states
-  - [ ] sprite system
-  - [ ] player class
-  - [ ] input handler
+  - [x] Create a window
+  - [ ] Core engine class
+  - [ ] Game states
+  - [ ] Player class
+  - [ ] Input command system
