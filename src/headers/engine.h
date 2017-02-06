@@ -6,11 +6,13 @@
 
 #include <iostream>
 
+#include "state.h"
+
 class Engine{
 
 public:
     Engine();
-    bool init();
+    bool init(State*);
     void cleanUp();
 
     void handleEvents();
@@ -20,6 +22,8 @@ public:
     bool isRunning();
 private:
     bool running;
+
+    State * currentState;
 
     SDL_Window * gWindow;
     SDL_Surface * display;

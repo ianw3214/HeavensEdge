@@ -4,7 +4,8 @@ Engine::Engine(){
 
 }
 
-bool Engine::init(){
+bool Engine::init(State* initialState){
+
     // initialize SDL subsystems
     if(SDL_Init(SDL_INIT_EVERYTHING) < 0){
         return false;
@@ -28,6 +29,9 @@ bool Engine::init(){
             return false;
         }
     }
+    // set intiial state of game engine
+    this->currentState = initialState;
+    this->currentState->init();
     this->running = true;
     return true;
 }
@@ -44,14 +48,26 @@ void Engine::handleEvents(){
             running = false;
         }
     }
+    this->currentState->handleEvents();
 }
 
 void Engine::update(){
-
+    this->currentState->update();
+    // check to see if the state should be changed
+    if(this->currentState->shouldQuit()){
+        this->currentState->exit();
+        State * nextState = this->currentState->getNextState();
+        if(nextState){
+            this->currentState = nextState;
+            this->currentState->init();
+        }else{
+            running = false;
+        }
+    }
 }
 
 void Engine::render(){
-
+    this->currentState->render();
 }
 
 bool Engine::isRunning(){

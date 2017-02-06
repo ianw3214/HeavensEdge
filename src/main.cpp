@@ -7,7 +7,8 @@
 int main(int argc, char* argv[]){
 
     Engine game;
-    if(!game.init()){
+    State* test = new State();
+    if(!game.init(test)){
         return 1;
     }
     while(game.isRunning()){
