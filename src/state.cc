@@ -7,11 +7,11 @@ State::State(){
 }
 
 void State::init(){
-
+    this->test = new Sprite("assets/test.png", 50, 50, 64, 64);
 }
 
 void State::exit(){
-    
+
 }
 
 void State::handleEvents(){
@@ -19,11 +19,11 @@ void State::handleEvents(){
 }
 
 void State::update(){
-
+    test->update(0.0f);
 }
 
-void State::render(){
-
+void State::render(SDL_Surface * display){
+    test->render(display, {});
 }
 
 bool State::shouldQuit(){

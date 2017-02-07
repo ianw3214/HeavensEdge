@@ -6,6 +6,8 @@
 
 #include <iostream>
 
+#include "sprite.h"
+
 class State{
 
 public:
@@ -16,11 +18,13 @@ public:
 
     void handleEvents();
     void update();
-    void render();
+    void render(SDL_Surface*);
 
     bool shouldQuit();
     State* getNextState();
 private:
+    Sprite * test;
+
     State * nextState;
     bool quit;
 };

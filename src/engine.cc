@@ -67,7 +67,8 @@ void Engine::update(){
 }
 
 void Engine::render(){
-    this->currentState->render();
+    this->currentState->render(display);
+    SDL_UpdateWindowSurface(gWindow);
 }
 
 bool Engine::isRunning(){
