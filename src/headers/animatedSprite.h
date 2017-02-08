@@ -12,14 +12,8 @@ class AnimatedSprite : public Sprite{
 
 public:
 
-    // structure to hold data about animation states
-    struct animState{
-        int start;
-        int end;
-    };
-
     AnimatedSprite(std::string, int, int, int, bool);
-    void setAnimationData(std::vector<animState>);
+    void setAnimationData(std::vector<int>);
 
     virtual void update(float);
     virtual void render(SDL_Surface*, SDL_Rect);
@@ -32,8 +26,8 @@ private:
 
     float deltaTime;
 
-    std::vector<animState> animData;
-    animState currentAnim;
+    std::vector<int> animData;
+    int currentAnim;
 
     bool playOnce;
 

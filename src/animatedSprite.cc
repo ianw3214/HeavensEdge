@@ -12,9 +12,9 @@ AnimatedSprite::AnimatedSprite(std::string path, int w, int h, int ssw, bool sho
 }
 
 // set the animation data of the sprite
-void AnimatedSprite::setAnimationData(std::vector<animState> inputData){
+void AnimatedSprite::setAnimationData(std::vector<int> inputData){
     animData = inputData;
-    currentAnim = animData.at(0);
+    currentAnim = 0;
 }
 
 // update the animated sprite frames
@@ -23,9 +23,9 @@ void AnimatedSprite::update(float delta){
     // TODO: customize update frame rate
     if(deltaTime >= 0.33f){
         currentFrame++;
-        if(currentFrame > currentAnim.end){
+        if(currentFrame >= animData.at(currentAnim)){
             if(playOnce) REMOVE = true;
-            currentFrame = currentAnim.start;
+            currentFrame = 0;
         }
         deltaTime = 0.0f;
         updateBlitRect();

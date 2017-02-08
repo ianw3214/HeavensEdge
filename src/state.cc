@@ -12,9 +12,7 @@ State::State(){
 void State::init(){
     test = new Sprite("assets/test.png", 50, 50, 64, 64);
     test2 = new AnimatedSprite("assets/test.png", 64, 64, 3, false);
-    AnimatedSprite::animState testi = {0, 2};
-    std::vector<AnimatedSprite::animState> tester;
-    tester.push_back(testi);
+    std::vector<int> tester = {3};
     test2->setAnimationData(tester);
 }
 
