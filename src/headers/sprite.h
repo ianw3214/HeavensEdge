@@ -4,7 +4,6 @@
 #include <SDL_image.h>
 #include <SDL_mixer.h>
 
-#include <iostream>
 #include <string>
 
 class Sprite{
@@ -24,16 +23,15 @@ public:
 
     virtual void update(float);
     virtual void render(SDL_Surface*, SDL_Rect);
-private:
-    int x, y;
-    int collisionWidth, collisionHeight;
-
-    SDL_Rect collisionRect;
-
+protected:
     SDL_Surface * img;
 
-    bool REMOVE;
+    int x, y;
+    int collisionWidth, collisionHeight;
+    SDL_Rect collisionRect;
 
+    bool REMOVE;
+private:
     void init(int x, int y, int w, int h);
     void loadImage(std::string);
 };

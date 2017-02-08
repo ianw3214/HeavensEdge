@@ -1,5 +1,7 @@
 #include "sprite.h"
 
+#include <iostream>
+
 // Sprite constructor with just an image path
 Sprite::Sprite(std::string path){
     loadImage(path);
@@ -19,18 +21,17 @@ Sprite::Sprite(std::string path, int x, int y, int w, int h){
 }
 
 // getter/setter methods
-int Sprite::getX() const{ return this->x; }
-int Sprite::getY() const{ return this->y; }
-SDL_Rect Sprite::getCollisionRect() const{ return this->collisionRect; }
-void Sprite::setPos(int x, int y){ this->x=x, this->y=y; }
-void Sprite::setCollisionWidth(int w){ this->collisionWidth = w; }
-void Sprite::setCollisionHeight(int h){ this->collisionHeight = h; }
-void Sprite::setCollisionRect(int x, int y){ this->collisionRect.x = x; this->collisionRect.y = y; }
+int Sprite::getX() const{ return x; }
+int Sprite::getY() const{ return y; }
+SDL_Rect Sprite::getCollisionRect() const{ return collisionRect; }
+void Sprite::setPos(int newX, int newY){ x=newX, y=newY; }
+void Sprite::setCollisionWidth(int w){ collisionWidth = w; }
+void Sprite::setCollisionHeight(int h){ collisionHeight = h; }
+void Sprite::setCollisionRect(int x, int y){ collisionRect.x = x; collisionRect.y = y; }
 
 // sprite render function
 void Sprite::update(float delta){
     // sprites do nothing by default
-    std::cout << this->collisionWidth << " : " << this->collisionRect.w << std::endl;
 }
 
 // sprite render function that renders according to camera position
@@ -41,19 +42,19 @@ void Sprite::render(SDL_Surface * display, SDL_Rect camera){
     }
 }
 
-void Sprite::init(int x, int y, int w, int h){
+void Sprite::init(int _x, int _y, int _w, int _h){
     // intialize default variables
-    this->x = x;
-    this->y = y;
-    this->collisionWidth = w;
-    this->collisionHeight = h;
-    this->collisionRect = {x, y, w, h};
-    this->REMOVE = false;
+    x = _x;
+    y = _y;
+    collisionWidth = _w;
+    collisionHeight = _h;
+    collisionRect = {_x, _y, _w, _h};
+    REMOVE = false;
 }
 
 // load the sprite sheet from specified path to the sprite
 void Sprite::loadImage(std::string path){
-    this->img = IMG_Load(path.c_str());
+    img = IMG_Load(path.c_str());
     if(!img){
         std::cout << "Image loading failed: " << path << ", error: " << IMG_GetError() << std::endl;
     }

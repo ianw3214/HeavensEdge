@@ -4,9 +4,8 @@
 #include <SDL_image.h>
 #include <SDL_mixer.h>
 
-#include <iostream>
-
 #include "sprite.h"
+#include "animatedSprite.h"
 
 class State{
 
@@ -24,6 +23,7 @@ public:
     State* getNextState();
 private:
     Sprite * test;
+    AnimatedSprite * test2;
 
     State * nextState;
     bool quit;
