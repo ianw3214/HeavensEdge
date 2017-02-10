@@ -20,6 +20,7 @@ public:
     virtual void setCollisionWidth(int);
     virtual void setCollisionHeight(int);
     virtual void setCollisionRect(int, int);
+    virtual void changeSpriteSheet(std::string path);
 
     virtual void update(float);
     virtual void render(SDL_Surface*, SDL_Rect);

@@ -28,10 +28,13 @@ void Sprite::setPos(int newX, int newY){ x=newX, y=newY; }
 void Sprite::setCollisionWidth(int w){ collisionWidth = w; }
 void Sprite::setCollisionHeight(int h){ collisionHeight = h; }
 void Sprite::setCollisionRect(int x, int y){ collisionRect.x = x; collisionRect.y = y; }
+void Sprite::changeSpriteSheet(std::string path){ loadImage(path); }
 
 // sprite render function
 void Sprite::update(float delta){
     // sprites do nothing by default
+    collisionRect.x = x;
+    collisionRect.y = y;
 }
 
 // sprite render function that renders according to camera position

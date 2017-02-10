@@ -5,6 +5,8 @@
 AnimatedSprite::AnimatedSprite(std::string path, int w, int h, int ssw, bool shouldPlayOnce=false) : Sprite(path){
     tileWidth = w;
     tileHeight = h;
+    collisionRect.w = w;
+    collisionRect.h = h;
     spriteSheetWidth = ssw;
     currentFrame = 0;
     deltaTime = 0.0f;
