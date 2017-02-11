@@ -6,6 +6,7 @@
 
 #include "sprite.h"
 #include "animatedSprite.h"
+#include "map.h"
 
 class State{
 
@@ -22,8 +23,7 @@ public:
     bool shouldQuit();
     State* getNextState();
 private:
-    Sprite * test;
-    AnimatedSprite * test2;
+    Map * test;
 
     State * nextState;
     bool quit;

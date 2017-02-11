@@ -7,13 +7,11 @@ State::State(){
     // initialize state properties
     nextState = nullptr;
     quit = false;
+    test = new Map();
 }
 
 void State::init(){
-    test = new Sprite("assets/test.png", 50, 50, 64, 64);
-    test2 = new AnimatedSprite("assets/test.png", 64, 64, 3, false);
-    std::vector<int> tester = {3};
-    test2->setAnimationData(tester);
+
 }
 
 void State::exit(){
@@ -25,13 +23,11 @@ void State::handleEvents(){
 }
 
 void State::update(){
-    test->update(0.0f);
-    test2->update(0.01f);
+    test->update();
 }
 
 void State::render(SDL_Surface * display){
-    test->render(display, {});
-    test2->render(display, {});
+    test->render(display, {0, 0, 1280, 720});
 }
 
 bool State::shouldQuit(){
