@@ -20,6 +20,14 @@ Map::Map(){
     tileMap[1] = tile1;
 }
 
+// overload constructor to allow initialization of map stats in constructor
+Map::Map(int width, int height, int tWidth, int tHeight){
+    mapWidth = width;
+    mapHeight = height;
+    tileWidth = tWidth;
+    tileHeight = tHeight;
+}
+
 void Map::update(){
     // update the tiles
 }

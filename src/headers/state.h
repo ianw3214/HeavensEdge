@@ -4,8 +4,6 @@
 #include <SDL_image.h>
 #include <SDL_mixer.h>
 
-#include "map.h"
-
 class State{
 
 public:
@@ -21,8 +19,6 @@ public:
     bool shouldQuit();
     State* getNextState();
 private:
-    Map * test;
-
     State * nextState;
     bool quit;
 };

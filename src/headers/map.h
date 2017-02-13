@@ -12,6 +12,7 @@
 class Map{
 public:
     Map();
+    Map(int, int, int, int);
 
     // TODO: implement loading tile map keys from a file/external class
 
