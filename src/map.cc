@@ -33,11 +33,10 @@ void Map::render(SDL_Surface * display, SDL_Rect camera){
         tileY = (static_cast<int>(i/3))*tileHeight;
         // check to see if tile is on screen
         if(tileX >= startX-tileWidth && tileY >= startY-tileHeight && tileX <= endX && tileY <= endY){
-            std::cout << tileX << " : " << tileY << std::endl;
             if(mapData.at(i) == 0){
-                tile1->render(display, tileX, tileY);
+                tile1->render(display, tileX - camera.x, tileY - camera.y);
             }else{
-                tile2->render(display, tileX, tileY);
+                tile2->render(display, tileX - camera.x, tileY - camera.y);
             }
         }
     }

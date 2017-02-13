@@ -27,7 +27,8 @@ void State::update(){
 }
 
 void State::render(SDL_Surface * display){
-    test->render(display, {0, 0, 1280, 720});
+    SDL_Rect camera = {-32, 0, 1280, 720};
+    test->render(display, camera);
 }
 
 bool State::shouldQuit(){
