@@ -4,8 +4,6 @@
 #include <SDL_image.h>
 #include <SDL_mixer.h>
 
-#include "sprite.h"
-#include "animatedSprite.h"
 #include "map.h"
 
 class State{

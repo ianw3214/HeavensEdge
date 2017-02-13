@@ -23,12 +23,11 @@ void State::handleEvents(){
 }
 
 void State::update(){
-    test->update();
+
 }
 
 void State::render(SDL_Surface * display){
-    SDL_Rect camera = {-32, 0, 1280, 720};
-    test->render(display, camera);
+    test->render(display, {0, 0, 1280, 720});
 }
 
 bool State::shouldQuit(){

@@ -70,7 +70,7 @@ void Engine::update(){
 
 void Engine::render(){
     // Fill the window black before updating the WINDOW
-	SDL_FillRect(display, nullptr, SDL_MapRGB(display->format, 255, 255, 255));
+	SDL_FillRect(display, nullptr, SDL_MapRGB(display->format, 0, 0, 0));
     this->currentState->render(display);
     SDL_UpdateWindowSurface(gWindow);
 }

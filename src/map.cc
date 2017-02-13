@@ -11,6 +11,13 @@ Map::Map(){
     mapHeight = 3;
     tileWidth = 64;
     tileHeight = 64;
+
+    // temporarily set the Tile map here
+    // TODO: replace with proper initialization code
+    Tile * tile1 = new Tile("assets/tiles.png", 64, 64, 0, 0);
+    Tile * tile2 = new Tile("assets/tiles.png", 64, 64, 1, 0);
+    tileMap[0] = tile2;
+    tileMap[1] = tile1;
 }
 
 void Map::update(){
@@ -18,25 +25,24 @@ void Map::update(){
 }
 
 void Map::render(SDL_Surface * display, SDL_Rect camera){
-    Tile * tile1 = new Tile("assets/tiles.png", 64, 64, 0, 0);
-    Tile * tile2 = new Tile("assets/tiles.png", 64, 64, 1, 0);
 
-    // loop through each tile and render them
+    // variables used to calculate whether a tile is on screen and should be rendered
     int startX = camera.x;
     int startY = camera.y;
     int endX = camera.x + camera.w;
     int endY = camera.y + camera.h;
 
+    // loop through each tile and render them
     int tileX, tileY;
     for(unsigned int i = 0; i < mapData.size(); i++){
-        tileX = (i % 3)*tileWidth;
-        tileY = (static_cast<int>(i/3))*tileHeight;
+        // calculate the absolute x and y position according to tile position
+        tileX = (i % mapWidth)*tileWidth;
+        tileY = (static_cast<int>(i/mapWidth))*tileHeight;
         // check to see if tile is on screen
         if(tileX >= startX-tileWidth && tileY >= startY-tileHeight && tileX <= endX && tileY <= endY){
-            if(mapData.at(i) == 0){
-                tile1->render(display, tileX - camera.x, tileY - camera.y);
-            }else{
-                tile2->render(display, tileX - camera.x, tileY - camera.y);
+            int key = mapData.at(i);
+            if(!(tileMap.find(key) == tileMap.end())){
+                tileMap[key]->render(display, tileX - camera.x, tileY - camera.y);
             }
         }
     }

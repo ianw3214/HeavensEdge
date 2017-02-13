@@ -16,6 +16,7 @@ void Tile::update(){
     // base update function for animated tiles
 }
 
+// requires to have camera position calculated beforehand
 void Tile::render(SDL_Surface* display, int x, int y){
     SDL_Rect targetRect = {x, y, 0, 0};
     if(SDL_BlitSurface(spriteSheet, &blitRect, display, &targetRect) < 0){
