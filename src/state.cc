@@ -21,12 +21,12 @@ void State::handleEvents(){
 
 }
 
-void State::update(){
+void State::update(float delta){
 
 }
 
 void State::render(SDL_Surface * display){
-    
+
 }
 
 bool State::shouldQuit(){

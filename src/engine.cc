@@ -54,7 +54,8 @@ void Engine::handleEvents(){
 }
 
 void Engine::update(){
-    this->currentState->update();
+    // TODO: replace temp float with delta time
+    this->currentState->update(0.0);
     // check to see if the state should be changed
     if(this->currentState->shouldQuit()){
         this->currentState->exit();

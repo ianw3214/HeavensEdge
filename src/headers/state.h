@@ -12,9 +12,9 @@ public:
     void init();
     void exit();
 
-    void handleEvents();
-    void update();
-    void render(SDL_Surface*);
+    virtual void handleEvents();
+    virtual void update(float);
+    virtual void render(SDL_Surface*);
 
     bool shouldQuit();
     State* getNextState();

@@ -3,11 +3,12 @@
 #include <SDL_mixer.h>
 
 #include "engine.h"
+#include "level.h"
 
 int main(int argc, char* argv[]){
 
     Engine game;
-    State* test = new State();
+    Level* test = new Level("levels/test.txt");
     if(!game.init(test)){
         return 1;
     }

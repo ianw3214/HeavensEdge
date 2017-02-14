@@ -12,9 +12,10 @@
 class Map{
 public:
     Map();
-    Map(int, int, int, int);
+    Map(std::string);
 
     // TODO: implement loading tile map keys from a file/external class
+    bool loadFromFile(std::string);
 
     void update();
     void render(SDL_Surface*, SDL_Rect);
@@ -24,4 +25,7 @@ private:
 
     std::map<int, Tile*> tileMap;
     std::vector<int> mapData;
+
+    void lineToTileMap(std::string);
+    void lineToMapData(std::string);
 };
