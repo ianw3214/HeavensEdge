@@ -9,8 +9,8 @@ class State{
 public:
     State();
 
-    void init();
-    void exit();
+    virtual void init();
+    virtual void exit();
 
     virtual void handleEvents();
     virtual void update(float);

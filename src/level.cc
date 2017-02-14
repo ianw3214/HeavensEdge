@@ -12,6 +12,18 @@ Level::Level(std::string filePath){
     map = new Map();
 }
 
+void Level::init(){
+
+}
+
+void Level::exit(){
+
+}
+
+void Level::handleEvents(){
+    
+}
+
 void Level::update(float delta){
 
 }

@@ -15,6 +15,10 @@ public:
     Level();
     Level(std::string);
 
+    void init();
+    void exit();
+
+    void handleEvents();
     void update(float);
     void render(SDL_Surface*);
 private:
