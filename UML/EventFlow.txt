@@ -1,0 +1,6 @@
+[<sender>SDL_Event] - [<label>Pollevent]
+[<label>Pollevent] -> [<receiver>State | handleEvents(): void]
+[State] - [<label>Keydown Events]
+[Keydown Events] -> [Player|handleEvents(): void]
+[Player] - [<label>Method calls]
+[Method calls] - [Hero|doAction(): void]

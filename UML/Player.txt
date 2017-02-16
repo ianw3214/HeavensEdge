@@ -1,6 +1,6 @@
 [Player|- hero: Hero| + handleEvents(): void; + update(float): void; + render(SDL_Surface*, SDL_Rect): void]
 
-[Hero|# health: int; # x: int; # y: int| + Hero(); + handleEvents(): void;  +update(float): void; + render(SDL_Surface*, SDL_Rect): void]
+[Hero|# health: int; # x: int; # y: int; # speed: int| + Hero(); + handleEvents(): void;  +update(float): void; + render(SDL_Surface*, SDL_Rect): void]
 
 [Archer| - shootCooldown: int; - loadedArrows: int; - maxArrows: int|+ Archer(); + handleEvents(): void; + update(float): void; + render(SDL_Surface*, SDL_Rect): void; - shoot(): void; - reload(): void]
 
