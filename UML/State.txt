@@ -1,0 +1,6 @@
+[State|- nextState: state*; - quit: bool|
++ State(); + init(): void; + exit(): void;
++ handleEvents(): void; + update(float): void; + render(SDL_Surface*): void;
++ shouldQuit(): bool; + getNextState(): State*]
+
+[State] <-[Level|- player: Player; - map: Map; - camera: SDL_Rect| + Level(); + handleEvents(): void; + update(float): void; + render(SDL_Surface*): void]

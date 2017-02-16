@@ -22,5 +22,5 @@ public:
     void update(float);
     void render(SDL_Surface*);
 private:
-    Map * map;
+    Map* map;
 };

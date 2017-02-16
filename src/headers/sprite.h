@@ -6,7 +6,7 @@
 
 #include <string>
 
-class Sprite{
+class Sprite {
 
 public:
     Sprite(std::string);
@@ -20,12 +20,12 @@ public:
     virtual void setCollisionWidth(int);
     virtual void setCollisionHeight(int);
     virtual void setCollisionRect(int, int);
-    virtual void changeSpriteSheet(std::string path);
+    virtual void changeSpriteSheet(std::string);
 
     virtual void update(float);
     virtual void render(SDL_Surface*, SDL_Rect);
 protected:
-    SDL_Surface * img;
+    SDL_Surface* img;
 
     int x, y;
     int collisionWidth, collisionHeight;

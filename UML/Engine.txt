@@ -1,0 +1,8 @@
+[Engine|- running: bool; - currentState: state; - gWindow: SDL_Window*; - display: SDL_Surface|
++ Engine(); + init(State*): bool; + cleanUp(): void; + handleEvents(): void; + update(): void;
++ render(): void; + isRunning(): bool]
+
+[Engine]-[State|- nextState: state*; - quit: bool|
++ State(); + init(): void; + exit(): void;
++ handleEvents(): void; + update(float): void; + render(SDL_Surface*): void;
++ shouldQuit(): bool; + getNextState(): State*]
