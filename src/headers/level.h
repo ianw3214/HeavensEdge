@@ -26,4 +26,6 @@ public:
 private:
     Map* map;
     std::vector<Entity*> entities;
+
+    SDL_Rect camera;
 };
