@@ -6,7 +6,9 @@
 
 #include <string>
 
-class Sprite {
+#include "entity.h"
+
+class Sprite : public Entity{
 
 public:
     Sprite(std::string);
@@ -22,8 +24,8 @@ public:
     virtual void setCollisionRect(int, int);
     virtual void changeSpriteSheet(std::string);
 
-    virtual void update(float);
-    virtual void render(SDL_Surface*, SDL_Rect);
+    void update(float);
+    void render(SDL_Surface*, SDL_Rect);
 protected:
     SDL_Surface* img;
 

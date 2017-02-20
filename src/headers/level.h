@@ -5,8 +5,10 @@
 #include <SDL_mixer.h>
 
 #include <string>
+#include <vector>
 
 #include "state.h"
+#include "entity.h"
 #include "map.h"
 
 class Level : public State{
@@ -18,9 +20,10 @@ public:
     void init();
     void exit();
 
-    void handleEvents();
+    void handleEvents(SDL_Event);
     void update(float);
     void render(SDL_Surface*);
 private:
     Map* map;
+    std::vector<Entity*> entities;
 };

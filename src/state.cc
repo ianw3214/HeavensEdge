@@ -17,7 +17,7 @@ void State::exit(){
 
 }
 
-void State::handleEvents(){
+void State::handleEvents(SDL_Event event){
 
 }
 

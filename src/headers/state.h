@@ -12,7 +12,7 @@ public:
     virtual void init();
     virtual void exit();
 
-    virtual void handleEvents();
+    virtual void handleEvents(SDL_Event);
     virtual void update(float);
     virtual void render(SDL_Surface*);
 

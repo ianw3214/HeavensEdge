@@ -49,8 +49,8 @@ void Engine::handleEvents(){
         if(e.type == SDL_QUIT){
             running = false;
         }
+        this->currentState->handleEvents(e);
     }
-    this->currentState->handleEvents();
 }
 
 void Engine::update(){
