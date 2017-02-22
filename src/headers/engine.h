@@ -23,6 +23,9 @@ private:
 
     State * currentState;
 
+    Uint32 lastTime, currentTime;
+    float deltaTime;
+
     SDL_Window * gWindow;
     SDL_Surface * display;
 };

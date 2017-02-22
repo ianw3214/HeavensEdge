@@ -54,15 +54,17 @@ void Engine::handleEvents(){
 }
 
 void Engine::update(){
-    // TODO: replace temp float with delta time
-    this->currentState->update(0.0);
+    currentTime = SDL_GetTicks();
+    deltaTime = static_cast<float>(currentTime - lastTime)/1000.0;
+    lastTime = currentTime;
+    currentState->update(deltaTime);
     // check to see if the state should be changed
-    if(this->currentState->shouldQuit()){
-        this->currentState->exit();
-        State * nextState = this->currentState->getNextState();
+    if(currentState->shouldQuit()){
+        currentState->exit();
+        State * nextState = currentState->getNextState();
         if(nextState){
-            this->currentState = nextState;
-            this->currentState->init();
+            currentState = nextState;
+            currentState->init();
         }else{
             running = false;
         }

@@ -1,14 +1,18 @@
 #include "hero.h"
 
+#include <iostream>
+
 // Set up the default hero
 Hero::Hero(int initX, int initY) : AnimatedSprite("assets/hero.png", 64, 64, 10, false) {
     // TODO: get default variables from input/global variable/something like that
+    setAnimationData({1});
     x = initX;
     y = initY;
     health = 5;
 }
 
 void Hero::update(float delta){
+    AnimatedSprite::update(delta);
     // first handle player movement according to movement flags
     if(UP){
         y -= speed*delta;

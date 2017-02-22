@@ -20,7 +20,7 @@ public:
     virtual void update(float);
     virtual void render(SDL_Surface*, SDL_Rect);
 
-private:
+protected:
     int tileWidth, tileHeight;
     int spriteSheetWidth;
     int currentFrame;

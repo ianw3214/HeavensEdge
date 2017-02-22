@@ -10,6 +10,8 @@ Level::Level(){
 // load a level and its data from a file
 Level::Level(std::string filePath){
     map = new Map("levels/test.txt");
+    hero = new Hero(0, 0);
+    entities.push_back(hero);
 }
 
 void Level::init(){

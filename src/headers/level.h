@@ -10,6 +10,7 @@
 #include "state.h"
 #include "entity.h"
 #include "map.h"
+#include "hero.h"   // testing
 
 class Level : public State{
 
@@ -26,6 +27,8 @@ public:
 private:
     Map* map;
     std::vector<Entity*> entities;
+    Hero* hero;
+
 
     SDL_Rect camera;
 };
