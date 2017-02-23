@@ -43,7 +43,6 @@ void AnimatedSprite::render(SDL_Surface* display, SDL_Rect camera){
 }
 
 void AnimatedSprite::updateBlitRect(){
-    std::cout << currentFrame << std::endl;
     int xPos = currentFrame % spriteSheetWidth;
     // round down for y position divided by sprite sheet width
     int yPos = static_cast<int>(currentFrame/spriteSheetWidth);

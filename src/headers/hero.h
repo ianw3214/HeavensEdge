@@ -17,7 +17,6 @@ public:
     void move(int);
     void stopMove(int);
 protected:
-    int x, y;
     int health;
     int speed;
 

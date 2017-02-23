@@ -9,6 +9,9 @@ Hero::Hero(int initX, int initY) : AnimatedSprite("assets/hero.png", 64, 64, 10,
     x = initX;
     y = initY;
     health = 5;
+    speed = 500;
+    move(1);
+    move(2);
 }
 
 void Hero::update(float delta){
