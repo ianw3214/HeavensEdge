@@ -6,6 +6,13 @@
 
 #include "state.h"
 
+/**
+ * Core engine of the game
+ *
+ * The engine contains nothing gameplay specific, instead
+ * has general functions that call into specific state methods
+ * for specific gameplay functionalities.
+ */
 class Engine{
 
 public:

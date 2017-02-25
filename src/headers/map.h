@@ -9,6 +9,11 @@
 
 #include "tile.h"
 
+/**
+ * Map class representing tile maps
+ *
+ * Map data is loaded from files
+ */
 class Map{
 public:
     Map();

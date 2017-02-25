@@ -12,6 +12,9 @@
 #include "map.h"
 #include "hero.h"   // testing
 
+/**
+ * Level game state
+ */
 class Level : public State{
 
 public:

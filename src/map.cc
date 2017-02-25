@@ -3,17 +3,26 @@
 #include <iostream>
 #include <fstream>
 
+/**
+ * Default map constructor that loads a default level file
+ */
 Map::Map(){
     // load a default level if no level was specified
     loadFromFile("levels/test.txt");
 }
 
-// constructor for loading a map from a file
+/**
+ * Map constructor that loads a map from a file
+ */
 Map::Map(std::string filePath){
     loadFromFile(filePath);
 }
 
-// function to load a level from a file
+/**
+ * Parses data from text file to load map data
+ * @param  file Source file to load data from
+ * @return      boolean representing the success state of the method
+ */
 bool Map::loadFromFile(std::string file){
     std::ifstream fileStream;
     fileStream.open(file);
@@ -52,11 +61,19 @@ bool Map::loadFromFile(std::string file){
     return true;
 }
 
-
+/**
+ * Updates the map
+ */
 void Map::update(){
-    // update the tiles
+    // TODO: add delta time dependencies
+    // TODO: update the tiles
 }
 
+/**
+ * Renders the map according to camera position
+ * @param display SDL_Surface associated with the game window
+ * @param camera  SDL_Rect representing the game camera
+ */
 void Map::render(SDL_Surface * display, SDL_Rect camera){
 
     // variables used to calculate whether a tile is on screen and should be rendered
@@ -81,7 +98,10 @@ void Map::render(SDL_Surface * display, SDL_Rect camera){
     }
 }
 
-// Helper function to load tile map data
+/**
+ * Helper function to laod file data to tileMap data
+ * @param line Input line from the file
+ */
 void Map::lineToTileMap(std::string line){
     // Lines are in the form:
     // index#path#xPosition#yPosition
@@ -120,7 +140,10 @@ void Map::lineToTileMap(std::string line){
     return;
 }
 
-// Helper function to load Map data
+/**
+ * Helper function to load file data to map data
+ * @param line [description]
+ */
 void Map::lineToMapData(std::string line){
     // each token is seperated by a #
 

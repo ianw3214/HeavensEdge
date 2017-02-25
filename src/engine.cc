@@ -2,10 +2,18 @@
 
 #include <iostream>
 
+/**
+ * Engine constructor
+ */
 Engine::Engine(){
 
 }
 
+/**
+ * Initializes the game engine by initializing SDL subsystems
+ * @param  initialState The first state to be played upon engine creation
+ * @return              returns whether initialization was successful
+ */
 bool Engine::init(State* initialState){
 
     // initialize SDL subsystems
@@ -18,6 +26,7 @@ bool Engine::init(State* initialState){
             std::cout << "Window initialization failed: " << SDL_GetError() << std::endl;
             return false;
         }
+        // set display surface to the one associated with game window
         display = SDL_GetWindowSurface(gWindow);
         // initialize image loading library
         int success = IMG_Init(IMG_INIT_PNG);
@@ -38,10 +47,24 @@ bool Engine::init(State* initialState){
     return true;
 }
 
+/**
+ * Cleans up SDL subsystems
+ */
 void Engine::cleanUp(){
-    // clean up SDL resources
+    // // Destroy the window
+	SDL_DestroyWindow(gWindow);
+	gWindow = nullptr;
+
+	// quit SDL_mixer
+	Mix_CloseAudio();
+
+	// Quit SDL subsystems
+	SDL_Quit();
 }
 
+/**
+ * Polls for events and passes them into the state event handlers
+ */
 void Engine::handleEvents(){
     // temporary code to escape window when escape key pressed or window quit
     SDL_Event e;
@@ -53,6 +76,9 @@ void Engine::handleEvents(){
     }
 }
 
+/**
+ * Updates the game state and calculates time difference between each call
+ */
 void Engine::update(){
     currentTime = SDL_GetTicks();
     deltaTime = static_cast<float>(currentTime - lastTime)/1000.0;
@@ -62,15 +88,20 @@ void Engine::update(){
     if(currentState->shouldQuit()){
         currentState->exit();
         State * nextState = currentState->getNextState();
+        // if there is a next state, change it to be the current state
         if(nextState){
             currentState = nextState;
             currentState->init();
         }else{
+            // if there is no next state, exit the game
             running = false;
         }
     }
 }
 
+/**
+ * Resets the window and calls the state render function
+ */
 void Engine::render(){
     // Fill the window black before updating the WINDOW
 	SDL_FillRect(display, nullptr, SDL_MapRGB(display->format, 0, 0, 0));
@@ -78,6 +109,10 @@ void Engine::render(){
     SDL_UpdateWindowSurface(gWindow);
 }
 
+/**
+ * Returns whether the game is still running
+ * @return A boolean value representing the running state of the game
+ */
 bool Engine::isRunning(){
     return this->running;
 }

@@ -2,7 +2,9 @@
 
 #include <iostream>
 
-// Set up the default hero
+/**
+ * Default constructor with initial positions
+ */
 Hero::Hero(int initX, int initY) : AnimatedSprite("assets/hero.png", 64, 64, 10, false) {
     // TODO: get default variables from input/global variable/something like that
     setAnimationData({1});
@@ -14,8 +16,13 @@ Hero::Hero(int initX, int initY) : AnimatedSprite("assets/hero.png", 64, 64, 10,
     move(2);
 }
 
+/**
+ * Updates the hero
+ * @param delta Difference in time between update calls
+ */
 void Hero::update(float delta){
     AnimatedSprite::update(delta);
+    // TODO: Let Player class handle movement flags
     // first handle player movement according to movement flags
     if(UP){
         y -= speed*delta;
@@ -31,11 +38,19 @@ void Hero::update(float delta){
     }
 }
 
+/**
+ * Renders the hero according to camera position
+ * @param display SDL_Surface associated with the game window
+ * @param camera  SDL_Rect representing the game camera
+ */
 void Hero::render(SDL_Surface * display, SDL_Rect camera){
     AnimatedSprite::render(display, camera);
 }
 
-// move the hero towards a certain direction
+/**
+ * Moves the hero in a certain direction
+ * @param direction Integer representation of hero movement direction
+ */
 void Hero::move(int direction){
     // 0 - up, 1 - right, 2 - down, 3 - left
     if(direction == 0){
@@ -52,8 +67,12 @@ void Hero::move(int direction){
     }
 }
 
-// stop the hero movement in a certain direction, opposite of move method
+/**
+ * Stop hero movement in a certain direction
+ * @param direction Integer representation of hero movement direction
+ */
 void Hero::stopMove(int direction){
+    // TODO: remove this function from hero class and let player class handle
     // 0 - up, 1 - right, 2 - down, 3 - left
     if(direction == 0){
         UP = false;

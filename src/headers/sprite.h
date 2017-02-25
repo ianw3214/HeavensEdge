@@ -8,6 +8,12 @@
 
 #include "entity.h"
 
+/**
+ * Base sprite class
+ *
+ * All entities in the game that have a visual representation
+ * should be children of the sprite class
+ */
 class Sprite : public Entity{
 
 public:
@@ -15,6 +21,7 @@ public:
     Sprite(std::string, int, int);
     Sprite(std::string, int, int, int, int);
 
+    // getter/setter functions
     virtual int getX() const;
     virtual int getY() const;
     virtual void setPos(int, int);

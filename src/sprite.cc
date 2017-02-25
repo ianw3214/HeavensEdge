@@ -30,14 +30,21 @@ void Sprite::setCollisionHeight(int h){ collisionHeight = h; }
 void Sprite::setCollisionRect(int x, int y){ collisionRect.x = x; collisionRect.y = y; }
 void Sprite::changeSpriteSheet(std::string path){ loadImage(path); }
 
-// sprite render function
+/**
+ * Updates sprite
+ * @param delta Difference in time between each update call
+ */
 void Sprite::update(float delta){
-    // sprites do nothing by default
+    // Set the collision Rects to match new positions
     collisionRect.x = x;
     collisionRect.y = y;
 }
 
-// sprite render function that renders according to camera position
+/**
+ * Renders sprite according to camera position
+ * @param display SDL_Surface associated with the game window
+ * @param camera  SDL_Rect representing the game camera
+ */
 void Sprite::render(SDL_Surface * display, SDL_Rect camera){
     SDL_Rect targetRect = {x - camera.x, y - camera.y, 0, 0};
     if(SDL_BlitSurface(img, nullptr, display, &targetRect) < 0){
@@ -45,6 +52,13 @@ void Sprite::render(SDL_Surface * display, SDL_Rect camera){
     }
 }
 
+/**
+ * Sprite initialization function
+ * @param _x initial x position of sprite
+ * @param _y initial y position of sprite
+ * @param _w width of sprite
+ * @param _h height of sprite
+ */
 void Sprite::init(int _x, int _y, int _w, int _h){
     // intialize default variables
     x = _x;
@@ -55,7 +69,10 @@ void Sprite::init(int _x, int _y, int _w, int _h){
     REMOVE = false;
 }
 
-// load the sprite sheet from specified path to the sprite
+/**
+ * load the sprite sheet from specified path to the sprite
+ * @param path Path to desired sprite image
+ */
 void Sprite::loadImage(std::string path){
     img = IMG_Load(path.c_str());
     if(!img){

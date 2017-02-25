@@ -6,6 +6,9 @@
 
 #include "animatedSprite.h"
 
+/**
+ * Base hero class representing entities controllable by the player
+ */
 class Hero : public AnimatedSprite{
 
 public:

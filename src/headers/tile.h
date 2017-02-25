@@ -5,6 +5,9 @@
 
 #include <string>
 
+/**
+ * Tile class used to form tilemaps
+ */
 class Tile{
 public:
     Tile(std::string, int, int, int, int);

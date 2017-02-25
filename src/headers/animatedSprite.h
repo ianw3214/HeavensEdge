@@ -2,12 +2,16 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
-#include <SDL_mixer.h>
 
 #include <vector>
 
 #include "sprite.h"
 
+/**
+ * Base animated sprite class
+ *
+ * Uses sprite sheets to play animations
+ */
 class AnimatedSprite : public Sprite{
 
 public:

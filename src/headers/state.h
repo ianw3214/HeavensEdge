@@ -1,9 +1,13 @@
 #pragma once
 
 #include <SDL.h>
-#include <SDL_image.h>
-#include <SDL_mixer.h>
 
+/**
+ * Base game state used in engine class
+ *
+ * Contains base virtual methods for the engine to call and
+ * child classes to inherit from.
+ */
 class State{
 
 public:
