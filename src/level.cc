@@ -10,8 +10,8 @@ Level::Level(){
 // load a level and its data from a file
 Level::Level(std::string filePath){
     map = new Map("levels/test.txt");
-    hero = new Hero(0, 0);
-    entities.push_back(hero);
+    player = new Player();
+    entities.push_back(player);
 }
 
 /**
@@ -41,7 +41,7 @@ void Level::handleEvents(SDL_Event e){
  * Updates the level game state
  * @param delta Difference in time between last update call and current
  */
-void Level::update(float delta){
+    void Level::update(float delta){
     // update the map first
     map->update(delta);
     for(int i = 0; i < entities.size(); i++){

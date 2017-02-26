@@ -10,7 +10,7 @@
 #include "state.h"
 #include "entity.h"
 #include "map.h"
-#include "hero.h"   // testing
+#include "player.h"
 
 /**
  * Level game state
@@ -30,7 +30,7 @@ public:
 private:
     Map* map;
     std::vector<Entity*> entities;
-    Hero* hero;
+    Player* player;
 
 
     SDL_Rect camera;

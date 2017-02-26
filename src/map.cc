@@ -65,8 +65,8 @@ bool Map::loadFromFile(std::string file){
  * Updates the map
  * @param delta Difference in time between update calls
  */
-void Map::update(float delta){
-    for(auto const& tile : tileMap){
+void Map::update(float delta) {
+    for(auto const& tile : tileMap) {
         tile.second->update(delta);
     }
 }
@@ -76,7 +76,7 @@ void Map::update(float delta){
  * @param display SDL_Surface associated with the game window
  * @param camera  SDL_Rect representing the game camera
  */
-void Map::render(SDL_Surface * display, SDL_Rect camera){
+void Map::render(SDL_Surface * display, SDL_Rect camera) {
 
     // variables used to calculate whether a tile is on screen and should be rendered
     int startX = camera.x;
