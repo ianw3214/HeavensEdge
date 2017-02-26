@@ -34,7 +34,7 @@ void Level::exit(){
  * @param e Event to be processed
  */
 void Level::handleEvents(SDL_Event e){
-
+    player->handleEvents(e);
 }
 
 /**

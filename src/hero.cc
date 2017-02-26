@@ -12,8 +12,6 @@ Hero::Hero(int initX, int initY) : AnimatedSprite("assets/hero.png", 64, 64, 10,
     y = initY;
     health = 5;
     speed = 500;
-    move(1);
-    move(2);
 }
 
 /**
@@ -22,20 +20,6 @@ Hero::Hero(int initX, int initY) : AnimatedSprite("assets/hero.png", 64, 64, 10,
  */
 void Hero::update(float delta){
     AnimatedSprite::update(delta);
-    // TODO: Let Player class handle movement flags
-    // first handle player movement according to movement flags
-    if(UP){
-        y -= speed*delta;
-    }
-    if(DOWN){
-        y += speed*delta;
-    }
-    if(LEFT){
-        x -= speed*delta;
-    }
-    if(RIGHT){
-        x += speed*delta;
-    }
 }
 
 /**
@@ -50,40 +34,12 @@ void Hero::render(SDL_Surface * display, SDL_Rect camera){
 /**
  * Moves the hero in a certain direction
  * @param direction Integer representation of hero movement direction
+ * @param delta     Delta time to account for when calculating move distance
  */
-void Hero::move(int direction){
-    // 0 - up, 1 - right, 2 - down, 3 - left
-    if(direction == 0){
-        UP = true;
-    }
-    if(direction == 1){
-        RIGHT = true;
-    }
-    if(direction == 2){
-        DOWN = true;
-    }
-    if(direction == 3){
-        LEFT = true;
-    }
-}
-
-/**
- * Stop hero movement in a certain direction
- * @param direction Integer representation of hero movement direction
- */
-void Hero::stopMove(int direction){
-    // TODO: remove this function from hero class and let player class handle
-    // 0 - up, 1 - right, 2 - down, 3 - left
-    if(direction == 0){
-        UP = false;
-    }
-    if(direction == 1){
-        RIGHT = false;
-    }
-    if(direction == 2){
-        DOWN = false;
-    }
-    if(direction == 3){
-        LEFT = false;
-    }
-}
+ void Hero::move(int direction, float delta){
+     // 0 - up, 1 - right, 2 - down, 3 - left
+     if(direction == 0){ y -= speed*delta; }
+     if(direction == 1){ x += speed*delta; }
+     if(direction == 2){ y += speed*delta; }
+     if(direction == 3){ x -= speed*delta; }
+ }

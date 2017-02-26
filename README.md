@@ -15,5 +15,5 @@ View the [devlog](devlog/list.md).
   - [x] Animated sprite class / Sprite sheet loading
   - [x] Tile Map system
   - [x] Tile map loading from file
-  - [ ] Player class
+  - [x] Player class
   - [ ] Input command system

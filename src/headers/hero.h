@@ -17,11 +17,9 @@ public:
     void update(float);
     void render(SDL_Surface*, SDL_Rect);
 
-    void move(int);
+    void move(int, float);
     void stopMove(int);
 protected:
     int health;
     int speed;
-
-    bool UP, DOWN, LEFT, RIGHT;
 };

@@ -21,4 +21,9 @@ public:
     void render(SDL_Surface*, SDL_Rect);
 private:
     Hero * hero;
+
+    bool UP, DOWN, LEFT, RIGHT;
+
+    void handleKeyPress(SDL_Keycode);
+    void handleKeyRelease(SDL_Keycode);
 };
