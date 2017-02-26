@@ -42,6 +42,8 @@ void Level::handleEvents(SDL_Event e){
  * @param delta Difference in time between last update call and current
  */
 void Level::update(float delta){
+    // update the map first
+    map->update(delta);
     for(int i = 0; i < entities.size(); i++){
         entities.at(i)->update(delta);
     }

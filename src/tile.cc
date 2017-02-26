@@ -17,8 +17,9 @@ Tile::Tile(std::string path, int w, int h, int xPos, int yPos){
 
 /**
  * Base update function for tiles in the tile map
+ * @param delta Difference in time between update calls
  */
-void Tile::update(){
+void Tile::update(float delta){
     // can be changed to include animated tiles in the future
 }
 

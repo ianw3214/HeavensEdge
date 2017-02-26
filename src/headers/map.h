@@ -19,10 +19,9 @@ public:
     Map();
     Map(std::string);
 
-    // TODO: implement loading tile map keys from a file/external class
     bool loadFromFile(std::string);
 
-    void update();
+    void update(float delta);
     void render(SDL_Surface*, SDL_Rect);
 private:
     int mapWidth, mapHeight;

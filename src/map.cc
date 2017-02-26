@@ -63,10 +63,12 @@ bool Map::loadFromFile(std::string file){
 
 /**
  * Updates the map
+ * @param delta Difference in time between update calls
  */
-void Map::update(){
-    // TODO: add delta time dependencies
-    // TODO: update the tiles
+void Map::update(float delta){
+    for(auto const& tile : tileMap){
+        tile.second->update(delta);
+    }
 }
 
 /**

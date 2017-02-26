@@ -12,7 +12,7 @@ class Tile{
 public:
     Tile(std::string, int, int, int, int);
 
-    virtual void update();
+    virtual void update(float);
     virtual void render(SDL_Surface*, int, int);
 protected:
     int tileWidth, tileHeight;
