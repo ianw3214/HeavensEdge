@@ -18,6 +18,7 @@ class Map{
 public:
     Map();
     Map(std::string);
+    ~Map();
 
     bool loadFromFile(std::string);
 

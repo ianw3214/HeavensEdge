@@ -26,7 +26,11 @@ void Level::init(){
  * Exit function of level
  */
 void Level::exit(){
-
+    delete map;
+    delete player;
+    for(int i = 0; i < entities.size(); i++){
+        delete entities.at(i);
+    }
 }
 
 /**

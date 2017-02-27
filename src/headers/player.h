@@ -15,6 +15,7 @@ class Player : public Entity{
 public:
     Player();
     Player(Hero*);
+    ~Player();
 
     void handleEvents(SDL_Event);
     void update(float);

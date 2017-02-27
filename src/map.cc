@@ -19,6 +19,16 @@ Map::Map(std::string filePath){
 }
 
 /**
+ * Destructor for map class
+ */
+Map::~Map(){
+    // clean up memory for all tile pointers
+    for(int i = 0; i < tileMap.size(); i++){
+        delete tileMap.at(i);
+    }
+}
+
+/**
  * Parses data from text file to load map data
  * @param  file Source file to load data from
  * @return      boolean representing the success state of the method

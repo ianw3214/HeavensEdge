@@ -10,6 +10,10 @@ Player::Player(Hero * initHero){
     hero = initHero;
 }
 
+Player::~Player(){
+    delete hero;
+}
+
 void Player::handleEvents(SDL_Event event){
     if(event.type == SDL_KEYDOWN){
         handleKeyPress(event.key.keysym.sym);
