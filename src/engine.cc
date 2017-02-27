@@ -4,9 +4,12 @@
 
 /**
  * Engine constructor
+ * @param width  The width of the game window
+ * @param height The height of the game window
  */
-Engine::Engine(){
-
+Engine::Engine(int width, int height){
+    windowWidth = width;
+    windowHeight = height;
 }
 
 /**
@@ -21,7 +24,7 @@ bool Engine::init(State* initialState){
         return false;
     }else{
         // create a game window
-        gWindow = SDL_CreateWindow("Heaven's Edge", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1280, 720, SDL_WINDOW_SHOWN);
+        gWindow = SDL_CreateWindow("Heaven's Edge", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, windowWidth, windowHeight, SDL_WINDOW_SHOWN);
         if(gWindow == nullptr){
             std::cout << "Window initialization failed: " << SDL_GetError() << std::endl;
             return false;

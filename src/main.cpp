@@ -7,7 +7,7 @@
 
 int main(int argc, char* argv[]){
 
-    Engine game;
+    Engine game(1280, 720);
     Level* test = new Level("levels/test.txt");
     if(!game.init(test)){
         return 1;

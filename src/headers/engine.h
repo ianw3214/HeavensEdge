@@ -16,7 +16,7 @@
 class Engine{
 
 public:
-    Engine();
+    Engine(int, int);
     bool init(State*);
     void cleanUp();
 
@@ -26,6 +26,7 @@ public:
 
     bool isRunning();
 private:
+    int windowWidth, windowHeight;
     bool running;
 
     State * currentState;
