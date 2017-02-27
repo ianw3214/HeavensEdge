@@ -4,6 +4,10 @@
 
 Player::Player(){
     hero = new Hero(0, 0);
+    UP = false;
+    DOWN = false;
+    LEFT = false;
+    RIGHT = false;
 }
 
 Player::Player(Hero * initHero){
