@@ -19,7 +19,8 @@ Level::Level(std::string filePath){
  */
 void Level::init(){
     // TODO: initialize camera from NOT hard coded code
-    camera = {0, 0, 1280, 720};
+    camera.w = 1280;
+    camera.h = 720;
 }
 
 /**
@@ -45,9 +46,13 @@ void Level::handleEvents(SDL_Event e){
  * Updates the level game state
  * @param delta Difference in time between last update call and current
  */
-    void Level::update(float delta){
+void Level::update(float delta){
     // update the map first
     map->update(delta);
+	// update the camera position to match the player
+	camera.x = player->getCenterX() - camera.w / 2;
+	camera.y = player->getCenterY() - camera.h / 2;
+	// update each entity in the level
     for(int i = 0; i < entities.size(); i++){
         entities.at(i)->update(delta);
     }

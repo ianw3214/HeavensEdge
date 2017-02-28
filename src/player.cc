@@ -2,21 +2,38 @@
 
 #include <iostream>
 
+/**
+ * Default player constructor
+ */
 Player::Player(){
+	// set the player to a default hero at 0,0
     hero = new Hero(0, 0);
+	// TODO: Add variable initialization to an initialization function
     upPress = false;
     downPress = false;
     leftPress = false;
     rightPress = false;
 }
 
+/**
+ * Player constructor with a hero class passed in as the player hero
+ * @param initHero The hero that the player is playing
+ */
 Player::Player(Hero * initHero){
     hero = initHero;
 }
 
+/**
+ * Player destructor
+ */
 Player::~Player(){
     delete hero;
 }
+
+// getter/setter functions
+// TODO: change getCenterPos functions to get sprite widths from hero
+int Player::getCenterX() { return hero->getX()+32; }
+int Player::getCenterY() { return hero->getY()+32; }
 
 void Player::handleEvents(SDL_Event event){
     if(event.type == SDL_KEYDOWN){
@@ -78,6 +95,9 @@ void Player::handleKeyRelease(SDL_Keycode key){
  * Processes pressed keys and updates player class accordingly
  */
 void Player::processKeyEvents() {
+	// TODO: fix bug where pressing 3 keys and then removing 1 causes movement
+	//		 to keep going in original direction
+	// updates movement flags if only 1 arrow key is pressed
 	if (upPress && !downPress && !leftPress && !rightPress) {
 		moveUp = true, moveDown = false, moveLeft = false, moveRight =false;
 	}

@@ -17,6 +17,10 @@ public:
     Player(Hero*);
     ~Player();
 
+	// getter/setter functions
+	int getCenterX();
+	int getCenterY();
+
     void handleEvents(SDL_Event);
     void update(float);
     void render(SDL_Surface*, SDL_Rect);
