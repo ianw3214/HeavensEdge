@@ -16,4 +16,5 @@ View the [devlog](devlog/list.md).
   - [x] Tile Map system
   - [x] Tile map loading from file
   - [x] Player class
-  - [ ] Input command system
+  - [x] Camera movement
+  - [ ] tile collision
