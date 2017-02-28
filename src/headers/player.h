@@ -23,8 +23,10 @@ public:
 private:
     Hero * hero;
 
-    bool UP, DOWN, LEFT, RIGHT;
+	bool moveUp, moveDown, moveLeft, moveRight;
+	bool upPress, downPress, leftPress, rightPress;
 
     void handleKeyPress(SDL_Keycode);
     void handleKeyRelease(SDL_Keycode);
+	void processKeyEvents();
 };

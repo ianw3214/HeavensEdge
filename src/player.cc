@@ -4,10 +4,10 @@
 
 Player::Player(){
     hero = new Hero(0, 0);
-    UP = false;
-    DOWN = false;
-    LEFT = false;
-    RIGHT = false;
+    upPress = false;
+    downPress = false;
+    leftPress = false;
+    rightPress = false;
 }
 
 Player::Player(Hero * initHero){
@@ -28,11 +28,13 @@ void Player::handleEvents(SDL_Event event){
 
 void Player::update(float delta){
     hero->update(delta);
+	// proccess any key events
+	processKeyEvents();
     // handle player movement
-    if(UP){ hero->move(0, delta); }
-    if(DOWN){ hero->move(2, delta); }
-    if(LEFT){ hero->move(3, delta); }
-    if(RIGHT){ hero->move(1, delta); }
+	if (moveUp) { hero->move(0, delta); }
+	if (moveDown) { hero->move(2, delta); }
+	if (moveLeft) { hero->move(3, delta); }
+	if (moveRight) { hero->move(1, delta); }
 }
 
 void Player::render(SDL_Surface* display, SDL_Rect camera){
@@ -42,32 +44,53 @@ void Player::render(SDL_Surface* display, SDL_Rect camera){
 void Player::handleKeyPress(SDL_Keycode key){
     switch(key){
         case SDLK_UP:{
-            UP = true;
+            upPress = true;
         } break;
         case SDLK_DOWN:{
-            DOWN = true;
+            downPress = true;
         } break;
         case SDLK_LEFT:{
-            LEFT = true;
+            leftPress = true;
         } break;
         case SDLK_RIGHT:{
-            RIGHT = true;
+            rightPress= true;
         } break;
     }
 }
 void Player::handleKeyRelease(SDL_Keycode key){
     switch(key){
         case SDLK_UP:{
-            UP = false;
+            upPress = false;
         } break;
         case SDLK_DOWN:{
-            DOWN = false;
+            downPress = false;
         } break;
         case SDLK_LEFT:{
-            LEFT = false;
+            leftPress = false;
         } break;
         case SDLK_RIGHT:{
-            RIGHT = false;
+            rightPress = false;
         } break;
     }
+}
+
+/**
+ * Processes pressed keys and updates player class accordingly
+ */
+void Player::processKeyEvents() {
+	if (upPress && !downPress && !leftPress && !rightPress) {
+		moveUp = true, moveDown = false, moveLeft = false, moveRight =false;
+	}
+	else if (!upPress && downPress && !leftPress && !rightPress) {
+		moveUp = false, moveDown = true, moveLeft = false, moveRight = false;
+	}
+	else if (!upPress && !downPress && leftPress && !rightPress) {
+		moveUp = false, moveDown = false, moveLeft = true, moveRight = false;
+	}
+	else if (!upPress && !downPress && !leftPress && rightPress) {
+		moveUp = false, moveDown = false, moveLeft = false, moveRight = true;
+	}
+	if (!upPress && !downPress && !rightPress && !leftPress) {
+		moveUp = false, moveDown = false, moveLeft = false, moveRight = false;
+	}
 }
