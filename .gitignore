@@ -1,5 +1,15 @@
 libs/
-art/
+assets/
+levels/
+Debug/
 build/*.obj
 build/*.dll
-build/.vs/
+.vs/
+*.aps
+HeavensEdge.rc
+*.sln
+HeavensEdge.VC.db
+HeavensEdge.VC.VC.opendb
+*.vcxproj
+HeavensEdge.vcxproj.filters
+resource.h
