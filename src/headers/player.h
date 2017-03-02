@@ -4,6 +4,8 @@
 #include <SDL_image.h>
 #include <SDL_mixer.h>
 
+#include <vector>
+
 #include "hero.h"
 #include "entity.h"
 
@@ -18,6 +20,7 @@ public:
     ~Player();
 
 	// getter/setter functions
+	void setCollisionData(std::vector<int>, int, int);
 	int getCenterX();
 	int getCenterY();
 

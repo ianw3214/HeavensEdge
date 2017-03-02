@@ -18,6 +18,8 @@ public:
 
 	// getter/setter functions
 	void setCollisionMap(std::vector<int>);
+	void setLevelWidth(int);
+	void setTileSize(int);
 
     void update(float);
     void render(SDL_Surface*, SDL_Rect);
@@ -28,5 +30,6 @@ protected:
     int speed;
 
 	std::vector<int> collisionMap;
-	bool validateMovement(int, int);
+	int levelWidth, tileSize;
+	bool checkCollision(int, int);
 };
