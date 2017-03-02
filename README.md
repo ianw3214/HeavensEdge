@@ -17,4 +17,9 @@ View the [devlog](devlog/list.md).
   - [x] Tile map loading from file
   - [x] Player class
   - [x] Camera movement
-  - [ ] tile collision
+  - [x] tile collision
+  - [ ] basic enemy
+  - [ ] player animations
+  - [ ] player attacks
+  - [ ] menu state
+  - [ ] pause functionalities
