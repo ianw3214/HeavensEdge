@@ -79,6 +79,8 @@ void Hero::move(int direction, float delta){
 					if (difference > 20) {
 						tileX += tileSize;
 					}
+					// TODO: Check collision tiles to make sure adjusting only happens when
+					//		the player is moving towards non empty tile
 					x = tileX;
 				}
 			}else if (direction == 1 || direction == 3) {
@@ -90,6 +92,8 @@ void Hero::move(int direction, float delta){
 					if (difference > 20) {
 						tileY += tileSize;
 					}
+					// TODO: Check collision tiles to make sure adjusting only happens when
+					//		the player is moving towards non empty tile
 					y = tileY;
 				}
 			}
