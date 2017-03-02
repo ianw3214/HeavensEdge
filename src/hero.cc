@@ -71,30 +71,70 @@ void Hero::move(int direction, float delta){
 			// check if the margin is small enough for the player to be adjusted
 			if (direction == 0 || direction == 2) {
 				int key = x % tileSize;
-				std::cout << key << std::endl;
-				if (key < 20) {
+				if (key < 30) {
 					int tileX = static_cast<int>(x / tileSize)*tileSize;
 					int difference = std::abs(x - tileX);
 					// if the difference too big, then we took the wrong tile to adjust to
-					if (difference > 20) {
+					if (difference > 30) {
 						tileX += tileSize;
 					}
 					// TODO: Check collision tiles to make sure adjusting only happens when
-					//		the player is moving towards non empty tile
-					x = tileX;
+					//		the player is moving towards non empty tilex
+					// check the tile above
+					int tileNumX = tileX / 64;
+					int tileNumY = newY / 64;
+					if (direction == 0) {
+						// check the tile above
+						int target = tileNumY * levelWidth + tileNumX;
+						if (target >= 0 || target < collisionMap.size()) {
+							if (collisionMap.at(target) == 0) {
+								x = tileX;
+							}
+						}
+					}
+					if (direction == 2) {
+						// check the tile above
+						tileNumY += 1;
+						int target = tileNumY * levelWidth + tileNumX;
+						if (target >= 0 || target < collisionMap.size()) {
+							if (collisionMap.at(target) == 0) {
+								x = tileX;
+							}
+						}
+					}
 				}
 			}else if (direction == 1 || direction == 3) {
 				int key = y % tileSize;
-				if (key < 20) {
+				if (key < 30) {
 					int tileY = static_cast<int>(y / tileSize)*tileSize;
 					int difference = std::abs(y - tileY);
 					// if the difference too big, then we took the wrong tile to adjust to
-					if (difference > 20) {
+					if (difference > 30) {
 						tileY += tileSize;
 					}
 					// TODO: Check collision tiles to make sure adjusting only happens when
 					//		the player is moving towards non empty tile
-					y = tileY;
+					int tileNumX = newX / 64;
+					int tileNumY = tileY / 64;
+					if (direction == 1) {
+						// check the tile above
+						tileNumX += 1;
+						int target = tileNumY * levelWidth + tileNumX;
+						if (target >= 0 || target < collisionMap.size()) {
+							if (collisionMap.at(target) == 0) {
+								y = tileY;
+							}
+						}
+					}
+					if (direction == 3) {
+						// check the tile above
+						int target = tileNumY * levelWidth + tileNumX;
+						if (target >= 0 || target < collisionMap.size()) {
+							if (collisionMap.at(target) == 0) {
+								y = tileY;
+							}
+						}
+					}
 				}
 			}
 			// otherwise, don't do anything
