@@ -1,6 +1,7 @@
 #include "hero.h"
 
 #include <iostream>
+#include <cmath>
 
 /**
  * Default constructor with initial positions
@@ -68,7 +69,31 @@ void Hero::move(int direction, float delta){
 		// if a collision occured, check for a small margin
 		if (checkCollision(newX, newY)) {
 			// check if the margin is small enough for the player to be adjusted
-
+			if (direction == 0 || direction == 2) {
+				int key = x % tileSize;
+				std::cout << key << std::endl;
+				if (key < 20) {
+					int tileX = static_cast<int>(x / tileSize)*tileSize;
+					int difference = std::abs(x - tileX);
+					// if the difference too big, then we took the wrong tile to adjust to
+					if (difference > 20) {
+						tileX += tileSize;
+					}
+					x = tileX;
+				}
+			}else if (direction == 1 || direction == 3) {
+				int key = y % tileSize;
+				if (key < 20) {
+					int tileY = static_cast<int>(y / tileSize)*tileSize;
+					int difference = std::abs(y - tileY);
+					// if the difference too big, then we took the wrong tile to adjust to
+					if (difference > 20) {
+						tileY += tileSize;
+					}
+					y = tileY;
+				}
+			}
+			// otherwise, don't do anything
 		}
 		else {
 			// otherwise, set the new x and y positions
@@ -82,6 +107,7 @@ void Hero::move(int direction, float delta){
  * Checks the hero the see if it collides with a collidable tile
  */
 bool Hero::checkCollision(int xpos, int ypos) {
+	// TODO: check if player goes out of the map
 	// TODO: optimize collision checking by shrinking checking range
 	for (int i = 0; i < collisionMap.size(); i++) {
 		// for now, check every single tile for a collision
