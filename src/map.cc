@@ -38,36 +38,43 @@ bool Map::loadFromFile(std::string file){
     fileStream.open(file);
     std::string line;
     int counter = 0;        // counter to keep track of which line we're reading
-    bool onMapData = false;
-    while(getline(fileStream, line)){
-        // TODO: change conditionals to not depend on order
-        if(counter == 0){   // first line is the width of each tile
-            int width = std::stoi(line, nullptr);
-            tileWidth = width;
-        }
-        if(counter == 1){   // second line is the height of each tile
-            int height = std::stoi(line, nullptr);
-            tileHeight = height;
-        }
-        if(counter == 2){   // third line is the width of each map in tiles
-            int width = std::stoi(line, nullptr);
-            mapWidth = width;
-        }
-        if(counter == 3){   // third line is the width of each map in tiles
-            int height = std::stoi(line, nullptr);
-            mapHeight = height;
-        }
-        if(onMapData){  // read the numbers into the map data
-            lineToMapData(line);
-        }
-        if(line == "---"){  // stop reading into tile map when token is reached
-            onMapData = true;
-        }
-        if(counter > 3 && !onMapData){  // reading tile info to tileMap
-            lineToTileMap(line);
-        }
-        counter++;
-    }
+    bool onMapData = false, onCollisionData = false;
+	while (getline(fileStream, line)) {
+		// TODO: change conditionals to not depend on order
+		if (counter == 0) {   // first line is the width of each tile
+			int width = std::stoi(line, nullptr);
+			tileWidth = width;
+		}
+		if (counter == 1) {   // second line is the height of each tile
+			int height = std::stoi(line, nullptr);
+			tileHeight = height;
+		}
+		if (counter == 2) {   // third line is the width of each map in tiles
+			int width = std::stoi(line, nullptr);
+			mapWidth = width;
+		}
+		if (counter == 3) {   // third line is the width of each map in tiles
+			int height = std::stoi(line, nullptr);
+			mapHeight = height;
+		}
+		if (onCollisionData) {	// read the numbers into the collision data
+			lineToCollisionData(line);
+		}
+		if (line == "***") {	// stop reading into map data when token is reached
+			onCollisionData = true;
+		}
+		if (onMapData && !onCollisionData) {  // read the numbers into the map data
+			lineToMapData(line);
+		}
+		if (line == "---") {  // stop reading into tile map when token is reached
+			onMapData = true;
+		}
+		if (counter > 3 && !onMapData && !onCollisionData) {
+			// reading tile info to tileMap
+			lineToTileMap(line);
+		}
+		counter++;
+	}
     return true;
 }
 
@@ -154,7 +161,7 @@ void Map::lineToTileMap(std::string line){
 
 /**
  * Helper function to load file data to map data
- * @param line [description]
+ * @param line The line to be parsed
  */
 void Map::lineToMapData(std::string line){
     // each token is seperated by a #
@@ -171,4 +178,28 @@ void Map::lineToMapData(std::string line){
     }
     mapData.push_back(std::stoi(token, nullptr));
     return;
+}
+
+/**
+* Helper function to load file data to collision data
+* @param line The line to be parsed
+*/
+void Map::lineToCollisionData(std::string line) {
+	// each token is seperated by a #
+
+	std::string token = "";
+
+	for (char const & c : line) {
+		if (c == '#') {
+			int key = std::stoi(token, nullptr);
+			if (key == 0) { collisionData.push_back(0); }
+			else { collisionData.push_back(1); }
+			token = "";
+		}
+		else {
+			token += c;
+		}
+	}
+	collisionData.push_back(std::stoi(token, nullptr));
+	return;
 }

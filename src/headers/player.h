@@ -33,4 +33,16 @@ private:
     void handleKeyPress(SDL_Keycode);
     void handleKeyRelease(SDL_Keycode);
 	void processKeyEvents();
+
+	// TODO: function that checks tile collision for movement
+	//	- Take x and y coord and the tile it lands on as a center tile
+	//	- Take the circle of tiles surrounding said tile
+	//	- Take input of tiles as well as desired movement direction
+	//	- If there is a block stopping the desired move direction
+	//		- make sure the player doesn't move into the block
+	//	- If there is an empty block but 1 or 2 surrounding blocks
+	//		- Adjust player position to align with empty block if
+	//		   the margin between player and desired position is close enough
+	//	- Otherwise, there is no collisions
+	//		- Move the player with no adjustments
 };

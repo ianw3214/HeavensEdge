@@ -30,7 +30,9 @@ private:
 
     std::map<int, Tile*> tileMap;
     std::vector<int> mapData;
+	std::vector<int> collisionData;
 
     void lineToTileMap(std::string);
     void lineToMapData(std::string);
+	void lineToCollisionData(std::string);
 };
