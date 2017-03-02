@@ -28,6 +28,11 @@ Map::~Map(){
     }
 }
 
+// getter/setter functions
+std::vector<int> Map::getCollisionMap() const{
+	return collisionData;
+}
+
 /**
  * Parses data from text file to load map data
  * @param  file Source file to load data from

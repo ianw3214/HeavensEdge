@@ -4,6 +4,8 @@
 #include <SDL_image.h>
 #include <SDL_mixer.h>
 
+#include <vector>
+
 #include "animatedSprite.h"
 
 /**
@@ -14,12 +16,17 @@ class Hero : public AnimatedSprite{
 public:
     Hero(int, int);
 
+	// getter/setter functions
+	void setCollisionMap(std::vector<int>);
+
     void update(float);
     void render(SDL_Surface*, SDL_Rect);
 
     void move(int, float);
-    void stopMove(int);
 protected:
     int health;
     int speed;
+
+	std::vector<int> collisionMap;
+	bool validateMovement(int, int);
 };

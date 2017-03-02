@@ -22,6 +22,9 @@ public:
 
     bool loadFromFile(std::string);
 
+	// getter/setter functions
+	std::vector<int> getCollisionMap() const;
+
     void update(float delta);
     void render(SDL_Surface*, SDL_Rect);
 private:
