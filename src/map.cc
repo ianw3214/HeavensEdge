@@ -32,6 +32,9 @@ Map::~Map(){
 std::vector<int> Map::getCollisionMap() const{
 	return collisionData;
 }
+int Map::getWidth() { return mapWidth; }
+int Map::getHeight() { return mapHeight; }
+int Map::getTileSize() { return tileWidth; }
 
 /**
  * Parses data from text file to load map data

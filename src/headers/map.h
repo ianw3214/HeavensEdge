@@ -21,6 +21,9 @@ public:
     ~Map();
 
     bool loadFromFile(std::string);
+	int getWidth();
+	int getHeight();
+	int getTileSize();
 
 	// getter/setter functions
 	std::vector<int> getCollisionMap() const;

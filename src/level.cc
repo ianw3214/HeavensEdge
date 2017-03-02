@@ -10,7 +10,9 @@ Level::Level(){
 // load a level and its data from a file
 Level::Level(std::string filePath){
     map = new Map("levels/test.txt");
+	// load the collision data to the player
     player = new Player();
+	player->setCollisionData(map->getCollisionMap(), map->getWidth(), map->getTileSize());
     entities.push_back(player);
 }
 

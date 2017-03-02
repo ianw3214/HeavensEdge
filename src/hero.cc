@@ -14,7 +14,10 @@ Hero::Hero(int initX, int initY) : AnimatedSprite("assets/hero.png", 64, 64, 10,
     speed = 500;
 }
 
+// getter/setter functions
 void Hero::setCollisionMap(std::vector<int> inputMap) { collisionMap = inputMap; }
+void Hero::setLevelWidth(int width) { levelWidth = width; }
+void Hero::setTileSize(int size) { tileSize = size; }
 
 /**
  * Updates the hero
@@ -38,26 +41,64 @@ void Hero::render(SDL_Surface * display, SDL_Rect camera){
  * @param direction Integer representation of hero movement direction
  * @param delta     Delta time to account for when calculating move distance
  */
- void Hero::move(int direction, float delta){
-     // 0 - up, 1 - right, 2 - down, 3 - left
-     if(direction == 0){ 
-		 y -= speed*delta; 
-	 }
-     if(direction == 1){ 
-		 x += speed*delta; 
-	 }
-     if(direction == 2){ 
-		 y += speed*delta; 
-	 }
-     if(direction == 3){ 
-		 x -= speed*delta; 
-	 }
+void Hero::move(int direction, float delta){
+    // 0 - up, 1 - right, 2 - down, 3 - left
+    /*
+	if(direction == 0){ 
+		y -= speed*delta; 
+	}
+    if(direction == 1){ 
+		x += speed*delta; 
+	}
+    if(direction == 2){ 
+		y += speed*delta; 
+	}
+    if(direction == 3){ 
+		x -= speed*delta; 
+	}
+	*/
+	int units = static_cast<int>(speed*delta);
+	for (int i = 0; i < units; i++) {
+		int newX = x;
+		int newY = y;
+		if (direction == 0) { newY--; }
+		if (direction == 1) { newX++; }
+		if (direction == 2) { newY++; }
+		if (direction == 3) { newX--; }
+		// if a collision occured, check for a small margin
+		if (checkCollision(newX, newY)) {
+			// check if the margin is small enough for the player to be adjusted
+
+		}
+		else {
+			// otherwise, set the new x and y positions
+			x = newX;
+			y = newY;
+		}
+	}
 }
 
 /**
-* Returns a boolean representing if the player is allowed to move to a certain
-* position depending on collision map data
-*/
-bool Hero::validateMovement(int x, int y) {
-
+ * Checks the hero the see if it collides with a collidable tile
+ */
+bool Hero::checkCollision(int xpos, int ypos) {
+	// TODO: optimize collision checking by shrinking checking range
+	for (int i = 0; i < collisionMap.size(); i++) {
+		// for now, check every single tile for a collision
+		if (collisionMap.at(i) == 1) {	// 1 means it is a collidable tile
+			// check the coords of the tile against player position
+			int targetX = (i % levelWidth) * tileSize;
+			int targetY = static_cast<int>(i / levelWidth) * tileSize;
+			// first check x coordinates
+			if (xpos + tileWidth > targetX && xpos < (targetX + tileSize)) {
+				// check y coordinates
+				if (ypos + tileHeight > targetY && ypos < (targetY + tileSize)) {
+					// return true only if both x and y intersect
+					return true;
+				}
+			}
+		}
+	}
+	// return false if no collision happened
+	return false;
 }
