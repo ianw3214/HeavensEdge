@@ -25,6 +25,9 @@ void Level::init(){
     camera.w = 1280;
     camera.h = 720;
 	camSpeed = 2;
+	// set initial camera position to player position
+	camera.x = player->getCenterX() - camera.w / 2;
+	camera.y = player->getCenterY() - camera.h / 2;
 }
 
 /**
@@ -33,7 +36,7 @@ void Level::init(){
 void Level::exit(){
     delete map;
     delete player;
-    for(int i = 0; i < entities.size(); i++){
+    for(unsigned int i = 0; i < entities.size(); i++){
         delete entities.at(i);
     }
 }
@@ -55,7 +58,7 @@ void Level::update(float delta){
     map->update(delta);
 	updateCamera();
 	// update each entity in the level
-    for(int i = 0; i < entities.size(); i++){
+    for(unsigned int i = 0; i < entities.size(); i++){
         entities.at(i)->update(delta);
     }
 }
@@ -66,7 +69,7 @@ void Level::update(float delta){
  */
 void Level::render(SDL_Surface* display){
     map->render(display, camera);
-    for(int i = 0; i < entities.size(); i++){
+    for(unsigned int i = 0; i < entities.size(); i++){
         entities.at(i)->render(display, camera);
     }
 }
@@ -79,27 +82,16 @@ void Level::updateCamera() {
 	int targetX = player->getCenterX() - camera.w / 2;
 	int targetY = player->getCenterY() - camera.h / 2;
 	// update the camera position to match the player
+	// if the difference in position is greater than the speed, add the speed to position
+	// otherwise, set the position to be equal to target position
 	if (std::abs(targetX - camera.x) > camSpeed) {
-		std::cout << "FLAG" << std::endl;
-		if (targetX > camera.x) {
-			camera.x += camSpeed;
-		}
-		else {
-			camera.x -= camSpeed;
-		}
+		if (targetX > camera.x) { camera.x += camSpeed; }
+		else { camera.x -= camSpeed; }
 	}
-	else {
-		camera.x = targetX;
-	}
+	else { camera.x = targetX; }
 	if (std::abs(targetY - camera.y) > camSpeed) {
-		if (targetY > camera.y) {
-			camera.y += camSpeed;
-		}
-		else {
-			camera.y -= camSpeed;
-		}
+		if (targetY > camera.y) { camera.y += camSpeed; }
+		else { camera.y -= camSpeed; }
 	}
-	else {
-		camera.y = targetY;
-	}
+	else { camera.y = targetY; }
 }

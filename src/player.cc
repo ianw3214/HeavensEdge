@@ -40,7 +40,12 @@ void Player::setCollisionData(std::vector<int> inputMap, int width, int tileSize
 int Player::getCenterX() { return hero->getX()+32; }
 int Player::getCenterY() { return hero->getY()+32; }
 
+/**
+ * Processes events from the event queue
+ * @param event The event to be processed
+ */
 void Player::handleEvents(SDL_Event event){
+	// invoke the helper functions corresponding to the triggered event
     if(event.type == SDL_KEYDOWN){
         handleKeyPress(event.key.keysym.sym);
     }else if(event.type == SDL_KEYUP){
@@ -48,6 +53,10 @@ void Player::handleEvents(SDL_Event event){
     }
 }
 
+/**
+ * Updates the player and it's components
+ * @param delta The difference in time between each update calls
+ */
 void Player::update(float delta){
     hero->update(delta);
 	// proccess any key events
@@ -59,10 +68,20 @@ void Player::update(float delta){
 	if (moveRight) { hero->move(1, delta); }
 }
 
+/**
+ * Renders the player
+ * @param display The SDL_Surface associated with the game window
+ * @param camera  The SDL_Rect representing the level camera
+ */
 void Player::render(SDL_Surface* display, SDL_Rect camera){
+	// call the hero render function
     hero->render(display, camera);
 }
 
+/**
+ * Processes Key down events from the event queue
+ * @param key The key that was pressed
+ */
 void Player::handleKeyPress(SDL_Keycode key){
     switch(key){
         case SDLK_UP:{
@@ -79,6 +98,11 @@ void Player::handleKeyPress(SDL_Keycode key){
         } break;
     }
 }
+
+/**
+* Processes Key up events from the event queue
+* @param key The key that was released
+*/
 void Player::handleKeyRelease(SDL_Keycode key){
     switch(key){
         case SDLK_UP:{
@@ -103,6 +127,10 @@ void Player::processKeyEvents() {
 	// TODO: fix bug where pressing 3 keys and then removing 1 causes movement
 	//		 to keep going in original direction
 	// updates movement flags if only 1 arrow key is pressed
+	if (!upPress) { moveUp = false; }
+	if (!downPress) { moveDown = false; }
+	if (!leftPress) { moveLeft = false; }
+	if (!rightPress) { moveRight = false; }
 	if (upPress && !downPress && !leftPress && !rightPress) {
 		moveUp = true, moveDown = false, moveLeft = false, moveRight =false;
 	}
