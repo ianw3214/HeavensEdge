@@ -44,20 +44,6 @@ void Hero::render(SDL_Surface * display, SDL_Rect camera){
  */
 void Hero::move(int direction, float delta){
     // 0 - up, 1 - right, 2 - down, 3 - left
-    /*
-	if(direction == 0){
-		y -= speed*delta;
-	}
-    if(direction == 1){
-		x += speed*delta;
-	}
-    if(direction == 2){
-		y += speed*delta;
-	}
-    if(direction == 3){
-		x -= speed*delta;
-	}
-	*/
 	int units = static_cast<int>(speed*delta);
 	int newX = x;
 	int newY = y;
@@ -69,72 +55,75 @@ void Hero::move(int direction, float delta){
 	if (checkCollision(newX, newY)) {
 		// check if the margin is small enough for the player to be adjusted
 		if (direction == 0 || direction == 2) {
+			// get the distance from the x position a grid x position
 			int key = x % tileSize;
-
+			// if the distance is small/big enough, then it is close to a tile
 			if (key < 15 || key > tileSize - 15) {
+				// find the target x position to adjust towards
 				int tileX = static_cast<int>(x / tileSize)*tileSize;
 				int difference = std::abs(x - tileX);
 				// if the difference too big, then we took the wrong tile to adjust to
 				if (difference > 15) {
 					tileX += tileSize;
 				}
+				// find the coordinates of the target tile
 				int tileNumX = tileX / 64;
 				int tileNumY = newY / 64;
-				if (direction == 0) {
-					// check the tile above
-					int target = tileNumY * levelWidth + tileNumX;
-					if (target >= 0 || target < collisionMap.size()) {
-						if (collisionMap.at(target) == 0) {
-							x = tileX;
-						}
+				tileNumY += direction == 2 ? 1 : 0;
+				// get the index of the target tile
+				int target = tileNumY * levelWidth + tileNumX;
+				// if the index is valid, check the collision map
+				if (target >= 0 || target < collisionMap.size()) {
+					// if the target tile is valid, align the x position
+					if (collisionMap.at(target) == 0) {
+						x = tileX;
+						y = newY;
 					}
-				}
-				if (direction == 2) {
-					// check the tile above
-					tileNumY += 1;
-					int target = tileNumY * levelWidth + tileNumX;
-					if (target >= 0 || target < collisionMap.size()) {
-						if (collisionMap.at(target) == 0) {
-							x = tileX;
-						}
+					// otherwise, bring the player to the edge
+					else {
+						y = (y / tileSize) * tileSize;
 					}
 				}
 			}
+			// if the distance isn't small enough, bring the player to the edge
+			else {
+				y = (y / tileSize) * tileSize;
+			}
 		}else if (direction == 1 || direction == 3) {
+			// get the distance from the y position a grid y position
 			int key = y % tileSize;
+			// if the distance is small/big enough, then it is close to a tile
 			if (key < 15 || key > tileSize - 15) {
+				// find the target y position to adjust towards
 				int tileY = static_cast<int>(y / tileSize)*tileSize;
 				int difference = std::abs(y - tileY);
 				// if the difference too big, then we took the wrong tile to adjust to
 				if (difference > 15) {
 					tileY += tileSize;
 				}
-				// TODO: Check collision tiles to make sure adjusting only happens when
-				//		the player is moving towards non empty tile
+				// find the coordinates of the target tile
 				int tileNumX = newX / 64;
 				int tileNumY = tileY / 64;
-				if (direction == 1) {
-					// check the tile above
-					tileNumX += 1;
-					int target = tileNumY * levelWidth + tileNumX;
-					if (target >= 0 || target < collisionMap.size()) {
-						if (collisionMap.at(target) == 0) {
-							y = tileY;
-						}
+				tileNumX += direction == 1 ? 1 : 0;
+				// get the index of the target tile
+				int target = tileNumY * levelWidth + tileNumX;
+				// if the index is valid, check the collision map
+				if (target >= 0 || target < collisionMap.size()) {
+					// if the target tile is valid, align the y position
+					if (collisionMap.at(target) == 0) {
+						y = tileY;
 					}
-				}
-				if (direction == 3) {
-					// check the tile above
-					int target = tileNumY * levelWidth + tileNumX;
-					if (target >= 0 || target < collisionMap.size()) {
-						if (collisionMap.at(target) == 0) {
-							y = tileY;
-						}
+					// otherwise, bring the player to the edge
+					else {
+						x = (x / tileSize) * tileSize;
 					}
 				}
 			}
+			// if the distance isn't small enough, bring the player to the edge
+			else {
+				x = (x / tileSize) * tileSize;
+			}
 		}
-		// otherwise, don't do anything
 	}
 	else {
 		// otherwise, set the new x and y positions
