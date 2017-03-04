@@ -32,6 +32,8 @@ private:
     std::vector<Entity*> entities;
     Player* player;
 
+	int camSpeed;
 
     SDL_Rect camera;
+	void updateCamera();
 };
