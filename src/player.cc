@@ -31,8 +31,8 @@ Player::~Player(){
 }
 
 // getter/setter functions
-void Player::setCollisionData(std::vector<int> inputMap, int width, int tileSize) { 
-	hero->setCollisionMap(inputMap); 
+void Player::setCollisionData(std::vector<int> inputMap, int width, int tileSize) {
+	hero->setCollisionMap(inputMap);
 	hero->setLevelWidth(width);
 	hero->setTileSize(tileSize);
 }

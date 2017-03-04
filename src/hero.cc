@@ -12,7 +12,7 @@ Hero::Hero(int initX, int initY) : AnimatedSprite("assets/hero.png", 64, 64, 10,
     x = initX;
     y = initY;
     health = 5;
-    speed = 500;
+    speed = 300;
 }
 
 // getter/setter functions
@@ -71,11 +71,12 @@ void Hero::move(int direction, float delta){
 			// check if the margin is small enough for the player to be adjusted
 			if (direction == 0 || direction == 2) {
 				int key = x % tileSize;
-				if (key < 30) {
+				
+				if (key < 20 || key > tileSize - 20) {
 					int tileX = static_cast<int>(x / tileSize)*tileSize;
 					int difference = std::abs(x - tileX);
 					// if the difference too big, then we took the wrong tile to adjust to
-					if (difference > 30) {
+					if (difference > 20) {
 						tileX += tileSize;
 					}
 					// TODO: Check collision tiles to make sure adjusting only happens when
@@ -105,11 +106,11 @@ void Hero::move(int direction, float delta){
 				}
 			}else if (direction == 1 || direction == 3) {
 				int key = y % tileSize;
-				if (key < 30) {
+				if (key < 20 || key > tileSize - 20) {
 					int tileY = static_cast<int>(y / tileSize)*tileSize;
 					int difference = std::abs(y - tileY);
 					// if the difference too big, then we took the wrong tile to adjust to
-					if (difference > 30) {
+					if (difference > 20) {
 						tileY += tileSize;
 					}
 					// TODO: Check collision tiles to make sure adjusting only happens when
