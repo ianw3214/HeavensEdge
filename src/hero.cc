@@ -45,17 +45,17 @@ void Hero::render(SDL_Surface * display, SDL_Rect camera){
 void Hero::move(int direction, float delta){
     // 0 - up, 1 - right, 2 - down, 3 - left
     /*
-	if(direction == 0){ 
-		y -= speed*delta; 
+	if(direction == 0){
+		y -= speed*delta;
 	}
-    if(direction == 1){ 
-		x += speed*delta; 
+    if(direction == 1){
+		x += speed*delta;
 	}
-    if(direction == 2){ 
-		y += speed*delta; 
+    if(direction == 2){
+		y += speed*delta;
 	}
-    if(direction == 3){ 
-		x -= speed*delta; 
+    if(direction == 3){
+		x -= speed*delta;
 	}
 	*/
 	int units = static_cast<int>(speed*delta);
@@ -71,7 +71,7 @@ void Hero::move(int direction, float delta){
 			// check if the margin is small enough for the player to be adjusted
 			if (direction == 0 || direction == 2) {
 				int key = x % tileSize;
-				
+
 				if (key < 20 || key > tileSize - 20) {
 					int tileX = static_cast<int>(x / tileSize)*tileSize;
 					int difference = std::abs(x - tileX);
@@ -79,9 +79,6 @@ void Hero::move(int direction, float delta){
 					if (difference > 20) {
 						tileX += tileSize;
 					}
-					// TODO: Check collision tiles to make sure adjusting only happens when
-					//		the player is moving towards non empty tilex
-					// check the tile above
 					int tileNumX = tileX / 64;
 					int tileNumY = newY / 64;
 					if (direction == 0) {
