@@ -81,13 +81,17 @@ void Hero::move(int direction, float delta){
 					}
 					// otherwise, bring the player to the edge
 					else {
-						y = (y / tileSize) * tileSize;
+						newY = (y / tileSize) * tileSize;
+						newY += std::abs(newY - y) > tileSize/2? tileSize : 0;
+						y = newY;
 					}
 				}
 			}
 			// if the distance isn't small enough, bring the player to the edge
 			else {
-				y = (y / tileSize) * tileSize;
+				newY = (y / tileSize) * tileSize;
+				newY += std::abs(newY - y) > tileSize/2 ? tileSize : 0;
+				y = newY;
 			}
 		}else if (direction == 1 || direction == 3) {
 			// get the distance from the y position a grid y position
@@ -115,13 +119,17 @@ void Hero::move(int direction, float delta){
 					}
 					// otherwise, bring the player to the edge
 					else {
-						x = (x / tileSize) * tileSize;
+						newX = (x / tileSize) * tileSize;
+						newX += std::abs(newX - x) > tileSize / 2 ? tileSize : 0;
+						x = newX;
 					}
 				}
 			}
 			// if the distance isn't small enough, bring the player to the edge
 			else {
-				x = (x / tileSize) * tileSize;
+				newX = (x / tileSize) * tileSize;
+				newX += std::abs(newX - x) > tileSize / 2 ? tileSize : 0;
+				x = newX;
 			}
 		}
 	}
