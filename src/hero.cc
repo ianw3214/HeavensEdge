@@ -71,7 +71,7 @@ void Hero::move(int direction, float delta){
 				int tileNumY = newY / 64;
 				tileNumY += direction == 2 ? 1 : 0;
 				// get the index of the target tile
-				int target = tileNumY * levelWidth + tileNumX;
+				unsigned int target = tileNumY * levelWidth + tileNumX;
 				// if the index is valid, check the collision map
 				if (target >= 0 || target < collisionMap.size()) {
 					// if the target tile is valid, align the x position
@@ -110,7 +110,7 @@ void Hero::move(int direction, float delta){
 				int tileNumY = tileY / 64;
 				tileNumX += direction == 1 ? 1 : 0;
 				// get the index of the target tile
-				int target = tileNumY * levelWidth + tileNumX;
+				unsigned int target = tileNumY * levelWidth + tileNumX;
 				// if the index is valid, check the collision map
 				if (target >= 0 || target < collisionMap.size()) {
 					// if the target tile is valid, align the y position
@@ -146,7 +146,7 @@ void Hero::move(int direction, float delta){
 bool Hero::checkCollision(int xpos, int ypos) {
 	// TODO: check if player goes out of the map
 	// TODO: optimize collision checking by shrinking checking range
-	for (int i = 0; i < collisionMap.size(); i++) {
+	for (unsigned int i = 0; i < collisionMap.size(); i++) {
 		// for now, check every single tile for a collision
 		if (collisionMap.at(i) == 1) {	// 1 means it is a collidable tile
 			// check the coords of the tile against player position
