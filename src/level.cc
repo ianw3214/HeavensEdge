@@ -25,6 +25,7 @@ void Level::init(){
     camera.w = 1280;
     camera.h = 720;
 	camSpeed = 2;
+	player->setPos(map->getStartingX()*map->getTileSize(), map->getStartingY()*map->getTileSize());
 	// set initial camera position to player position
 	camera.x = player->getCenterX() - camera.w / 2;
 	camera.y = player->getCenterY() - camera.h / 2;

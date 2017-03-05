@@ -35,6 +35,8 @@ std::vector<int> Map::getCollisionMap() const{
 int Map::getWidth() { return mapWidth; }
 int Map::getHeight() { return mapHeight; }
 int Map::getTileSize() { return tileWidth; }
+int Map::getStartingX() { return startX; }
+int Map::getStartingY() { return startY; }
 
 /**
  * Parses data from text file to load map data
@@ -65,6 +67,12 @@ bool Map::loadFromFile(std::string file){
 			int height = std::stoi(line, nullptr);
 			mapHeight = height;
 		}
+		if (counter == 4) {		// the starting x position of the player
+			startX = std::stoi(line);
+		}
+		if (counter == 5) {		// the starting y position of the player
+			startY = std::stoi(line);
+		}
 		if (onCollisionData) {	// read the numbers into the collision data
 			lineToCollisionData(line);
 		}
@@ -77,7 +85,7 @@ bool Map::loadFromFile(std::string file){
 		if (line == "---") {  // stop reading into tile map when token is reached
 			onMapData = true;
 		}
-		if (counter > 3 && !onMapData && !onCollisionData) {
+		if (counter > 5 && !onMapData && !onCollisionData) {
 			// reading tile info to tileMap
 			lineToTileMap(line);
 		}

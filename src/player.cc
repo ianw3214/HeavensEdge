@@ -36,6 +36,9 @@ void Player::setCollisionData(std::vector<int> inputMap, int width, int tileSize
 	hero->setLevelWidth(width);
 	hero->setTileSize(tileSize);
 }
+void Player::setPos(int newX, int newY) {
+	hero->setPos(newX, newY);
+}
 // TODO: change getCenterPos functions to get sprite widths from hero
 int Player::getCenterX() { return hero->getX()+32; }
 int Player::getCenterY() { return hero->getY()+32; }

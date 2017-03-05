@@ -21,18 +21,21 @@ public:
     ~Map();
 
     bool loadFromFile(std::string);
-	int getWidth();
-	int getHeight();
-	int getTileSize();
 
 	// getter/setter functions
 	std::vector<int> getCollisionMap() const;
+	int getWidth();
+	int getHeight();
+	int getTileSize();
+	int getStartingX();
+	int getStartingY();
 
     void update(float delta);
     void render(SDL_Surface*, SDL_Rect);
 private:
     int mapWidth, mapHeight;
     int tileWidth, tileHeight;
+	int startX, startY;		// the starting position of the player
 
     std::map<int, Tile*> tileMap;
     std::vector<int> mapData;
