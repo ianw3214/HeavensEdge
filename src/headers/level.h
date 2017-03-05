@@ -33,6 +33,7 @@ private:
     Player* player;
 
 	int camSpeed;
+	int camMargin;
 
     SDL_Rect camera;
 	void updateCamera();

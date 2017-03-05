@@ -25,6 +25,7 @@ void Level::init(){
     camera.w = 1280;
     camera.h = 720;
 	camSpeed = 2;
+	camMargin = 30;
 	player->setPos(map->getStartingX()*map->getTileSize(), map->getStartingY()*map->getTileSize());
 	// set initial camera position to player position
 	camera.x = player->getCenterX() - camera.w / 2;
@@ -85,14 +86,12 @@ void Level::updateCamera() {
 	// update the camera position to match the player
 	// if the difference in position is greater than the speed, add the speed to position
 	// otherwise, set the position to be equal to target position
-	if (std::abs(targetX - camera.x) > camSpeed) {
+	if (std::abs(targetX - camera.x) > camMargin) {
 		if (targetX > camera.x) { camera.x += camSpeed; }
 		else { camera.x -= camSpeed; }
 	}
-	else { camera.x = targetX; }
-	if (std::abs(targetY - camera.y) > camSpeed) {
+	if (std::abs(targetY - camera.y) > camMargin) {
 		if (targetY > camera.y) { camera.y += camSpeed; }
 		else { camera.y -= camSpeed; }
 	}
-	else { camera.y = targetY; }
 }
