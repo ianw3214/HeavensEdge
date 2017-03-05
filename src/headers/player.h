@@ -42,7 +42,8 @@ private:
 
     Hero * hero;
 
-	bool moveUp, moveDown, moveLeft, moveRight;
+	bool moving;
+	bool faceUp, faceDown, faceLeft, faceRight;
 	bool upPress, downPress, leftPress, rightPress;
 
 	ANIM_STATE currentAnimation;

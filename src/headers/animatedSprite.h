@@ -19,7 +19,7 @@ public:
     AnimatedSprite(std::string, int, int, int, bool);
     void setAnimationData(std::vector<int>);
 
-    // TODO: method to change playing animation
+	void playAnimation(int);
 
     virtual void update(float);
     virtual void render(SDL_Surface*, SDL_Rect);
