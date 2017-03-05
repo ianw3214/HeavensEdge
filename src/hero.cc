@@ -8,7 +8,7 @@
  */
 Hero::Hero(int initX, int initY) : AnimatedSprite("assets/hero.png", 64, 64, 10, false) {
     // TODO: get default variables from input/global variable/something like that
-    setAnimationData({1});
+    setAnimationData({10, 10, 10, 10, 10, 10, 10, 10});
     x = initX;
     y = initY;
     health = 5;

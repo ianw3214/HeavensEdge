@@ -13,6 +13,7 @@ Player::Player(){
     downPress = false;
     leftPress = false;
     rightPress = false;
+	currentAnimation = IDLE_RIGHT;
 }
 
 /**
@@ -21,6 +22,12 @@ Player::Player(){
  */
 Player::Player(Hero * initHero){
     hero = initHero;
+	// TODO: Add variable initialization to an initialization function
+	upPress = false;
+	downPress = false;
+	leftPress = false;
+	rightPress = false;
+	currentAnimation = IDLE_RIGHT;
 }
 
 /**
@@ -40,8 +47,8 @@ void Player::setPos(int newX, int newY) {
 	hero->setPos(newX, newY);
 }
 // TODO: change getCenterPos functions to get sprite widths from hero
-int Player::getCenterX() { return hero->getX()+32; }
-int Player::getCenterY() { return hero->getY()+32; }
+int Player::getCenterX() const { return hero->getX()+32; }
+int Player::getCenterY() const { return hero->getY()+32; }
 
 /**
  * Processes events from the event queue
@@ -149,4 +156,15 @@ void Player::processKeyEvents() {
 	if (!upPress && !downPress && !rightPress && !leftPress) {
 		moveUp = false, moveDown = false, moveLeft = false, moveRight = false;
 	}
+}
+
+/**
+ *	Resets the player animation state to idle in the right direction depending on current state
+ */
+void Player::setAnimationToIdle() {
+	if (moveRight) { currentAnimation = IDLE_RIGHT; }
+	else if (moveLeft) { currentAnimation = IDLE_LEFT; }
+	else if (moveUp) { currentAnimation = IDLE_UP; }
+	else if (moveDown) { currentAnimation = IDLE_DOWN; }
+	else { currentAnimation = IDLE_DOWN; }
 }
