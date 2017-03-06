@@ -13,6 +13,10 @@ Player::Player(){
     downPress = false;
     leftPress = false;
     rightPress = false;
+	faceUp = false;
+	faceRight = false;
+	faceLeft = false;
+	faceDown = false;
 	moving = false;
 	currentAnimation = IDLE_RIGHT;
 }
@@ -28,6 +32,10 @@ Player::Player(Hero * initHero){
 	downPress = false;
 	leftPress = false;
 	rightPress = false;
+	faceUp = false;
+	faceRight = false;
+	faceLeft = false;
+	faceDown = false;
 	moving = false;
 	currentAnimation = IDLE_RIGHT;
 }
