@@ -52,5 +52,6 @@ private:
     void handleKeyRelease(SDL_Keycode);
 	void processKeyEvents();
 	void setAnimationToIdle();
+	void changeAnimation();
 
 };

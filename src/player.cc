@@ -83,25 +83,43 @@ void Player::update(float delta){
 	processKeyEvents();
     // handle player movement
 	if (moving) {
-		if (faceUp) { 
-			hero->move(0, delta); 
-			hero->playAnimation(6);
+		// if the direction changed, change the animation
+		bool changeDirection = false;
+		if (faceUp) {
+			hero->move(0, delta);
+			if (currentAnimation != MOVE_UP) {
+				currentAnimation = MOVE_UP;
+				changeDirection = true;
+			}
 		}
-		if (faceDown) { 
-			hero->move(2, delta); 
-			hero->playAnimation(7);
+		if (faceDown) {
+			hero->move(2, delta);
+			if (currentAnimation != MOVE_DOWN) {
+				currentAnimation = MOVE_DOWN;
+				changeDirection = true;
+			}
 		}
-		if (faceLeft) { 
+		if (faceLeft) {
 			hero->move(3, delta);
-			hero->playAnimation(5);
+			if (currentAnimation != MOVE_LEFT) {
+				currentAnimation = MOVE_LEFT;
+				changeDirection = true;
+			}
 		}
-		if (faceRight) { 
+		if (faceRight) {
 			hero->move(1, delta);
-			hero->playAnimation(4);
+			if (currentAnimation != MOVE_RIGHT) {
+				currentAnimation = MOVE_RIGHT;
+				changeDirection = true;
+			}
 		}
+		if (changeDirection) changeAnimation();
 	}
 	else {
-		setAnimationToIdle();
+		// if the current animation isn't in idle, change it to idle
+		if (currentAnimation > 3) {
+			setAnimationToIdle();
+		}
 	}
 }
 
@@ -161,8 +179,6 @@ void Player::handleKeyRelease(SDL_Keycode key){
  * Processes pressed keys and updates player class accordingly
  */
 void Player::processKeyEvents() {
-	// TODO: fix bug where pressing 3 keys and then removing 1 causes movement
-	//		 to keep going in original direction
 	// updates movement flags if only 1 arrow key is pressed
 	if (upPress && !faceUp) { faceUp = true, faceDown = false, faceLeft = false, faceRight = false; }
 	if (downPress && !faceDown) { faceUp = false, faceDown = true, faceLeft = false, faceRight = false; }
@@ -176,24 +192,27 @@ void Player::processKeyEvents() {
  *	Resets the player animation state to idle in the right direction depending on current state
  */
 void Player::setAnimationToIdle() {
-	if (faceRight) { 
-		currentAnimation = IDLE_RIGHT; 
-		hero->playAnimation(0);
+	if (faceRight) {
+		currentAnimation = IDLE_RIGHT;
 	}
-	else if (faceLeft) { 
-		currentAnimation = IDLE_LEFT; 
-		hero->playAnimation(1);
+	else if (faceLeft) {
+		currentAnimation = IDLE_LEFT;
 	}
-	else if (faceUp) { 
-		currentAnimation = IDLE_UP; 
-		hero->playAnimation(2);
+	else if (faceUp) {
+		currentAnimation = IDLE_UP;
 	}
-	else if (faceDown) { 
-		currentAnimation = IDLE_DOWN; 
-		hero->playAnimation(3);
+	else if (faceDown) {
+		currentAnimation = IDLE_DOWN;
 	}
-	else { 
-		currentAnimation = IDLE_DOWN; 
-		hero->playAnimation(0);
+	else {
+		currentAnimation = IDLE_DOWN;
 	}
+	changeAnimation();
+}
+
+/**
+ * Updates the hero to have the current animation of the player
+ */
+void Player::changeAnimation() {
+	hero->playAnimation(currentAnimation);
 }
