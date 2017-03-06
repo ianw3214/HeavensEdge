@@ -13,6 +13,7 @@ Player::Player(){
     downPress = false;
     leftPress = false;
     rightPress = false;
+	moving = false;
 	currentAnimation = IDLE_RIGHT;
 }
 
@@ -27,6 +28,7 @@ Player::Player(Hero * initHero){
 	downPress = false;
 	leftPress = false;
 	rightPress = false;
+	moving = false;
 	currentAnimation = IDLE_RIGHT;
 }
 
@@ -72,10 +74,27 @@ void Player::update(float delta){
 	// proccess any key events
 	processKeyEvents();
     // handle player movement
-	if (moveUp) { hero->move(0, delta); }
-	if (moveDown) { hero->move(2, delta); }
-	if (moveLeft) { hero->move(3, delta); }
-	if (moveRight) { hero->move(1, delta); }
+	if (moving) {
+		if (faceUp) { 
+			hero->move(0, delta); 
+			hero->playAnimation(6);
+		}
+		if (faceDown) { 
+			hero->move(2, delta); 
+			hero->playAnimation(7);
+		}
+		if (faceLeft) { 
+			hero->move(3, delta);
+			hero->playAnimation(5);
+		}
+		if (faceRight) { 
+			hero->move(1, delta);
+			hero->playAnimation(4);
+		}
+	}
+	else {
+		setAnimationToIdle();
+	}
 }
 
 /**
@@ -137,34 +156,36 @@ void Player::processKeyEvents() {
 	// TODO: fix bug where pressing 3 keys and then removing 1 causes movement
 	//		 to keep going in original direction
 	// updates movement flags if only 1 arrow key is pressed
-	if (!upPress) { moveUp = false; }
-	if (!downPress) { moveDown = false; }
-	if (!leftPress) { moveLeft = false; }
-	if (!rightPress) { moveRight = false; }
-	if (upPress && !downPress && !leftPress && !rightPress) {
-		moveUp = true, moveDown = false, moveLeft = false, moveRight =false;
-	}
-	else if (!upPress && downPress && !leftPress && !rightPress) {
-		moveUp = false, moveDown = true, moveLeft = false, moveRight = false;
-	}
-	else if (!upPress && !downPress && leftPress && !rightPress) {
-		moveUp = false, moveDown = false, moveLeft = true, moveRight = false;
-	}
-	else if (!upPress && !downPress && !leftPress && rightPress) {
-		moveUp = false, moveDown = false, moveLeft = false, moveRight = true;
-	}
-	if (!upPress && !downPress && !rightPress && !leftPress) {
-		moveUp = false, moveDown = false, moveLeft = false, moveRight = false;
-	}
+	if (upPress && !faceUp) { faceUp = true, faceDown = false, faceLeft = false, faceRight = false; }
+	if (downPress && !faceDown) { faceUp = false, faceDown = true, faceLeft = false, faceRight = false; }
+	if (leftPress && !faceLeft) { faceUp = false, faceDown = false, faceLeft = true, faceRight = false; }
+	if (rightPress && !faceRight) { faceUp = false, faceDown = false, faceLeft = false, faceRight = true; }
+	if (upPress || downPress || leftPress || rightPress) { moving = true; }
+	else { moving = false; }
 }
 
 /**
  *	Resets the player animation state to idle in the right direction depending on current state
  */
 void Player::setAnimationToIdle() {
-	if (moveRight) { currentAnimation = IDLE_RIGHT; }
-	else if (moveLeft) { currentAnimation = IDLE_LEFT; }
-	else if (moveUp) { currentAnimation = IDLE_UP; }
-	else if (moveDown) { currentAnimation = IDLE_DOWN; }
-	else { currentAnimation = IDLE_DOWN; }
+	if (faceRight) { 
+		currentAnimation = IDLE_RIGHT; 
+		hero->playAnimation(0);
+	}
+	else if (faceLeft) { 
+		currentAnimation = IDLE_LEFT; 
+		hero->playAnimation(1);
+	}
+	else if (faceUp) { 
+		currentAnimation = IDLE_UP; 
+		hero->playAnimation(2);
+	}
+	else if (faceDown) { 
+		currentAnimation = IDLE_DOWN; 
+		hero->playAnimation(3);
+	}
+	else { 
+		currentAnimation = IDLE_DOWN; 
+		hero->playAnimation(0);
+	}
 }

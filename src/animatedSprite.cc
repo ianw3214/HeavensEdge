@@ -26,6 +26,14 @@ void AnimatedSprite::setAnimationData(std::vector<int> inputData){
 }
 
 /**
+ * Plays the animation associated with the row of the vector/spritesheet
+ * @param row The row of animation to play
+ */
+void AnimatedSprite::playAnimation(int row) {
+	currentAnim = row;
+}
+
+/**
  * Updates the animated sprite
  * @param delta Difference in time between each update call
  */
@@ -33,7 +41,7 @@ void AnimatedSprite::update(float delta){
     deltaTime += delta;
     // TODO: customize update frame rate
     // Updates the animation frame if desired time has passed
-    if(deltaTime >= 0.33f){
+    if(deltaTime >= 0.03f){
         currentFrame++;
         // resets animation if end is reached
         if(currentFrame >= animData.at(currentAnim)){
@@ -67,6 +75,6 @@ void AnimatedSprite::render(SDL_Surface* display, SDL_Rect camera){
 void AnimatedSprite::updateBlitRect(){
     int xPos = currentFrame % spriteSheetWidth;
     // round down for y position divided by sprite sheet width
-    int yPos = static_cast<int>(currentFrame/spriteSheetWidth);
+	int yPos = currentAnim;
     blitRect = {tileWidth * xPos, tileHeight * yPos, tileWidth, tileHeight};
 }
