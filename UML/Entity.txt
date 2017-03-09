@@ -1,0 +1,40 @@
+[<abstract>GameObject|
+|
++ update(float): void
++ render(SDL_Surface, SDL_Rect): void
+]
+
+[<abstract>Entity|
+- health : int
+- maxHealth : int
+- dead: bool
+- entities: std::vector<*Entity>
+- type: ENUM | int
+|
++ takeDamage(int): void
+]
+
+[Example Entity|
+|
++ attack() : void
+]
+
+[<note>Entity Notes|
+Entities store a pointer to the vector of Entity pointers
+Attacks can be implemented using the vector of Entity pointers
+Stores a type using ENUM(ints)
+Attacks against certain enemies can be used using the TYPE enum
+]
+
+[<note>Example Entity Notes|
+The example entity could be of type PLAYER for example
+When ATTACK is called, it make an SDL_Rect represening the attack
+It then checks through all the vector elements for ENEMY types
+If an enemy is found, check for collisions from the attack and enemy
+If a collision occurs, use the takeDamage function from the entity
+]
+
+[GameObject] <- [Entity]
+[Entity] -- [Entity Notes]
+[Example Entity] -> [Entity]
+[Example Entity] -- [Example Entity Notes]

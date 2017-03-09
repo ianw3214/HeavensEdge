@@ -6,7 +6,7 @@
 
 #include <string>
 
-#include "entity.h"
+#include "gameObject.h"
 
 /**
  * Base sprite class
@@ -14,7 +14,7 @@
  * All entities in the game that have a visual representation
  * should be children of the sprite class
  */
-class Sprite : public Entity{
+class Sprite : public GameObject{
 
 public:
     Sprite(std::string);

@@ -18,6 +18,8 @@ public:
 
     AnimatedSprite(std::string, int, int, int, bool);
     void setAnimationData(std::vector<int>);
+	int getTileWidth();
+	int getTileHeight();
 
 	void playAnimation(int);
 

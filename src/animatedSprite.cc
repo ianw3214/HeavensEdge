@@ -25,6 +25,10 @@ void AnimatedSprite::setAnimationData(std::vector<int> inputData){
     currentAnim = 0;
 }
 
+// getter/setter for tile width/height
+int AnimatedSprite::getTileWidth() { return tileWidth; }
+int AnimatedSprite::getTileHeight() { return tileHeight; }
+
 /**
  * Plays the animation associated with the row of the vector/spritesheet
  * @param row The row of animation to play

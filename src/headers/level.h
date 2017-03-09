@@ -8,7 +8,7 @@
 #include <vector>
 
 #include "state.h"
-#include "entity.h"
+#include "gameObject.h"
 #include "map.h"
 #include "player.h"
 
@@ -29,7 +29,7 @@ public:
     void render(SDL_Surface*);
 private:
     Map* map;
-    std::vector<Entity*> entities;
+    std::vector<GameObject*> entities;
     Player* player;
 
 	int camSpeed;

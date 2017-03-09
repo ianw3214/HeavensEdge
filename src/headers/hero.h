@@ -7,11 +7,12 @@
 #include <vector>
 
 #include "animatedSprite.h"
+#include "entity.h"
 
 /**
  * Base hero class representing entities controllable by the player
  */
-class Hero : public AnimatedSprite{
+class Hero : public Entity{
 
 public:
     Hero(int, int);
@@ -20,16 +21,25 @@ public:
 	void setCollisionMap(std::vector<int>);
 	void setLevelWidth(int);
 	void setTileSize(int);
+	void setPos(int, int);
+	int getX();
+	int getY();
 
     void update(float);
     void render(SDL_Surface*, SDL_Rect);
 
+	// methods to interact with animated sprite from outside
+	void playAnimation(int);
+
     void move(int, float);
 protected:
+	int x, y;
     int health;
     int speed;
 
 	std::vector<int> collisionMap;
 	int levelWidth, tileSize;
 	bool checkCollision(int, int);
+
+	AnimatedSprite * sprite;
 };

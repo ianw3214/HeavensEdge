@@ -7,12 +7,12 @@
 #include <vector>
 
 #include "hero.h"
-#include "entity.h"
+#include "gameObject.h"
 
 /**
  * Player controller class that controls heros
  */
-class Player : public Entity{
+class Player : public GameObject{
 
 public:
     Player();
