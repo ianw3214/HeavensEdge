@@ -5,15 +5,13 @@
 
 /**
  * Default constructor with initial positions
+ *
+ * Calls the Entity constructor with 20 base health
  */
-Hero::Hero(int initX, int initY) {
+Hero::Hero(int initX, int initY) : Entity(20), x(initX), y(initY), speed(300){
     // TODO: get default variables from input/global variable/something like that
 	sprite = new AnimatedSprite("assets/hero.png", 64, 64, 10, false);
     sprite->setAnimationData({10, 10, 10, 10, 10, 10, 10, 10});
-    x = initX;
-    y = initY;
-    health = 5;
-    speed = 300;
 }
 
 // getter/setter functions
@@ -58,13 +56,15 @@ void Hero::playAnimation(int anim) {
  */
 void Hero::move(int direction, float delta){
     // 0 - up, 1 - right, 2 - down, 3 - left
+	// get the amount of units that the hero should move this update call
 	int units = static_cast<int>(speed*delta);
 	int newX = x;
 	int newY = y;
+	// calculate the new position
 	if (direction == 0) { newY -= units; }
-	if (direction == 1) { newX += units; }
-	if (direction == 2) { newY += units; }
-	if (direction == 3) { newX -= units; }
+	else if (direction == 1) { newX += units; }
+	else if (direction == 2) { newY += units; }
+	else if (direction == 3) { newX -= units; }
 	// if a collision occured, check for a small margin
 	if (checkCollision(newX, newY)) {
 		// check if the margin is small enough for the player to be adjusted
@@ -74,38 +74,31 @@ void Hero::move(int direction, float delta){
 			// if the distance is small/big enough, then it is close to a tile
 			if (key < 15 || key > tileSize - 15) {
 				// find the target x position to adjust towards
-				int tileX = static_cast<int>(x / tileSize)*tileSize;
-				int difference = std::abs(x - tileX);
+				int tileX = static_cast<int>(x / tileSize);
+				int difference = std::abs(x - tileX*tileSize);
 				// if the difference too big, then we took the wrong tile to adjust to
-				if (difference > 15) {
-					tileX += tileSize;
-				}
+				if (difference > 15) { tileX += 1; }
 				// find the coordinates of the target tile
-				int tileNumX = tileX / 64;
-				int tileNumY = newY / 64;
+				int tileNumY = newY / tileSize;
 				tileNumY += direction == 2 ? 1 : 0;
 				// get the index of the target tile
-				unsigned int target = tileNumY * levelWidth + tileNumX;
+				unsigned int target = tileNumY * levelWidth + tileX;
 				// if the index is valid, check the collision map
 				if (target >= 0 || target < collisionMap.size()) {
 					// if the target tile is valid, align the x position
 					if (collisionMap.at(target) == 0) {
-						x = tileX;
+						x = tileX * tileSize;
 						y = newY;
 					}
 					// otherwise, bring the player to the edge
 					else {
-						newY = (y / tileSize) * tileSize;
-						newY += std::abs(newY - y) > tileSize/2? tileSize : 0;
-						y = newY;
+						moveToEdge(0);
 					}
 				}
 			}
 			// if the distance isn't small enough, bring the player to the edge
 			else {
-				newY = (y / tileSize) * tileSize;
-				newY += std::abs(newY - y) > tileSize/2 ? tileSize : 0;
-				y = newY;
+				moveToEdge(0);
 			}
 		}else if (direction == 1 || direction == 3) {
 			// get the distance from the y position a grid y position
@@ -113,37 +106,30 @@ void Hero::move(int direction, float delta){
 			// if the distance is small/big enough, then it is close to a tile
 			if (key < 15 || key > tileSize - 15) {
 				// find the target y position to adjust towards
-				int tileY = static_cast<int>(y / tileSize)*tileSize;
-				int difference = std::abs(y - tileY);
+				int tileY = static_cast<int>(y / tileSize);
+				int difference = std::abs(y - tileY * tileSize);
 				// if the difference too big, then we took the wrong tile to adjust to
-				if (difference > 15) {
-					tileY += tileSize;
-				}
+				if (difference > 15) { tileY += 1; }
 				// find the coordinates of the target tile
-				int tileNumX = newX / 64;
-				int tileNumY = tileY / 64;
+				int tileNumX = newX / tileSize;
 				tileNumX += direction == 1 ? 1 : 0;
 				// get the index of the target tile
-				unsigned int target = tileNumY * levelWidth + tileNumX;
+				unsigned int target = tileY * levelWidth + tileNumX;
 				// if the index is valid, check the collision map
 				if (target >= 0 || target < collisionMap.size()) {
 					// if the target tile is valid, align the y position
 					if (collisionMap.at(target) == 0) {
-						y = tileY;
+						y = tileY * tileSize;
 					}
 					// otherwise, bring the player to the edge
 					else {
-						newX = (x / tileSize) * tileSize;
-						newX += std::abs(newX - x) > tileSize / 2 ? tileSize : 0;
-						x = newX;
+						moveToEdge(1);
 					}
 				}
 			}
 			// if the distance isn't small enough, bring the player to the edge
 			else {
-				newX = (x / tileSize) * tileSize;
-				newX += std::abs(newX - x) > tileSize / 2 ? tileSize : 0;
-				x = newX;
+				moveToEdge(1);
 			}
 		}
 	}
@@ -159,13 +145,28 @@ void Hero::move(int direction, float delta){
  */
 bool Hero::checkCollision(int xpos, int ypos) {
 	// TODO: check if player goes out of the map
-	// TODO: optimize collision checking by shrinking checking range
-	for (unsigned int i = 0; i < collisionMap.size(); i++) {
+	std::vector<int> checkIndices;			// vector to hold indices of collision map to check
+	// get the players left and up most tile box
+	int tileX = static_cast<int>(xpos / tileSize);
+	int tileY = static_cast<int>(ypos / tileSize);
+	// we only have to check 4 boxes because the player spans at most 4 tiles
+	// since x and y round down, we know we only have to get the right and bottom tiles
+	int targetIndex = tileY * levelWidth + tileX;
+	checkIndices.push_back(targetIndex);	// add the current tile always
+	// if we aren't at the right most side of the level, add the tile 1 to the right
+	if(tileX != levelWidth-1){ checkIndices.push_back(targetIndex + 1); }
+	// if we aren't at the bottom, add the bottom 2 tiles
+	if ((tileY + 1) * levelWidth < collisionMap.size()) {
+		checkIndices.push_back(targetIndex + levelWidth);
+		checkIndices.push_back(targetIndex + levelWidth + 1);
+	}
+	for (unsigned int i = 0; i < checkIndices.size(); i++) {
+		int collisionIndex = checkIndices.at(i);
 		// for now, check every single tile for a collision
-		if (collisionMap.at(i) == 1) {	// 1 means it is a collidable tile
+		if (collisionMap.at(collisionIndex) == 1) {	// 1 means it is a collidable tile
 			// check the coords of the tile against player position
-			int targetX = (i % levelWidth) * tileSize;
-			int targetY = static_cast<int>(i / levelWidth) * tileSize;
+			int targetX = (collisionIndex % levelWidth) * tileSize;
+			int targetY = static_cast<int>(collisionIndex / levelWidth) * tileSize;
 			// first check x coordinates
 			if (xpos + sprite->getTileWidth() > targetX && xpos < (targetX + tileSize)) {
 				// check y coordinates
@@ -178,4 +179,22 @@ bool Hero::checkCollision(int xpos, int ypos) {
 	}
 	// return false if no collision happened
 	return false;
+}
+
+/**
+ * Moves the hero to the edge of a tile 
+ * @param key The axis to move the player in
+ * 0 - x, 1 - y
+ */
+void Hero::moveToEdge(int key) {
+	if (key == 0) {
+		int newY = (y / tileSize) * tileSize;
+		newY += std::abs(newY - y) > tileSize / 2 ? tileSize : 0;
+		y = newY;
+	}
+	else {
+		int newX = (x / tileSize) * tileSize;
+		newX += std::abs(newX - x) > tileSize / 2 ? tileSize : 0;
+		x = newX;
+	}
 }

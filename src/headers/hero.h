@@ -35,12 +35,12 @@ public:
     void move(int, float);
 protected:
 	int x, y;
-    int health;
     int speed;
 
 	std::vector<int> collisionMap;
 	int levelWidth, tileSize;
 	bool checkCollision(int, int);
+	void moveToEdge(int);
 
 	AnimatedSprite * sprite;
 };
