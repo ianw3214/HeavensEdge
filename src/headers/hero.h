@@ -16,6 +16,7 @@ class Hero : public Entity{
 
 public:
     Hero(int, int);
+	virtual ~Hero() {};
 
 	// getter/setter functions
 	void setCollisionMap(std::vector<int>);
@@ -25,8 +26,8 @@ public:
 	int getX();
 	int getY();
 
-    void update(float);
-    void render(SDL_Surface*, SDL_Rect);
+    virtual void update(float);
+    virtual void render(SDL_Surface*, SDL_Rect);
 
 	// methods to interact with animated sprite from outside
 	void playAnimation(int);

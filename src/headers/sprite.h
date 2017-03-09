@@ -20,6 +20,7 @@ public:
     Sprite(std::string);
     Sprite(std::string, int, int);
     Sprite(std::string, int, int, int, int);
+	virtual ~Sprite() {};
 
     // getter/setter functions
     virtual int getX() const;
