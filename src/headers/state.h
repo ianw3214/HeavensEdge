@@ -12,7 +12,7 @@ class State{
 
 public:
     State();
-	virtual ~State();
+	virtual ~State() {};
 
     virtual void init();
     virtual void exit();

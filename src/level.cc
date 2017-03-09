@@ -9,7 +9,7 @@ Level::Level(){
 }
 
 // load a level and its data from a file
-Level::Level(std::string filePath){
+Level::Level(std::string filePath) {
     map = new Map("levels/test.txt");
 	// load the collision data to the player
     player = new Player();
@@ -20,7 +20,7 @@ Level::Level(std::string filePath){
 /**
  * Initialization function of level
  */
-void Level::init(){
+void Level::init() {
     // TODO: initialize camera from NOT hard coded code
     camera.w = 1280;
     camera.h = 720;
@@ -35,7 +35,7 @@ void Level::init(){
 /**
  * Exit function of level
  */
-void Level::exit(){
+void Level::exit() {
     delete map;
     delete player;
     for(unsigned int i = 0; i < entities.size(); i++){
@@ -47,7 +47,7 @@ void Level::exit(){
  * Level event handler
  * @param e Event to be processed
  */
-void Level::handleEvents(SDL_Event e){
+void Level::handleEvents(SDL_Event e) {
     player->handleEvents(e);
 }
 
@@ -55,7 +55,7 @@ void Level::handleEvents(SDL_Event e){
  * Updates the level game state
  * @param delta Difference in time between last update call and current
  */
-void Level::update(float delta){
+void Level::update(float delta) {
     // update the map first
     map->update(delta);
 	updateCamera();
@@ -69,7 +69,7 @@ void Level::update(float delta){
  * Renders the level
  * @param display The SDL_Surface associated with the game window
  */
-void Level::render(SDL_Surface* display){
+void Level::render(SDL_Surface* display) {
     map->render(display, camera);
     for(unsigned int i = 0; i < entities.size(); i++){
         entities.at(i)->render(display, camera);
