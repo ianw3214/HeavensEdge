@@ -40,8 +40,6 @@ protected:
     int x, y;
     int collisionWidth, collisionHeight;
     SDL_Rect collisionRect;
-
-    bool REMOVE;
 private:
     void init(int x, int y, int w, int h);
     void loadImage(std::string);

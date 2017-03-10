@@ -1,5 +1,7 @@
 #include "entity.h"
 
+#include <iostream>
+
 // default constructor
 Entity::Entity() {
 	// set default values
@@ -39,6 +41,7 @@ void Entity::takeDamage(int dmg) {
 	health -= dmg;
 	// set the player to dead if health falls below 0
 	if (health <= 0) { dead = true; }
+	std::cout << "HEALTH: " << health << std::endl;		// DEBUG CODE
 }
 
 /**

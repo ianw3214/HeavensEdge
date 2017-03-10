@@ -49,7 +49,9 @@ void Hero::key1Attack() {
 	if (!entityList) { return; }
 	for (int i = 0; i < entityList->size(); i++) {
 		if (entityList->at(i)->getType() == 2) {
-			std::cout << "there's an enemy!!" << std::endl;
+			// cast the type to an entity to access it's functions
+			Entity * temp = dynamic_cast<Entity*>(entityList->at(i));
+			temp->takeDamage(5);
 		}
 	}
 }

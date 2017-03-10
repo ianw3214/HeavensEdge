@@ -14,6 +14,9 @@ Enemy::Enemy(int initX, int initY) : Entity(10, 2), x(initX), y(initY) {
 void Enemy::update(float delta) {
 	sprite->update(delta);
 	sprite->setPos(x, y);
+	if (health <= 0) {
+		REMOVE = true;
+	}
 }
 
 void Enemy::render(SDL_Surface * display, SDL_Rect camera) {

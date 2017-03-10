@@ -69,6 +69,14 @@ void Level::update(float delta) {
     for(unsigned int i = 0; i < entities.size(); i++){
         entities.at(i)->update(delta);
     }
+	// check if the entities should be removed
+	for (int i = entities.size() - 1; i>=0 ; i--) {
+		if (entities.at(i)->shouldRemove()) {
+			GameObject * temp = entities.at(i);
+			entities.erase(entities.begin() + i);
+			delete temp;
+		}
+	}
 }
 
 /**

@@ -12,6 +12,7 @@ public:
 
 	void setType(int);
 	int getType();
+	bool shouldRemove();
 
 	virtual ~GameObject() {};
 	virtual void render(SDL_Surface*, SDL_Rect) = 0;
@@ -22,4 +23,5 @@ protected:
 	//		- 1 stands for hero type
 	//		- 2 stands for enemy types
 	int TYPE;
+	bool REMOVE;
 };
