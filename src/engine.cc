@@ -54,7 +54,10 @@ bool Engine::init(State* initialState){
  * Cleans up SDL subsystems
  */
 void Engine::cleanUp(){
-    // // Destroy the window
+	// free allocated memory
+	delete currentState;
+
+    // Destroy the window
 	SDL_DestroyWindow(gWindow);
 	gWindow = nullptr;
 
