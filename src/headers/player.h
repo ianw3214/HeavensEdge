@@ -21,6 +21,7 @@ public:
 
 	// getter/setter functions
 	void setCollisionData(std::vector<int>, int, int);
+	void setHeroEntities(std::vector<GameObject*>*);
 	void setPos(int, int);
 	int getCenterX() const;
 	int getCenterY() const;

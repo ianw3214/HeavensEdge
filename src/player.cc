@@ -53,6 +53,7 @@ void Player::setCollisionData(std::vector<int> inputMap, int width, int tileSize
 	hero->setLevelWidth(width);
 	hero->setTileSize(tileSize);
 }
+void Player::setHeroEntities(std::vector<GameObject*>* input) { hero->setEntities(input); }
 void Player::setPos(int newX, int newY) {
 	hero->setPos(newX, newY);
 }
@@ -151,6 +152,9 @@ void Player::handleKeyPress(SDL_Keycode key){
         case SDLK_RIGHT:{
             rightPress= true;
         } break;
+		case SDLK_x: {
+			hero->key1Attack();
+		}
     }
 }
 

@@ -29,6 +29,8 @@ public:
     virtual void update(float);
     virtual void render(SDL_Surface*, SDL_Rect);
 
+	virtual void key1Attack();
+
 	// methods to interact with animated sprite from outside
 	void playAnimation(int);
 

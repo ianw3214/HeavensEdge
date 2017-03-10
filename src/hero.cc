@@ -8,7 +8,7 @@
  *
  * Calls the Entity constructor with 20 base health
  */
-Hero::Hero(int initX, int initY) : Entity(20), x(initX), y(initY), speed(300){
+Hero::Hero(int initX, int initY) : Entity(20, 1), x(initX), y(initY), speed(300){
     // TODO: get default variables from input/global variable/something like that
 	sprite = new AnimatedSprite("assets/hero.png", 64, 64, 10, false);
     sprite->setAnimationData({10, 10, 10, 10, 10, 10, 10, 10});
@@ -39,6 +39,19 @@ void Hero::update(float delta){
  */
 void Hero::render(SDL_Surface * display, SDL_Rect camera){
     sprite->render(display, camera);
+}
+
+/**
+ * Performs the attack associated with the first attack key
+ */
+void Hero::key1Attack() {
+	// loop through all entities and deal damage if enemy type
+	if (!entityList) { return; }
+	for (int i = 0; i < entityList->size(); i++) {
+		if (entityList->at(i)->getType() == 2) {
+			std::cout << "there's an enemy!!" << std::endl;
+		}
+	}
 }
 
 /**

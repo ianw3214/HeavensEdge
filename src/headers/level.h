@@ -11,6 +11,7 @@
 #include "gameObject.h"
 #include "map.h"
 #include "player.h"
+#include "enemy.h"
 
 /**
  * Level game state

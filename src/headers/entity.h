@@ -19,18 +19,13 @@ public:
 	// getter/setters
 	void setEntities(std::vector<GameObject*>*);
 	bool isDead();
-	void setType(int);
-	int getType();
 
 	void takeDamage(int);
 	void heal(int);
 
-private:
+protected:
 	int health, maxHealth;
 	bool dead;
 	std::vector<GameObject*>* entityList;
 
-	// TYPE is represented by ints for now, eventually want to move to ENUMS
-	//		- 0 stands for generic types
-	int TYPE;
 };

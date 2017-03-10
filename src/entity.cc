@@ -30,8 +30,6 @@ Entity::Entity(int initHealth, int thisType) {
 // getter/setter functions
 void Entity::setEntities(std::vector<GameObject*>* input) { entityList = input; }
 bool Entity::isDead() { return dead; }
-void Entity::setType(int inputType) { TYPE = inputType; }
-int Entity::getType() { return TYPE; }
 
 /**
  * Decreases health of the entity

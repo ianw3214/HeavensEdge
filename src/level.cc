@@ -13,8 +13,14 @@ Level::Level(std::string filePath) {
     map = new Map("levels/test.txt");
 	// load the collision data to the player
     player = new Player();
+	player->setHeroEntities(&entities);
 	player->setCollisionData(map->getCollisionMap(), map->getWidth(), map->getTileSize());
     entities.push_back(player);
+	// temporarily set new enemies
+	Enemy * temp = new Enemy(100, 100);
+	entities.push_back(temp);
+	temp = new Enemy(200, 200);
+	entities.push_back(temp);
 }
 
 /**
