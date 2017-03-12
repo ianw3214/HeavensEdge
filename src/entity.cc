@@ -24,14 +24,30 @@ Entity::Entity(int initHealth) {
 Entity::Entity(int initHealth, int thisType) {
 	maxHealth = initHealth;
 	health = initHealth;
+	TYPE = thisType;
 	// set default values
 	dead = false;
+}
+
+// constructor with health, type and positions set
+Entity::Entity(int initHealth, int thisType, int initX, int initY) {
+	maxHealth = initHealth;
+	health = initHealth;
+	x = initX;
+	y = initY;
 	TYPE = thisType;
+	// set default values
+	dead = false;
 }
 
 // getter/setter functions
 void Entity::setEntities(std::vector<GameObject*>* input) { entityList = input; }
-bool Entity::isDead() { return dead; }
+bool Entity::isDead() const { return dead; }
+int Entity::getX() const { return x; }
+int Entity::getY() const { return y; }
+int Entity::getSpriteWidth() const { return sprite->getTileWidth(); }
+int Entity::getSpriteHeight() const { return sprite->getTileHeight(); }
+SDL_Rect Entity::getCollisionRect() const { return sprite->getCollisionRect(); }
 
 /**
  * Decreases health of the entity

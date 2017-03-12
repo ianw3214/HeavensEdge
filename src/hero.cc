@@ -8,7 +8,7 @@
  *
  * Calls the Entity constructor with 20 base health
  */
-Hero::Hero(int initX, int initY) : Entity(20, 1), x(initX), y(initY), speed(300){
+Hero::Hero(int initX, int initY) : Entity(20, 1, initX, initY), speed(300){
     // TODO: get default variables from input/global variable/something like that
 	sprite = new AnimatedSprite("assets/hero.png", 64, 64, 10, false);
     sprite->setAnimationData({10, 10, 10, 10, 10, 10, 10, 10});
@@ -47,11 +47,18 @@ void Hero::render(SDL_Surface * display, SDL_Rect camera){
 void Hero::key1Attack() {
 	// loop through all entities and deal damage if enemy type
 	if (!entityList) { return; }
-	for (int i = 0; i < entityList->size(); i++) {
+	for (unsigned int i = 0; i < entityList->size(); i++) {
 		if (entityList->at(i)->getType() == 2) {
 			// cast the type to an entity to access it's functions
 			Entity * temp = dynamic_cast<Entity*>(entityList->at(i));
-			temp->takeDamage(5);
+			// get the enemy collision Rect
+			SDL_Rect checkBox = temp->getCollisionRect();
+			// check for collisions
+			if (checkBox.x <= x + sprite->getTileWidth() && checkBox.x + checkBox.w >= x) {
+				if (checkBox.y <= y + sprite->getTileHeight() && checkBox.y + checkBox.h >= y) {
+					temp->takeDamage(5);
+				}
+			}
 		}
 	}
 }

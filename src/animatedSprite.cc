@@ -42,6 +42,7 @@ void AnimatedSprite::playAnimation(int row) {
  * @param delta Difference in time between each update call
  */
 void AnimatedSprite::update(float delta){
+	Sprite::update(delta);
     deltaTime += delta;
     // TODO: customize update frame rate
     // Updates the animation frame if desired time has passed

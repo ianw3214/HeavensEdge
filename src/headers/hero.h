@@ -6,7 +6,6 @@
 
 #include <vector>
 
-#include "animatedSprite.h"
 #include "entity.h"
 
 /**
@@ -36,13 +35,10 @@ public:
 
     void move(int, float);
 protected:
-	int x, y;
     int speed;
 
 	std::vector<int> collisionMap;
 	int levelWidth, tileSize;
 	bool checkCollision(int, int);
 	void moveToEdge(int);
-
-	AnimatedSprite * sprite;
 };
