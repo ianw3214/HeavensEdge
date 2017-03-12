@@ -54,6 +54,9 @@ void Level::exit() {
  * @param e Event to be processed
  */
 void Level::handleEvents(SDL_Event e) {
+	if (e.type == SDL_KEYDOWN) {
+		handleKeyPress(e.key.keysym.sym);
+	}
     player->handleEvents(e);
 }
 
@@ -107,5 +110,18 @@ void Level::updateCamera() {
 	if (std::abs(static_cast<double>(targetY - camera.y)) > camMargin) {
 		if (targetY > camera.y) { camera.y += camSpeed; }
 		else { camera.y -= camSpeed; }
+	}
+}
+
+/**
+ * Processes Key down events from the event queue
+ * @param key The key that was pressed
+ */
+void Level::handleKeyPress(SDL_Keycode key) {
+	if (key == SDLK_f) {
+		Enemy * temp = new Enemy(100, 100);
+		entities.push_back(temp);
+		temp = new Enemy(200, 200);
+		entities.push_back(temp);
 	}
 }
