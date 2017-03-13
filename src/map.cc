@@ -22,10 +22,10 @@ Map::Map(std::string filePath){
  * Destructor for map class
  */
 Map::~Map(){
-    // clean up memory for all tile pointers
-    for(int i = 0; i < tileMap.size(); i++){
-        delete tileMap.at(i);
-    }
+	for (std::map<int, Tile*>::iterator itr = tileMap.begin(); itr != tileMap.end(); itr++)
+	{
+		delete itr->second;
+	}
 }
 
 // getter/setter functions

@@ -14,8 +14,8 @@ int main(int argc, char* argv[]){
     }
     while(game.isRunning()){
         game.handleEvents();
-        game.update();
         game.render();
+		game.update();
     }
 
     game.cleanUp();

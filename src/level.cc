@@ -32,6 +32,7 @@ void Level::init() {
     camera.h = 720;
 	camSpeed = 2;
 	camMargin = 30;
+	pause = false;
 	player->setPos(map->getStartingX()*map->getTileSize(), map->getStartingY()*map->getTileSize());
 	// set initial camera position to player position
 	camera.x = player->getCenterX() - camera.w / 2;
@@ -42,10 +43,12 @@ void Level::init() {
  * Exit function of level
  */
 void Level::exit() {
-    delete map;
-    delete player;
-    for(unsigned int i = 0; i < entities.size(); i++){
-        delete entities.at(i);
+	delete map;
+	// delete all entities in the entities list
+    for(int i = entities.size() - 1; i >= 0; i--){
+		GameObject * temp = entities.at(i);
+		entities.erase(entities.begin() + i);
+		delete temp;
     }
 }
 
@@ -65,19 +68,22 @@ void Level::handleEvents(SDL_Event e) {
  * @param delta Difference in time between last update call and current
  */
 void Level::update(float delta) {
-    // update the map first
-    map->update(delta);
-	updateCamera();
-	// update each entity in the level
-    for(unsigned int i = 0; i < entities.size(); i++){
-        entities.at(i)->update(delta);
-    }
-	// check if the entities should be removed
-	for (int i = entities.size() - 1; i>=0 ; i--) {
-		if (entities.at(i)->shouldRemove()) {
-			GameObject * temp = entities.at(i);
-			entities.erase(entities.begin() + i);
-			delete temp;
+    // update the game if it is not paused
+	if (!pause) {
+		// update the map first
+		map->update(delta);
+		updateCamera();
+		// update each entity in the level
+		for (unsigned int i = 0; i < entities.size(); i++) {
+			entities.at(i)->update(delta);
+		}
+		// check if the entities should be removed
+		for (int i = entities.size() - 1; i >= 0; i--) {
+			if (entities.at(i)->shouldRemove()) {
+				GameObject * temp = entities.at(i);
+				entities.erase(entities.begin() + i);
+				delete temp;
+			}
 		}
 	}
 }
@@ -118,10 +124,20 @@ void Level::updateCamera() {
  * @param key The key that was pressed
  */
 void Level::handleKeyPress(SDL_Keycode key) {
+	// f key to spawn testing enemies
 	if (key == SDLK_f) {
 		Enemy * temp = new Enemy(100, 100);
 		entities.push_back(temp);
 		temp = new Enemy(200, 200);
 		entities.push_back(temp);
+	}
+	// space key to pause the game
+	if (key == SDLK_SPACE) {
+		pause = !pause;
+	}
+	// escape key to quit the game
+	if (key == SDLK_ESCAPE) {
+		nextState = nullptr;
+		quit = true;
 	}
 }

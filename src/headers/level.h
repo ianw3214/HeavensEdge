@@ -39,4 +39,6 @@ private:
     SDL_Rect camera;
 	void updateCamera();
 	void handleKeyPress(SDL_Keycode);
+
+	bool pause;
 };
