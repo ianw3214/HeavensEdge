@@ -8,6 +8,9 @@ View the [devlog](devlog/list.md).
 
 ## Devmap
 
+<details>
+  <summary>Core Engine</summary>
+
   - [x] Create a window
   - [x] Core engine class
   - [x] Game states
@@ -18,8 +21,10 @@ View the [devlog](devlog/list.md).
   - [x] Player class
   - [x] Camera movement
   - [x] tile collision
-  - [ ] basic enemy
-  - [ ] player animations
-  - [ ] player attacks
+  - [x] basic enemy
+  - [x] player animations
+  - [x] player attacks
   - [ ] menu state
-  - [ ] pause functionalities
+  - [x] pause functionalities
+
+</details>
