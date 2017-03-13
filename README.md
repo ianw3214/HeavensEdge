@@ -2,6 +2,8 @@
 
 ***
 
+Heaven's Edge is a RPG hack'n'slash game made in C++ with SDL2.
+
 View the [devlog](devlog/list.md).
 
 ***
@@ -20,11 +22,42 @@ View the [devlog](devlog/list.md).
   - [x] Tile map loading from file
   - [x] Player class
   - [x] Camera movement
-  - [x] tile collision
-  - [x] basic enemy
-  - [x] player animations
-  - [x] player attacks
-  - [ ] menu state
-  - [x] pause functionalities
+  - [x] Tile collision
+  - [x] Basic enemy
+  - [x] Player animations
+  - [x] Player attacks
+  - [x] Pause functionalities
+  - [ ] Menu state
 
 </details>
+
+## Secondary Features
+
+  - [ ] Dash
+  - [ ] Dash attack
+  - [ ] Change window size
+  - [ ] Basic enemy attack
+  - [ ] Random enemy movement
+  - [ ] Particle effects
+  - [ ] Audio loader
+  - [ ] More complicated collision boxes
+
+## Art
+
+  - [ ] Hero idle
+  - [ ] Hero movement
+  - [ ] Hero basic attack
+  - [ ] Enemy idle
+  - [ ] Enemy attack
+  - [ ] Starting tileset
+
+## Music / SFX
+
+  - [ ] Menu background track
+  - [ ] Game background track
+  - [ ] Combat music
+  - [ ] Menu sound effect
+  - [ ] Hero footsteps
+  - [ ] Hero attack sound
+  = [ ] Hero damage sound
+  - [ ] Enemy damage sound
