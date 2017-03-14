@@ -40,6 +40,7 @@ View the [devlog](devlog/list.md).
   - [ ] Random enemy movement
   - [ ] Particle effects
   - [ ] Audio loader
+  - [ ] Font/Text loading
   - [ ] More complicated collision boxes
 
 ## Art
