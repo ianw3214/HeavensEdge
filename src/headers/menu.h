@@ -6,6 +6,13 @@
 #include "state.h"
 #include "level.h"
 
+struct menuItem{
+	menuItem * previous;
+	menuItem * next;
+	int ID;
+	menuItem(menuItem* a, menuItem* b, int c) : previous(a), next(b), ID(c) {};
+};
+
 class Menu : public State{
 
 public:
@@ -15,6 +22,9 @@ public:
 	void handleEvents(SDL_Event);
 
 private:
+	menuItem * currentMenuItem;
+
 	void handleKeyPress(SDL_Keycode);
+	void select();
 
 };
