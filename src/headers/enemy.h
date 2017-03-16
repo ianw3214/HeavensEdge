@@ -6,6 +6,9 @@
 
 #include "entity.h"
 
+/**
+ * Base enemy class representing any enemy creature
+ */
 class Enemy : public Entity {
 
 public:

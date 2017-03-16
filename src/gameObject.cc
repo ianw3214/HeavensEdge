@@ -1,15 +1,20 @@
 #include "gameObject.h"
 
+/**
+ * Default gameObject constructor
+ *   - sets the type by default to 0
+ */
 GameObject::GameObject() : TYPE(0),  REMOVE(false) {}
 
-void GameObject::setType(int inputType) {
-	TYPE = inputType;
-}
+/**
+ * GameObject contructor with type initialized
+ * @type type Integer representing the gameObject type
+ */
+GameObject::GameObject(int type) : TYPE(type), REMOVE(false) {}
 
-int GameObject::getType() {
-	return TYPE;
-}
+// getter/setter functions for class attributes
+void GameObject::setType(int inputType) { TYPE = inputType; }
 
-bool GameObject::shouldRemove() {
-	return REMOVE;
-}
+int GameObject::getType() { return TYPE; }
+
+bool GameObject::shouldRemove() { return REMOVE; }

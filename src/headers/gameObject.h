@@ -9,6 +9,7 @@ class GameObject {
 
 public:
 	GameObject();
+	GameObject(int);
 
 	void setType(int);
 	int getType();

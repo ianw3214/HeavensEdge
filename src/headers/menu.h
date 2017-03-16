@@ -13,6 +13,9 @@ struct menuItem{
 	menuItem(menuItem* a, menuItem* b, int c) : previous(a), next(b), ID(c) {};
 };
 
+/**
+ * Menu state
+ */
 class Menu : public State{
 
 public:

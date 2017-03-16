@@ -2,6 +2,10 @@
 
 #include <iostream>
 
+/**
+ * The default constructor
+ *   - Initializes menu items
+ */
 Menu::Menu() {
 	// initialize a test menu
 	currentMenuItem = new menuItem(nullptr, nullptr, 1);
@@ -11,12 +15,20 @@ Menu::Menu() {
 	currentMenuItem->next = item2;
 }
 
+/**
+* Level event handler
+* @param event Event to be processed
+*/
 void Menu::handleEvents(SDL_Event event) {
 	if (event.type == SDL_KEYDOWN) {
 		handleKeyPress(event.key.keysym.sym);
 	}
 }
 
+/**
+* Processes Key down events from the event queue
+* @param key The key that was pressed
+*/
 void Menu::handleKeyPress(SDL_Keycode key) {
 	if (key == SDLK_SPACE) {
 		select();
@@ -35,6 +47,9 @@ void Menu::handleKeyPress(SDL_Keycode key) {
 	}
 }
 
+/**
+ * Handles logic when the player presses the select button
+ */
 void Menu::select() {
 	if (currentMenuItem->ID == 1) {
 		nextState = new Level("levels/test.txt");

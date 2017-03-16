@@ -2,40 +2,36 @@
 
 #include <iostream>
 
-// default constructor
-Entity::Entity() {
+// default constructor (type set to 0)
+Entity::Entity() : GameObject() {
 	// set default values
 	maxHealth = 10;
 	health = 10;
 	dead = false;
-	TYPE = 0;		// 0 stands for a generic type
 }
 
 // constructor with health set
-Entity::Entity(int initHealth) {
+Entity::Entity(int initHealth) : GameObject() {
 	maxHealth = initHealth;
 	health = initHealth;
 	// set default values
 	dead = false;
-	TYPE = 0;		// 0 stands for a generic type
 }
 
 // constructor with health and type set
-Entity::Entity(int initHealth, int thisType) {
+Entity::Entity(int initHealth, int thisType) : GameObject(thisType) {
 	maxHealth = initHealth;
 	health = initHealth;
-	TYPE = thisType;
 	// set default values
 	dead = false;
 }
 
 // constructor with health, type and positions set
-Entity::Entity(int initHealth, int thisType, int initX, int initY) {
+Entity::Entity(int initHealth, int thisType, int initX, int initY) : GameObject(thisType) {
 	maxHealth = initHealth;
 	health = initHealth;
 	x = initX;
 	y = initY;
-	TYPE = thisType;
 	// set default values
 	dead = false;
 }

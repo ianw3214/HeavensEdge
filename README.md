@@ -27,7 +27,7 @@ View the [devlog](devlog/list.md).
   - [x] Player animations
   - [x] Player attacks
   - [x] Pause functionalities
-  - [ ] Menu state
+  - [x] Menu state
 
 </details>
 
