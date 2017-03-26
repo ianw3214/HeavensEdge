@@ -153,6 +153,7 @@ void Player::handleKeyPress(SDL_Keycode key){
             rightPress= true;
         } break;
 		case SDLK_x: {
+			// TODO: Change logic so no continous attacks happen
 			hero->key1Attack();
 		}
     }

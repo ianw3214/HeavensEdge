@@ -60,7 +60,10 @@ void Level::handleEvents(SDL_Event e) {
 	if (e.type == SDL_KEYDOWN) {
 		handleKeyPress(e.key.keysym.sym);
 	}
-    player->handleEvents(e);
+	// make sure the level isn't paused when handling player input
+	if (!pause) {
+		player->handleEvents(e);
+	}
 }
 
 /**

@@ -5,6 +5,7 @@
 
 #include "state.h"
 #include "level.h"
+#include "sprite.h"
 
 struct menuItem{
 	menuItem * previous;
@@ -23,9 +24,11 @@ public:
 	~Menu() {};
 
 	void handleEvents(SDL_Event);
+	void render(SDL_Surface*);
 
 private:
 	menuItem * currentMenuItem;
+	Sprite * background;
 
 	void handleKeyPress(SDL_Keycode);
 	void select();

@@ -41,6 +41,16 @@ void Sprite::update(float delta){
 }
 
 /**
+* Renders sprite according to a default camera position
+* @param display SDL_Surface associated with the game window
+*/
+void Sprite::render(SDL_Surface * display) {
+	if (SDL_BlitSurface(img, nullptr, display, nullptr) < 0) {
+		std::cout << "Image unable to blit, error: " << SDL_GetError() << std::endl;
+	}
+}
+
+/**
  * Renders sprite according to camera position
  * @param display SDL_Surface associated with the game window
  * @param camera  SDL_Rect representing the game camera

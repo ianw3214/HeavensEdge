@@ -33,6 +33,7 @@ public:
     virtual void changeSpriteSheet(std::string);
 
     void update(float);
+	void render(SDL_Surface*);
     void render(SDL_Surface*, SDL_Rect);
 protected:
     SDL_Surface* img;

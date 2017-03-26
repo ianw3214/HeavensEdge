@@ -13,6 +13,8 @@ Menu::Menu() {
 	menuItem * item3 = new menuItem(item2, nullptr, 3);
 	item2->next = item3;
 	currentMenuItem->next = item2;
+	// initialize menu background
+	background = new Sprite("assets/menu_bg.png");
 }
 
 /**
@@ -23,6 +25,14 @@ void Menu::handleEvents(SDL_Event event) {
 	if (event.type == SDL_KEYDOWN) {
 		handleKeyPress(event.key.keysym.sym);
 	}
+}
+
+/**
+ * Renders the menu to the screen
+ * @param display The surface of the game window 
+ */
+void Menu::render(SDL_Surface* display) {
+	background->render(display);
 }
 
 /**
@@ -53,6 +63,13 @@ void Menu::handleKeyPress(SDL_Keycode key) {
 void Menu::select() {
 	if (currentMenuItem->ID == 1) {
 		nextState = new Level("levels/test.txt");
+		quit = true;
+	}
+	if (currentMenuItem->ID == 2) {
+		// TODO: add options code here
+	}
+	if (currentMenuItem->ID == 3) {
+		nextState = nullptr;
 		quit = true;
 	}
 }
