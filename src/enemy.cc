@@ -3,7 +3,7 @@
 /**
  * Default enemy constructor
  */
-Enemy::Enemy() : Entity(10, 2, 0, 0) {
+Enemy::Enemy() : Creature(0, 0, 10) {
 	// set default variables
 	init();
 }
@@ -13,7 +13,7 @@ Enemy::Enemy() : Entity(10, 2, 0, 0) {
  * @param initX Integer corresponding to the initial x position
  * @param initY Integer corresponding to the initial y position
  */
-Enemy::Enemy(int initX, int initY) : Entity(10, 2, initX, initY) {
+Enemy::Enemy(int initX, int initY) : Creature(initX, initY, 10) {
 	init();
 }
 
@@ -45,5 +45,4 @@ void Enemy::render(SDL_Surface * display, SDL_Rect camera) {
 void Enemy::init() {
 	sprite = new AnimatedSprite("assets/enemy.png", 64, 64, 1, false);
 	sprite->setAnimationData({ 1 });
-	sprite->setCollisionRect(sprite->getTileWidth(), sprite->getTileHeight());
 }

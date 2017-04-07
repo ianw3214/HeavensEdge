@@ -1,67 +1,21 @@
 #include "entity.h"
 
-#include <iostream>
-
 // default constructor (type set to 0)
-Entity::Entity() : GameObject() {
-	// set default values
-	maxHealth = 10;
-	health = 10;
-	dead = false;
+Entity::Entity() {
+	init(0);
 }
 
-// constructor with health set
-Entity::Entity(int initHealth) : GameObject() {
-	maxHealth = initHealth;
-	health = initHealth;
-	// set default values
-	dead = false;
+// constructor with an input type
+Entity::Entity(int inputType) {
+	init(inputType);
 }
 
-// constructor with health and type set
-Entity::Entity(int initHealth, int thisType) : GameObject(thisType) {
-	maxHealth = initHealth;
-	health = initHealth;
-	// set default values
-	dead = false;
-}
+// getter/setter methods
+int Entity::getType() const { return type; }
+bool Entity::getRemove() const { return REMOVE; }
 
-// constructor with health, type and positions set
-Entity::Entity(int initHealth, int thisType, int initX, int initY) : GameObject(thisType) {
-	maxHealth = initHealth;
-	health = initHealth;
-	x = initX;
-	y = initY;
-	// set default values
-	dead = false;
-}
-
-// getter/setter functions
-void Entity::setEntities(std::vector<GameObject*>* input) { entityList = input; }
-bool Entity::isDead() const { return dead; }
-int Entity::getX() const { return x; }
-int Entity::getY() const { return y; }
-int Entity::getSpriteWidth() const { return sprite->getTileWidth(); }
-int Entity::getSpriteHeight() const { return sprite->getTileHeight(); }
-SDL_Rect Entity::getCollisionRect() const { return sprite->getCollisionRect(); }
-
-/**
- * Decreases health of the entity
- * @param dmg The amount of damage to be taken
- */
-void Entity::takeDamage(int dmg) {
-	health -= dmg;
-	// set the player to dead if health falls below 0
-	if (health <= 0) { dead = true; }
-	std::cout << "HEALTH: " << health << std::endl;		// DEBUG CODE
-}
-
-/**
- * Restores the health of the entity until the max
- * @param hp The amount of health to restore
- */
-void Entity::heal(int hp) {
-	health += hp;
-	// set the players health to max if it goes over
-	if (health > maxHealth) { health = maxHealth; }
+// initialization function to set default entity attributes
+void Entity::init(int inputType) {
+	type = inputType;
+	REMOVE = false;
 }

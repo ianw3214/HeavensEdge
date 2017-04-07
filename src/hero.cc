@@ -8,7 +8,7 @@
  *
  * Calls the Entity constructor with 20 base health
  */
-Hero::Hero(int initX, int initY) : Entity(20, 1, initX, initY), speed(300){
+Hero::Hero(int initX, int initY) : Creature (initX, initY, 5), speed(300){
     // TODO: get default variables from input/global variable/something like that
 	sprite = new AnimatedSprite("assets/hero.png", 64, 64, 10, false);
     sprite->setAnimationData({10, 10, 10, 10, 10, 10, 10, 10});
@@ -19,6 +19,7 @@ void Hero::setCollisionMap(std::vector<int> inputMap) { collisionMap = inputMap;
 void Hero::setLevelWidth(int width) { levelWidth = width; }
 void Hero::setTileSize(int size) { tileSize = size; }
 void Hero::setPos(int newX, int newY) { x = newX, y = newY; }
+void Hero::setEntities(std::vector<Entity*>* input) { entityList = input; }
 int Hero::getX() { return x; }
 int Hero::getY() { return y; }
 
@@ -45,6 +46,8 @@ void Hero::render(SDL_Surface * display, SDL_Rect camera){
  * Performs the attack associated with the first attack key
  */
 void Hero::key1Attack() {
+	// TODO: update collision code for the attack function.
+	/*
 	// loop through all entities and deal damage if enemy type
 	if (!entityList) { return; }
 	for (unsigned int i = 0; i < entityList->size(); i++) {
@@ -61,6 +64,7 @@ void Hero::key1Attack() {
 			}
 		}
 	}
+	*/
 }
 
 /**

@@ -4,12 +4,12 @@
 #include <SDL_image.h>
 #include <SDL_mixer.h>
 
-#include "entity.h"
+#include "creature.h"
 
 /**
  * Base enemy class representing any enemy creature
  */
-class Enemy : public Entity {
+class Enemy : public Creature {
 
 public:
 

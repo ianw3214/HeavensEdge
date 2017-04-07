@@ -7,12 +7,12 @@
 #include <vector>
 
 #include "hero.h"
-#include "gameObject.h"
+#include "entity.h"
 
 /**
  * Player controller class that controls heros
  */
-class Player : public GameObject{
+class Player : public Entity{
 
 public:
     Player();
@@ -21,7 +21,7 @@ public:
 
 	// getter/setter functions
 	void setCollisionData(std::vector<int>, int, int);
-	void setHeroEntities(std::vector<GameObject*>*);
+	void setHeroEntities(std::vector<Entity*>*);
 	void setPos(int, int);
 	int getCenterX() const;
 	int getCenterY() const;

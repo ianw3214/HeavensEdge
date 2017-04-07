@@ -16,6 +16,7 @@ class AnimatedSprite : public Sprite{
 
 public:
 
+	
     AnimatedSprite(std::string, int, int, int, bool);
 	virtual ~AnimatedSprite() {};
 

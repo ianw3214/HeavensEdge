@@ -46,7 +46,7 @@ void Level::exit() {
 	delete map;
 	// delete all entities in the entities list
     for(int i = entities.size() - 1; i >= 0; i--){
-		GameObject * temp = entities.at(i);
+		Entity * temp = entities.at(i);
 		entities.erase(entities.begin() + i);
 		delete temp;
     }
@@ -82,8 +82,8 @@ void Level::update(float delta) {
 		}
 		// check if the entities should be removed
 		for (int i = entities.size() - 1; i >= 0; i--) {
-			if (entities.at(i)->shouldRemove()) {
-				GameObject * temp = entities.at(i);
+			if (entities.at(i)->getRemove()) {
+				Entity * temp = entities.at(i);
 				entities.erase(entities.begin() + i);
 				delete temp;
 			}

@@ -6,12 +6,12 @@
 
 #include <vector>
 
-#include "entity.h"
+#include "creature.h"
 
 /**
  * Base hero class representing entities controllable by the player
  */
-class Hero : public Entity{
+class Hero : public Creature{
 
 public:
     Hero(int, int);
@@ -22,6 +22,7 @@ public:
 	void setLevelWidth(int);
 	void setTileSize(int);
 	void setPos(int, int);
+	void setEntities(std::vector<Entity*>*);
 	int getX();
 	int getY();
 
@@ -37,6 +38,7 @@ public:
 protected:
     int speed;
 
+	std::vector<Entity*>* entityList;
 	std::vector<int> collisionMap;
 	int levelWidth, tileSize;
 	bool checkCollision(int, int);

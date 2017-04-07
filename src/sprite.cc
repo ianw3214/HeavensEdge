@@ -23,11 +23,7 @@ Sprite::Sprite(std::string path, int x, int y, int w, int h){
 // getter/setter methods
 int Sprite::getX() const{ return x; }
 int Sprite::getY() const{ return y; }
-SDL_Rect Sprite::getCollisionRect() const{ return collisionRect; }
 void Sprite::setPos(int newX, int newY){ x=newX, y=newY; }
-void Sprite::setCollisionWidth(int w){ collisionWidth = w; }
-void Sprite::setCollisionHeight(int h){ collisionHeight = h; }
-void Sprite::setCollisionRect(int x, int y){ collisionRect.x = x; collisionRect.y = y; }
 void Sprite::changeSpriteSheet(std::string path){ loadImage(path); }
 
 /**
@@ -35,9 +31,7 @@ void Sprite::changeSpriteSheet(std::string path){ loadImage(path); }
  * @param delta Difference in time between each update call
  */
 void Sprite::update(float delta){
-    // Set the collision Rects to match new positions
-    collisionRect.x = x;
-    collisionRect.y = y;
+    // sprites don't do anything upon update by default
 }
 
 /**
@@ -73,10 +67,8 @@ void Sprite::init(int _x, int _y, int _w, int _h){
     // intialize default variables
     x = _x;
     y = _y;
-    collisionWidth = _w;
-    collisionHeight = _h;
-    collisionRect = {_x, _y, _w, _h};
-    REMOVE = false;
+	w = _w;
+	h = _h;
 }
 
 /**

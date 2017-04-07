@@ -1,42 +1,33 @@
 #pragma once
 
 #include <SDL.h>
-#include <vector>
-
-#include "gameObject.h"
-#include "animatedSprite.h"
 
 /**
- * Abstract class providing base functions shared across entities
+ * Abstract class providing base functions shared across entities.
+ *   - Every object in the game is represented by a base entity class.
  */
-class Entity : public GameObject{
+class Entity {
 
 public:
 	Entity();
-	Entity(int);		// Health
-	Entity(int, int);	// Health + TYPE
-	Entity(int, int, int, int);	// Health + TYPE + positions
-	virtual ~Entity() {};	// Virtual destructor to prevent memory leaks
+	Entity(int);
+	
+	int getType() const;
+	bool getRemove() const;
 
-	// getter/setters
-	void setEntities(std::vector<GameObject*>*);
-	bool isDead() const;
-	int getX() const;
-	int getY() const;
-	int getSpriteWidth() const;
-	int getSpriteHeight() const;
-	SDL_Rect getCollisionRect() const;
-
-	void takeDamage(int);
-	void heal(int);
+	virtual void handleEvents(SDL_Event) {};
+	virtual void update(float) = 0;
+	virtual void render(SDL_Surface*, SDL_Rect) = 0;
 
 protected:
-	AnimatedSprite * sprite;
+	/* Integer representation of entity type:
+	  - 1: General
+	  - 2: Player
+	  - 3: Enemy 
+	*/
+	int type;
+	/* Boolean flag to show if the entity should be removed. */
+	bool REMOVE;
 
-	int x, y;
-
-	int health, maxHealth;
-	bool dead;
-	std::vector<GameObject*>* entityList;
-
+	void init(int);
 };

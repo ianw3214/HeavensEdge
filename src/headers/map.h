@@ -8,14 +8,14 @@
 #include <map>
 
 #include "tile.h"
-#include "gameObject.h"
+#include "entity.h"
 
 /**
  * Map class representing tile maps
  *
  * Map data is loaded from files
  */
-class Map : public GameObject{
+class Map : public Entity{
 public:
     Map();
     Map(std::string);
