@@ -5,6 +5,9 @@
 #include "entity.h"
 #include "animatedSprite.h"
 
+/**
+ * Base creature class representing game entities with health.
+ */
 class Creature : public Entity{
 public:
 	Creature();
