@@ -3,7 +3,7 @@
 /**
  * Default enemy constructor
  */
-Enemy::Enemy() : Creature(0, 0, 10) {
+Enemy::Enemy() : Creature(0, 0, 10, 2) {
 	// set default variables
 	init();
 }
@@ -13,7 +13,7 @@ Enemy::Enemy() : Creature(0, 0, 10) {
  * @param initX Integer corresponding to the initial x position
  * @param initY Integer corresponding to the initial y position
  */
-Enemy::Enemy(int initX, int initY) : Creature(initX, initY, 10) {
+Enemy::Enemy(int initX, int initY) : Creature(initX, initY, 10, 2) {
 	init();
 }
 
@@ -27,6 +27,9 @@ void Enemy::update(float delta) {
 	if (health <= 0) {
 		REMOVE = true;
 	}
+	// update the collision rectangle as well
+	collisionBox->x = x;
+	collisionBox->y = y;
 }
 
 /**
@@ -45,4 +48,6 @@ void Enemy::render(SDL_Surface * display, SDL_Rect camera) {
 void Enemy::init() {
 	sprite = new AnimatedSprite("assets/enemy.png", 64, 64, 1, false);
 	sprite->setAnimationData({ 1 });
+	// set the default collision rectangle
+	collisionBox = new Rectangle(x, y, 64, 64);
 }

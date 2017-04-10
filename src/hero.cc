@@ -12,6 +12,8 @@ Hero::Hero(int initX, int initY) : Creature (initX, initY, 5), speed(300){
     // TODO: get default variables from input/global variable/something like that
 	sprite = new AnimatedSprite("assets/hero.png", 64, 64, 10, false);
     sprite->setAnimationData({10, 10, 10, 10, 10, 10, 10, 10});
+	// initialize the collision shape
+	collisionBox = new Rectangle(x, y, 64, 64);
 }
 
 // getter/setter functions
@@ -31,6 +33,9 @@ void Hero::update(float delta){
     sprite->update(delta);
 	// set the position of the sprite to match that of the hero
 	sprite->setPos(x, y);
+	// update the collision shape as well
+	collisionBox->x = x;
+	collisionBox->y = y;
 }
 
 /**
@@ -46,25 +51,19 @@ void Hero::render(SDL_Surface * display, SDL_Rect camera){
  * Performs the attack associated with the first attack key
  */
 void Hero::key1Attack() {
-	// TODO: update collision code for the attack function.
-	/*
 	// loop through all entities and deal damage if enemy type
 	if (!entityList) { return; }
 	for (unsigned int i = 0; i < entityList->size(); i++) {
 		if (entityList->at(i)->getType() == 2) {
+			std::cout << "FLAG" << std::endl;
 			// cast the type to an entity to access it's functions
-			Entity * temp = dynamic_cast<Entity*>(entityList->at(i));
-			// get the enemy collision Rect
-			SDL_Rect checkBox = temp->getCollisionRect();
+			Creature * temp = dynamic_cast<Creature*>(entityList->at(i));
 			// check for collisions
-			if (checkBox.x <= x + sprite->getTileWidth() && checkBox.x + checkBox.w >= x) {
-				if (checkBox.y <= y + sprite->getTileHeight() && checkBox.y + checkBox.h >= y) {
-					temp->takeDamage(5);
-				}
+			if (isColliding(*collisionBox, *temp->getCollisionBox())) {
+				temp->takeDamage(5);
 			}
 		}
 	}
-	*/
 }
 
 /**

@@ -5,6 +5,7 @@
 #include <SDL_mixer.h>
 
 #include "creature.h"
+#include "collision.h"
 
 /**
  * Base enemy class representing any enemy creature

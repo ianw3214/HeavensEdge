@@ -7,6 +7,7 @@
 #include <vector>
 
 #include "creature.h"
+#include "collision.h"
 
 /**
  * Base hero class representing entities controllable by the player
