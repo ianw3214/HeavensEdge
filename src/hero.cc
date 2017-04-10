@@ -192,13 +192,12 @@ bool Hero::checkCollision(int xpos, int ypos) {
 			// check the coords of the tile against player position
 			int targetX = (collisionIndex % levelWidth) * tileSize;
 			int targetY = static_cast<int>(collisionIndex / levelWidth) * tileSize;
-			// first check x coordinates
-			if (xpos + sprite->getTileWidth() > targetX && xpos < (targetX + tileSize)) {
-				// check y coordinates
-				if (ypos + sprite->getTileHeight() > targetY && ypos < (targetY + tileSize)) {
-					// return true only if both x and y intersect
-					return true;
-				}
+			// make rectangles to represent the collision simulation
+			Rectangle target(targetX, targetY, 64, 64);
+			Rectangle owner(xpos, ypos, 64, 64);
+			if (isColliding(owner, target)){
+				// return true only if both x and y intersect
+				return true;
 			}
 		}
 	}

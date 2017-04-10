@@ -9,6 +9,8 @@
 #include "creature.h"
 #include "collision.h"
 
+// TODO: store list of shapes instead to avoid converting points to rects every time.
+
 /**
  * Base hero class representing entities controllable by the player
  */
