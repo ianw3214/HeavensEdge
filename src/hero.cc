@@ -11,7 +11,7 @@
 Hero::Hero(int initX, int initY) : Creature (initX, initY, 5), speed(300){
     // TODO: get default variables from input/global variable/something like that
 	sprite = new AnimatedSprite("assets/hero.png", 64, 64, 10, false);
-    sprite->setAnimationData({10, 10, 10, 10, 10, 10, 10, 10});
+    sprite->setAnimationData({1, 1, 10, 10});
 	// initialize the collision shape
 	collisionBox = new Rectangle(x, y, 64, 64);
 }

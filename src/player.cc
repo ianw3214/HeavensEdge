@@ -9,14 +9,11 @@ Player::Player(){
 	// set the player to a default hero at 0,0
     hero = new Hero(0, 0);
 	// TODO: Add variable initialization to an initialization function
-    upPress = false;
-    downPress = false;
-    leftPress = false;
-    rightPress = false;
-	faceUp = false;
-	faceRight = false;
-	faceLeft = false;
-	faceDown = false;
+	moveUp = false;
+	moveDown = false;
+	moveRight = false;
+	moveLeft = false;
+	faceRight = true;
 	moving = false;
 	currentAnimation = IDLE_RIGHT;
 }
@@ -28,14 +25,11 @@ Player::Player(){
 Player::Player(Hero * initHero){
     hero = initHero;
 	// TODO: Add variable initialization to an initialization function
-	upPress = false;
-	downPress = false;
-	leftPress = false;
-	rightPress = false;
-	faceUp = false;
-	faceRight = false;
-	faceLeft = false;
-	faceDown = false;
+	moveUp = false;
+	moveDown = false;
+	moveRight = false;
+	moveLeft = false;
+	faceRight = true;
 	moving = false;
 	currentAnimation = IDLE_RIGHT;
 }
@@ -80,48 +74,43 @@ void Player::handleEvents(SDL_Event event){
  */
 void Player::update(float delta){
     hero->update(delta);
-	// proccess any key events
-	processKeyEvents();
     // handle player movement
-	if (moving) {
-		// if the direction changed, change the animation
-		bool changeDirection = false;
-		if (faceUp) {
-			hero->move(0, delta);
-			if (currentAnimation != MOVE_UP) {
-				currentAnimation = MOVE_UP;
-				changeDirection = true;
-			}
-		}
-		if (faceDown) {
-			hero->move(2, delta);
-			if (currentAnimation != MOVE_DOWN) {
-				currentAnimation = MOVE_DOWN;
-				changeDirection = true;
-			}
-		}
-		if (faceLeft) {
-			hero->move(3, delta);
-			if (currentAnimation != MOVE_LEFT) {
-				currentAnimation = MOVE_LEFT;
-				changeDirection = true;
-			}
-		}
-		if (faceRight) {
-			hero->move(1, delta);
-			if (currentAnimation != MOVE_RIGHT) {
-				currentAnimation = MOVE_RIGHT;
-				changeDirection = true;
-			}
-		}
-		if (changeDirection) changeAnimation();
+	if (moveUp) {
+		hero->move(0, delta);
+		moving = true;
+	}
+	if (moveDown) {
+		hero->move(2, delta);
+		moving = true;
+	}
+	if (moveLeft) {
+		hero->move(3, delta);
+		moving = true;
+	}
+	if (moveRight) {
+		hero->move(1, delta);
+		moving = true;
+	}
+	if (!moveUp && !moveDown && !moveRight && !moveLeft) {
+		moving = false;
+	}
+	// update animations
+	if (faceRight && moving) {
+		currentAnimation = MOVE_RIGHT;
+	}
+	else if (!faceRight && moving) {
+		currentAnimation = MOVE_LEFT;
+	}
+	else if (faceRight && !moving) {
+		currentAnimation = IDLE_RIGHT;
+	}
+	else if (!faceRight && !moving) {
+		currentAnimation = IDLE_LEFT;
 	}
 	else {
-		// if the current animation isn't in idle, change it to idle
-		if (currentAnimation > 3) {
-			setAnimationToIdle();
-		}
+		currentAnimation = IDLE_RIGHT;
 	}
+	hero->playAnimation(currentAnimation);
 }
 
 /**
@@ -141,16 +130,18 @@ void Player::render(SDL_Surface* display, SDL_Rect camera){
 void Player::handleKeyPress(SDL_Keycode key){
     switch(key){
         case SDLK_UP:{
-            upPress = true;
+            moveUp = true;
         } break;
         case SDLK_DOWN:{
-            downPress = true;
+            moveDown = true;
         } break;
         case SDLK_LEFT:{
-            leftPress = true;
+            moveLeft = true;
+			faceRight = false;
         } break;
         case SDLK_RIGHT:{
-            rightPress= true;
+            moveRight = true;
+			faceRight = true;
         } break;
 		case SDLK_x: {
 			// TODO: Change logic so no continous attacks happen
@@ -166,53 +157,18 @@ void Player::handleKeyPress(SDL_Keycode key){
 void Player::handleKeyRelease(SDL_Keycode key){
     switch(key){
         case SDLK_UP:{
-            upPress = false;
+            moveUp = false;
         } break;
         case SDLK_DOWN:{
-            downPress = false;
+            moveDown= false;
         } break;
         case SDLK_LEFT:{
-            leftPress = false;
+            moveLeft = false;
         } break;
         case SDLK_RIGHT:{
-            rightPress = false;
+            moveRight = false;
         } break;
     }
-}
-
-/**
- * Processes pressed keys and updates player class accordingly
- */
-void Player::processKeyEvents() {
-	// updates movement flags if only 1 arrow key is pressed
-	if (upPress && !faceUp) { faceUp = true, faceDown = false, faceLeft = false, faceRight = false; }
-	if (downPress && !faceDown) { faceUp = false, faceDown = true, faceLeft = false, faceRight = false; }
-	if (leftPress && !faceLeft) { faceUp = false, faceDown = false, faceLeft = true, faceRight = false; }
-	if (rightPress && !faceRight) { faceUp = false, faceDown = false, faceLeft = false, faceRight = true; }
-	if (upPress || downPress || leftPress || rightPress) { moving = true; }
-	else { moving = false; }
-}
-
-/**
- *	Resets the player animation state to idle in the right direction depending on current state
- */
-void Player::setAnimationToIdle() {
-	if (faceRight) {
-		currentAnimation = IDLE_RIGHT;
-	}
-	else if (faceLeft) {
-		currentAnimation = IDLE_LEFT;
-	}
-	else if (faceUp) {
-		currentAnimation = IDLE_UP;
-	}
-	else if (faceDown) {
-		currentAnimation = IDLE_DOWN;
-	}
-	else {
-		currentAnimation = IDLE_DOWN;
-	}
-	changeAnimation();
 }
 
 /**

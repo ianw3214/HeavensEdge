@@ -33,26 +33,20 @@ private:
 	enum ANIM_STATE {
 		IDLE_RIGHT = 0,
 		IDLE_LEFT = 1,
-		IDLE_UP = 2,
-		IDLE_DOWN = 3,
-		MOVE_RIGHT = 4,
-		MOVE_LEFT = 5,
-		MOVE_UP = 6,
-		MOVE_DOWN = 7
+		MOVE_RIGHT = 2,
+		MOVE_LEFT = 3
 	};
 
     Hero * hero;
 
 	bool moving;
-	bool faceUp, faceDown, faceLeft, faceRight;
-	bool upPress, downPress, leftPress, rightPress;
+	bool faceRight;
+	bool moveUp, moveDown, moveRight, moveLeft;
 
 	ANIM_STATE currentAnimation;
 
     void handleKeyPress(SDL_Keycode);
     void handleKeyRelease(SDL_Keycode);
-	void processKeyEvents();
-	void setAnimationToIdle();
 	void changeAnimation();
 
 };
