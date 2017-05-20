@@ -164,9 +164,15 @@ void Player::handleKeyRelease(SDL_Keycode key){
         } break;
         case SDLK_LEFT:{
             moveLeft = false;
+			if (moveRight) {
+				faceRight = true;
+			}
         } break;
         case SDLK_RIGHT:{
             moveRight = false;
+			if (moveLeft) {
+				faceRight = false;
+			}
         } break;
     }
 }
