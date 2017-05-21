@@ -21,6 +21,7 @@ AnimatedSprite::AnimatedSprite(std::string path, int w, int h, int ssw, bool sho
 void AnimatedSprite::setAnimationData(std::vector<int> inputData){
     animData = inputData;
     currentAnim = 0;
+	nextAnim = -1;
 }
 
 // getter/setter for tile width/height
@@ -33,6 +34,14 @@ int AnimatedSprite::getTileHeight() { return tileHeight; }
  */
 void AnimatedSprite::playAnimation(int row) {
 	currentAnim = row;
+}
+
+void AnimatedSprite::setNextAnimation(int anim) {
+	nextAnim = anim;
+}
+
+void AnimatedSprite::resetAnimationFrame() {
+	currentFrame = 0;
 }
 
 /**
@@ -51,6 +60,11 @@ void AnimatedSprite::update(float delta){
             // remove the animation if it should only be played once
             if(playOnce) REMOVE = true;
             currentFrame = 0;
+			// reset the animation to the queued animation if specified
+			if (nextAnim >= 0) {
+				currentAnim = nextAnim;
+				nextAnim = -1;
+			}
         }
         // reset the delta time once frame has been incremented
         deltaTime = 0.0f;

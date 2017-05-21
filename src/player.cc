@@ -16,6 +16,8 @@ Player::Player(){
 	faceRight = true;
 	moving = false;
 	currentAnimation = IDLE_RIGHT;
+	attackCounter = 0.0;
+	attackBar = 0.0;
 }
 
 /**
@@ -32,6 +34,8 @@ Player::Player(Hero * initHero){
 	faceRight = true;
 	moving = false;
 	currentAnimation = IDLE_RIGHT;
+	attackCounter = 0.0;
+	attackBar = 0.0;
 }
 
 /**
@@ -75,42 +79,56 @@ void Player::handleEvents(SDL_Event event){
 void Player::update(float delta){
     hero->update(delta);
     // handle player movement
-	if (moveUp) {
-		hero->move(0, delta);
-		moving = true;
-	}
-	if (moveDown) {
-		hero->move(2, delta);
-		moving = true;
-	}
-	if (moveLeft) {
-		hero->move(3, delta);
-		moving = true;
-	}
-	if (moveRight) {
-		hero->move(1, delta);
-		moving = true;
+	if (!attacking) {
+		if (moveUp) {
+			hero->move(0, delta);
+			moving = true;
+		}
+		if (moveDown) {
+			hero->move(2, delta);
+			moving = true;
+		}
+		if (moveLeft) {
+			hero->move(3, delta);
+			moving = true;
+		}
+		if (moveRight) {
+			hero->move(1, delta);
+			moving = true;
+		}
 	}
 	if (!moveUp && !moveDown && !moveRight && !moveLeft) {
 		moving = false;
 	}
-	// update animations
-	if (faceRight && moving) {
-		currentAnimation = MOVE_RIGHT;
-	}
-	else if (!faceRight && moving) {
-		currentAnimation = MOVE_LEFT;
-	}
-	else if (faceRight && !moving) {
-		currentAnimation = IDLE_RIGHT;
-	}
-	else if (!faceRight && !moving) {
-		currentAnimation = IDLE_LEFT;
+	if (attackBar != 0.0) {
+		if (attackCounter >= attackBar) {
+			attackBar = 0.0;
+			attackCounter = 0.0;
+			attacking = false;
+		}
+		else {
+			attackCounter += delta;
+		}
 	}
 	else {
-		currentAnimation = IDLE_RIGHT;
+		// update animations
+		if (faceRight && moving) {
+			currentAnimation = MOVE_RIGHT;
+		}
+		else if (!faceRight && moving) {
+			currentAnimation = MOVE_LEFT;
+		}
+		else if (faceRight && !moving) {
+			currentAnimation = IDLE_RIGHT;
+		}
+		else if (!faceRight && !moving) {
+			currentAnimation = IDLE_LEFT;
+		}
+		else {
+			currentAnimation = IDLE_RIGHT;
+		}
+		hero->playAnimation(currentAnimation);
 	}
-	hero->playAnimation(currentAnimation);
 }
 
 /**
@@ -145,7 +163,7 @@ void Player::handleKeyPress(SDL_Keycode key){
         } break;
 		case SDLK_x: {
 			// TODO: Change logic so no continous attacks happen
-			hero->key1Attack();
+			key1Attack();
 		}
     }
 }
@@ -182,4 +200,23 @@ void Player::handleKeyRelease(SDL_Keycode key){
  */
 void Player::changeAnimation() {
 	hero->playAnimation(currentAnimation);
+}
+
+void Player::key1Attack() {
+	if (!attacking) {
+		if (faceRight) {
+			currentAnimation = ATTACK1RIGHT;
+			hero->setNextAnimation(IDLE_RIGHT);
+		}
+		else {
+			currentAnimation = ATTACK1LEFT;
+			hero->setNextAnimation(IDLE_LEFT);
+		}
+		changeAnimation();
+		hero->key1Attack();
+		attackBar = 0.3;
+		attackCounter = 0.0;
+		attacking = true;
+		hero->resetAnimationFrame();
+	}
 }

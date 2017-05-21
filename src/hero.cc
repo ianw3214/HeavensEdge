@@ -11,7 +11,7 @@
 Hero::Hero(int initX, int initY) : Creature (initX, initY, 5), speed(300){
     // TODO: get default variables from input/global variable/something like that
 	sprite = new AnimatedSprite("assets/hero.png", 64, 64, 10, false);
-    sprite->setAnimationData({10, 10, 6, 6});
+    sprite->setAnimationData({10, 10, 6, 6, 10, 10});
 	// initialize the collision shape
 	collisionBox = new Rectangle(x, y, 64, 64);
 }
@@ -55,7 +55,6 @@ void Hero::key1Attack() {
 	if (!entityList) { return; }
 	for (unsigned int i = 0; i < entityList->size(); i++) {
 		if (entityList->at(i)->getType() == 2) {
-			std::cout << "FLAG" << std::endl;
 			// cast the type to an entity to access it's functions
 			Creature * temp = dynamic_cast<Creature*>(entityList->at(i));
 			// check for collisions
@@ -72,6 +71,14 @@ void Hero::key1Attack() {
  */
 void Hero::playAnimation(int anim) {
 	sprite->playAnimation(anim);
+}
+
+void Hero::setNextAnimation(int anim) {
+	sprite->setNextAnimation(anim);
+}
+
+void Hero::resetAnimationFrame() {
+	sprite->resetAnimationFrame();
 }
 
 /**

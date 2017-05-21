@@ -36,6 +36,8 @@ public:
 
 	// methods to interact with animated sprite from outside
 	void playAnimation(int);
+	void setNextAnimation(int);
+	void resetAnimationFrame();
 
     void move(int, float);
 protected:

@@ -25,6 +25,8 @@ public:
 	int getTileHeight();
 
 	void playAnimation(int);
+	void setNextAnimation(int);
+	void resetAnimationFrame();
 
     virtual void update(float);
     virtual void render(SDL_Surface*, SDL_Rect);
@@ -39,6 +41,7 @@ protected:
 
     std::vector<int> animData;
     int currentAnim;
+	int nextAnim;
 
     bool playOnce;
 

@@ -34,7 +34,9 @@ private:
 		IDLE_RIGHT = 0,
 		IDLE_LEFT = 1,
 		MOVE_RIGHT = 2,
-		MOVE_LEFT = 3
+		MOVE_LEFT = 3,
+		ATTACK1RIGHT = 4,
+		ATTACK1LEFT = 5
 	};
 
     Hero * hero;
@@ -48,5 +50,11 @@ private:
     void handleKeyPress(SDL_Keycode);
     void handleKeyRelease(SDL_Keycode);
 	void changeAnimation();
+
+	float attackCounter;	// keeps track of how long the current attack has gone for
+	float attackBar;		// keeps track of how long the attack should last for
+	bool attacking;
+
+	void key1Attack();
 
 };
