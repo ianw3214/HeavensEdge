@@ -36,6 +36,15 @@ void Hero::update(float delta){
 	// update the collision shape as well
 	collisionBox->x = x;
 	collisionBox->y = y;
+	// delete effects accordingly
+	for (int i = effects.size() - 1; i >= 0; i--) {
+		effects.at(i)->update(delta);
+		if (effects.at(i)->getRemove()) {
+			AnimatedSprite* effect = effects.at(i);
+			effects.erase(effects.begin() + i);
+			delete effect;
+		}
+	}
 }
 
 /**
@@ -45,12 +54,23 @@ void Hero::update(float delta){
  */
 void Hero::render(SDL_Surface * display, SDL_Rect camera){
     sprite->render(display, camera);
+	// call the render on any function associated with the player
+	for (unsigned int i = 0; i < effects.size(); i++) {
+		effects.at(i)->render(display, camera);
+	}
 }
 
 /**
  * Performs the attack associated with the first attack key
+ * @param direction the direction the player is performing the attack
+ *
+ *	- Direction 0 for left, 1 for right
  */
-void Hero::key1Attack() {
+void Hero::key1Attack(int direction) {
+	Rectangle attackCollision(getX(), getY(), 100, 64);
+	if (direction == 0) {
+		attackCollision.x -= 64;
+	}
 	// loop through all entities and deal damage if enemy type
 	if (!entityList) { return; }
 	for (unsigned int i = 0; i < entityList->size(); i++) {
@@ -58,11 +78,17 @@ void Hero::key1Attack() {
 			// cast the type to an entity to access it's functions
 			Creature * temp = dynamic_cast<Creature*>(entityList->at(i));
 			// check for collisions
-			if (isColliding(*collisionBox, *temp->getCollisionBox())) {
+			if (isColliding(attackCollision, *temp->getCollisionBox())) {
 				temp->takeDamage(5);
 			}
 		}
 	}
+	// add an attack effect to the player
+	AnimatedSprite* effect = new AnimatedSprite("assets/attack.png", 100, 64, 10, true);
+	effect->setAnimationData({ 10 });
+	if (direction == 1) { effect->setPos(getX(), getY()); }
+	else { effect->setPos(getX()-64, getY()); }
+	effects.push_back(effect);
 }
 
 /**

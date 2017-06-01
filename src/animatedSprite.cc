@@ -57,8 +57,8 @@ void AnimatedSprite::update(float delta){
         currentFrame++;
         // resets animation if end is reached
         if(currentFrame >= animData.at(currentAnim)){
-            // remove the animation if it should only be played once
-            if(playOnce) REMOVE = true;
+            // remove th[e animation if it should only be played once
+			if (playOnce) {	REMOVE = true; }
             currentFrame = 0;
 			// reset the animation to the queued animation if specified
 			if (nextAnim >= 0) {

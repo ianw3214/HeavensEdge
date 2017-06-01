@@ -205,15 +205,16 @@ void Player::changeAnimation() {
 void Player::key1Attack() {
 	if (!attacking) {
 		if (faceRight) {
+			hero->key1Attack(1);
 			currentAnimation = ATTACK1RIGHT;
 			hero->setNextAnimation(IDLE_RIGHT);
 		}
 		else {
+			hero->key1Attack(0);
 			currentAnimation = ATTACK1LEFT;
 			hero->setNextAnimation(IDLE_LEFT);
 		}
 		changeAnimation();
-		hero->key1Attack();
 		attackBar = 0.3;
 		attackCounter = 0.0;
 		attacking = true;

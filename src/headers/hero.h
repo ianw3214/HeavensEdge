@@ -32,7 +32,7 @@ public:
     virtual void update(float);
     virtual void render(SDL_Surface*, SDL_Rect);
 
-	virtual void key1Attack();
+	virtual void key1Attack(int);
 
 	// methods to interact with animated sprite from outside
 	void playAnimation(int);
@@ -48,4 +48,7 @@ protected:
 	int levelWidth, tileSize;
 	bool checkCollision(int, int);
 	void moveToEdge(int);
+
+	std::vector<AnimatedSprite*> effects;
+
 };
