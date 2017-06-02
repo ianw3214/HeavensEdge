@@ -85,9 +85,14 @@ void Hero::key1Attack(int direction) {
 	}
 	// add an attack effect to the player
 	AnimatedSprite* effect = new AnimatedSprite("assets/attack.png", 100, 64, 10, true);
-	effect->setAnimationData({ 10 });
-	if (direction == 1) { effect->setPos(getX(), getY()); }
-	else { effect->setPos(getX()-64, getY()); }
+	effect->setAnimationData({ 10 , 10});
+	if (direction == 1) { 
+		effect->setPos(getX(), getY()); 
+		effect->playAnimation(0);
+	} else { 
+		effect->setPos(getX()-36, getY()); 
+		effect->playAnimation(1);
+	}
 	effects.push_back(effect);
 }
 
