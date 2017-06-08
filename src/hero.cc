@@ -13,7 +13,7 @@ Hero::Hero(int initX, int initY) : Creature (initX, initY, 5), speed(300){
 	sprite = new AnimatedSprite("assets/hero.png", 64, 64, 10, false);
     sprite->setAnimationData({10, 10, 6, 6, 10, 10});
 	// initialize the collision shape
-	collisionBox = new Rectangle(x, y, 64, 64);
+	collisionBox = new Rectangle(x, y, 56, 56);
 }
 
 // getter/setter functions
@@ -34,8 +34,8 @@ void Hero::update(float delta){
 	// set the position of the sprite to match that of the hero
 	sprite->setPos(x, y);
 	// update the collision shape as well
-	collisionBox->x = x;
-	collisionBox->y = y;
+	collisionBox->x = x + 4;
+	collisionBox->y = y + 4;
 	// delete effects accordingly
 	for (int i = effects.size() - 1; i >= 0; i--) {
 		effects.at(i)->update(delta);
@@ -172,15 +172,16 @@ bool Hero::checkCollision(int xpos, int ypos) {
 	}
 	for (unsigned int i = 0; i < checkIndices.size(); i++) {
 		int collisionIndex = checkIndices.at(i);
-		// for now, check every single tile for a collision
 		if (collisionMap.at(collisionIndex) == 1) {	// 1 means it is a collidable tile
 			// check the coords of the tile against player position
 			int targetX = (collisionIndex % levelWidth) * tileSize;
 			int targetY = static_cast<int>(collisionIndex / levelWidth) * tileSize;
 			// make rectangles to represent the collision simulation
 			Rectangle target(targetX, targetY, 64, 64);
-			Rectangle owner(xpos, ypos, 64, 64);
-			if (isColliding(owner, target)){
+			Rectangle newCollisionBox(*static_cast<Rectangle*>(collisionBox));
+			newCollisionBox.x = xpos + 4;
+			newCollisionBox.y = ypos + 4;
+			if (isColliding(newCollisionBox, target)){
 				// return true only if both x and y intersect
 				return true;
 			}

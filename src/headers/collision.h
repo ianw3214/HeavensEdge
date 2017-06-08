@@ -18,6 +18,8 @@ struct Rectangle : Shape {
 	Rectangle() : Shape(RECT) {}
 	Rectangle(int _x, int _y) : Shape(_x, _y, RECT) {}
 	Rectangle(int _x, int _y, int _w, int _h) : Shape(_x, _y, RECT), w(_w), h(_h) {}
+	// copy constructor
+	Rectangle(const Rectangle &obj) : Shape(obj.x, obj.y, RECT), w(obj.w), h(obj.w) {}
 };
 
 // pass shape parameters by reference to avoid slicing	
