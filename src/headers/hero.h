@@ -47,7 +47,6 @@ protected:
 	std::vector<int> collisionMap;
 	int levelWidth, tileSize;
 	bool checkCollision(int, int);
-	void moveToEdge(int);
 
 	std::vector<AnimatedSprite*> effects;
 
