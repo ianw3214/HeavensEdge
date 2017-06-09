@@ -21,8 +21,8 @@ public:
 	virtual ~AnimatedSprite() {};
 
     void setAnimationData(std::vector<int>);
-	int getTileWidth();
-	int getTileHeight();
+	int getTileWidth() const;
+	int getTileHeight() const;
 
 	void playAnimation(int);
 	void setNextAnimation(int);

@@ -26,8 +26,8 @@ public:
 	void setTileSize(int);
 	void setPos(int, int);
 	void setEntities(std::vector<Entity*>*);
-	int getX();
-	int getY();
+	int getX() const;
+	int getY() const;
 
     virtual void update(float);
     virtual void render(SDL_Surface*, SDL_Rect);
