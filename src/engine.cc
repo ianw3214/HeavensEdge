@@ -18,6 +18,8 @@ Engine::Engine(int width, int height){
  * @return              returns whether initialization was successful
  */
 bool Engine::init(State* initialState){
+	// initialize random seed
+	srand(time(nullptr));
 
     // initialize SDL subsystems
     if(SDL_Init(SDL_INIT_EVERYTHING) < 0){

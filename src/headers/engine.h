@@ -6,6 +6,8 @@
 
 #include "state.h"
 
+#include <ctime>
+
 /**
  * Core engine of the game
  *
