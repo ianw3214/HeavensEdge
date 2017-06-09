@@ -166,13 +166,13 @@ bool Hero::checkCollision(int xpos, int ypos) {
 	// if we aren't at the right most side of the level, add the tile 1 to the right
 	if(tileX != levelWidth-1){ checkIndices.push_back(targetIndex + 1); }
 	// if we aren't at the bottom, add the bottom 2 tiles
-	if ((tileY + 1) * levelWidth < collisionMap.size()) {
+	if ((tileY + 1) * levelWidth < collisionMap->size()) {
 		checkIndices.push_back(targetIndex + levelWidth);
 		checkIndices.push_back(targetIndex + levelWidth + 1);
 	}
 	for (unsigned int i = 0; i < checkIndices.size(); i++) {
 		int collisionIndex = checkIndices.at(i);
-		if (collisionMap.at(collisionIndex) == 1) {	// 1 means it is a collidable tile
+		if (collisionMap->at(collisionIndex) == 1) {	// 1 means it is a collidable tile
 			// check the coords of the tile against player position
 			int targetX = (collisionIndex % levelWidth) * tileSize;
 			int targetY = static_cast<int>(collisionIndex / levelWidth) * tileSize;

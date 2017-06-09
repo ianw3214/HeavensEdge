@@ -1,5 +1,9 @@
 #include "enemy.h"
 
+// define the static variables of the header file
+std::vector<int> Enemy::collisionMap;
+int Enemy::levelWidth, Enemy::tileSize;
+
 /**
  * Default enemy constructor
  */
@@ -18,13 +22,13 @@ Enemy::Enemy(int initX, int initY) : Creature(initX, initY, 10, 2), speed(200) {
 }
 
 // getter/setter methods
-void Enemy::setCollisionMap(std::vector<int> inputMap) { collisionMap = inputMap; }
-void Enemy::setLevelWidth(int width) { levelWidth = width; }
-void Enemy::setTileSize(int size) { tileSize = size; }
+void Enemy::setCollisionMap(std::vector<int> inputMap) { Enemy::collisionMap = inputMap; }
+void Enemy::setLevelWidth(int width) { Enemy::levelWidth = width; }
+void Enemy::setTileSize(int size) { Enemy::tileSize = size; }
 void Enemy::setCollisionData(std::vector<int> map, int width, int tileSize) {
-	setCollisionMap(map);
-	setLevelWidth(width);
-	setTileSize(tileSize);
+	Enemy::setCollisionMap(map);
+	Enemy::setLevelWidth(width);
+	Enemy::setTileSize(tileSize);
 }
 
 /**

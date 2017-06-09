@@ -18,10 +18,9 @@ Level::Level(std::string filePath) {
     entities.push_back(player);
 	// temporarily set new enemies
 	Enemy * temp = new Enemy(100, 100);
-	temp->setCollisionData(map->getCollisionMap(), map->getWidth(), map->getTileSize());
+	Enemy::setCollisionData(map->getCollisionMap(), map->getWidth(), map->getTileSize());
 	entities.push_back(temp);
 	temp = new Enemy(200, 200);
-	temp->setCollisionData(map->getCollisionMap(), map->getWidth(), map->getTileSize());
 	entities.push_back(temp);
 }
 
@@ -130,9 +129,7 @@ void Level::handleKeyPress(SDL_Keycode key) {
 	if (key == SDLK_f) {
 		Enemy * temp = new Enemy(100, 100);
 		entities.push_back(temp);
-		temp->setCollisionData(map->getCollisionMap(), map->getWidth(), map->getTileSize());
 		temp = new Enemy(200, 200);
-		temp->setCollisionData(map->getCollisionMap(), map->getWidth(), map->getTileSize());
 		entities.push_back(temp);
 	}
 	// space key to pause the game
