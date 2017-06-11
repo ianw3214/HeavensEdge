@@ -35,7 +35,7 @@ private:
 	void move(float);
 	bool checkCollision(int, int);
 	int currentDir;	// 0 - Up, 1 - Right, 2 - Down, 3 - Left
-	float moveTime;
+	float idleTimer;
 	static std::vector<int> collisionMap;
 	static int levelWidth, tileSize;
 

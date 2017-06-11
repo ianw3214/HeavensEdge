@@ -42,13 +42,18 @@ void Enemy::update(float delta) {
 		REMOVE = true;
 	}
 	// update enemy movement
-	move(delta);
-	// update movement direction when timer is up
-	if (moveTime > 0.7f) {
-		moveTime = 0.0f;
-		currentDir = rand() % 4;
+	if (idleTimer > 0.0f) {
+		idleTimer -= delta;
+		if (idleTimer < 0.0f) idleTimer = 0.0f;
 	}
-	else moveTime += delta;
+	else {
+		move(delta);
+		int key = rand() % 200;
+		if (key == 5) {
+			idleTimer = 1.5f;
+			currentDir = rand() % 4;
+		}
+	}
 	// update the collision rectangle as well
 	collisionBox->x = x;
 	collisionBox->y = y;
@@ -74,7 +79,7 @@ void Enemy::init() {
 	collisionBox = new Rectangle(x, y, 64, 64);
 	// set the initial movement flags
 	currentDir = rand() % 4;
-	moveTime = 0.0f;
+	idleTimer = 0.0f;
 }
 
 void Enemy::move(float delta) {
@@ -102,12 +107,19 @@ void Enemy::move(float delta) {
 		}
 		x = lastX;
 		y = lastY;
+		// update the current direction so the enemy doesn't collide with a wall anymore
+		int nextDir = rand() % 4;
+		while (nextDir == currentDir) {
+			nextDir = rand() % 4;
+		}
+		currentDir = nextDir;
 	}
 	else {
 		// otherwise, set the new x and y positions
 		x = newX;
 		y = newY;
 	}
+	std::cout << currentDir << std::endl;
 }
 
 bool Enemy::checkCollision(int xpos, int ypos) {
