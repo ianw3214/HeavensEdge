@@ -119,7 +119,6 @@ void Enemy::move(float delta) {
 		x = newX;
 		y = newY;
 	}
-	std::cout << currentDir << std::endl;
 }
 
 bool Enemy::checkCollision(int xpos, int ypos) {
