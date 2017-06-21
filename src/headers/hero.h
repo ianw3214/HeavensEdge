@@ -33,6 +33,7 @@ public:
     virtual void render(SDL_Surface*, SDL_Rect);
 
 	virtual void key1Attack(int);
+	virtual void key2Attack(int);
 
 	// methods to interact with animated sprite from outside
 	void playAnimation(int);
@@ -42,6 +43,9 @@ public:
     void move(int, float);
 protected:
     int speed;
+	int dashDistance, dashDirection;
+	bool dashing;
+	float dashTimer;
 
 	std::vector<Entity*>* entityList;
 	std::vector<int> collisionMap;

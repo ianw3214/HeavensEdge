@@ -164,7 +164,10 @@ void Player::handleKeyPress(SDL_Keycode key){
 		case SDLK_x: {
 			// TODO: Change logic so no continous attacks happen
 			key1Attack();
-		}
+		} break;
+		case SDLK_c: {
+			key2Attack();
+		} break;
     }
 }
 
@@ -219,5 +222,17 @@ void Player::key1Attack() {
 		attackCounter = 0.0;
 		attacking = true;
 		hero->resetAnimationFrame();
+	}
+}
+
+void Player::key2Attack() {
+	if (!attacking) {
+		// attack with a certain direction depending on movement and direction
+		if (moveRight) hero->key2Attack(1);
+		else if (moveLeft) hero->key2Attack(3);
+		else if (moveUp) hero->key2Attack(0);
+		else if (moveDown) hero->key2Attack(2);
+		else if (faceRight) hero->key2Attack(1);
+		else hero->key2Attack(3);
 	}
 }

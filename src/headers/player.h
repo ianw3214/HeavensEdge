@@ -56,5 +56,6 @@ private:
 	bool attacking;
 
 	void key1Attack();
+	void key2Attack();
 
 };
