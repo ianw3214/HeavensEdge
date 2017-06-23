@@ -205,6 +205,9 @@ void Player::changeAnimation() {
 	hero->playAnimation(currentAnimation);
 }
 
+/**
+ * Handles the attack logic for when the primary attack button is pressed
+ */
 void Player::key1Attack() {
 	if (!attacking) {
 		if (faceRight) {
@@ -218,13 +221,16 @@ void Player::key1Attack() {
 			hero->setNextAnimation(IDLE_LEFT);
 		}
 		changeAnimation();
-		attackBar = 0.3;
+		attackBar = HERO::ATTACK_1_TIME;
 		attackCounter = 0.0;
 		attacking = true;
 		hero->resetAnimationFrame();
 	}
 }
 
+/**
+ * Handles the attack logic for when the secondary attack button is pressed
+ */
 void Player::key2Attack() {
 	if (!attacking) {
 		// attack with a certain direction depending on movement and direction
@@ -234,5 +240,9 @@ void Player::key2Attack() {
 		else if (moveDown) hero->key2Attack(2);
 		else if (faceRight) hero->key2Attack(1);
 		else hero->key2Attack(3);
+		// set the attack timer
+		attackBar = HERO::ATTACK_2_TIME;
+		attackCounter = 0.0f;
+		attacking = true;
 	}
 }

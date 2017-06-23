@@ -9,7 +9,7 @@
 #include "creature.h"
 #include "collision.h"
 
-// TODO: store list of shapes instead to avoid converting points to rects every time.
+#include "constants.h"
 
 /**
  * Base hero class representing entities controllable by the player
@@ -42,8 +42,7 @@ public:
 
     void move(int, float);
 protected:
-    int speed;
-	int dashDistance, dashDirection;
+	int dashDirection;
 	bool dashing;
 	float dashTimer;
 

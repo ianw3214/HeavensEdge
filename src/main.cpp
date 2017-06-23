@@ -6,12 +6,11 @@
 #include "menu.h"
 #include "level.h"
 
-const int STARTING_WIDTH = 1280;
-const int STARTING_HEIGHT = 720;
+#include "constants.h"
 
 int main(int argc, char* argv[]){
 
-    Engine game(STARTING_WIDTH, STARTING_HEIGHT);
+    Engine game(WINDOW_WIDTH, WINDOW_HEIGHT);
 	// Menu* test = new Menu();
 	Level* test = new Level("levels/test.txt");
 	// return an error if the engine can't initialize with the starting level

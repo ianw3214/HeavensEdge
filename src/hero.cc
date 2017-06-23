@@ -8,7 +8,7 @@
  *
  * Calls the Entity constructor with 20 base health
  */
-Hero::Hero(int initX, int initY) : Creature (initX, initY, 5), speed(300), dashDistance(300) {
+Hero::Hero(int initX, int initY) : Creature (initX, initY, 5) {
     // TODO: get default variables from input/global variable/something like that
 	sprite = new AnimatedSprite("assets/hero.png", 64, 64, 10, false);
     sprite->setAnimationData({10, 10, 6, 6, 10, 10});
@@ -57,7 +57,7 @@ void Hero::update(float delta){
 	}
 	// update movement if the hero is dashing
 	if (dashing) {
-		int distance = delta / 0.2f * dashDistance;
+		int distance = delta / 0.2f * HERO::DASH_DISTANCE;
 		if (dashDirection == 0 || dashDirection == 2) {
 			int newY = (dashDirection == 0 ? -distance : distance) + y;
 			// if a collision occured, move by 1 pixel until collision again
@@ -108,7 +108,7 @@ void Hero::render(SDL_Surface * display, SDL_Rect camera){
  */
 void Hero::key1Attack(int direction) {
 	// set up the collision rectangle for determing attack collisions with enemy
-	Rectangle attackCollision(getX(), getY(), 100, 64);
+	Rectangle attackCollision(getX(), getY(), HERO::ATTACK_1_WIDTH, HERO::ATTACK_1_HEIGHT);
 	if (direction == 0) {
 		attackCollision.x -= 64;
 	}
@@ -137,6 +137,12 @@ void Hero::key1Attack(int direction) {
 	effects.push_back(effect);
 }
 
+/**
+ * Performs the attack associated with the second attack key, which is a dash attack
+ * @param direction The direction of the attack
+ *
+ *	- Direction: 0 - up, 1 - right, 2 - down, 3 - left
+ */
 void Hero::key2Attack(int direction) {
 	dashing = true;
 	dashTimer = 0.2f;
@@ -151,10 +157,17 @@ void Hero::playAnimation(int anim) {
 	sprite->playAnimation(anim);
 }
 
+/**
+ * Sets the next played sprite for the animated sprite after current one finishes playing
+ * @param anim The integer representation of the row of animation to play
+ */
 void Hero::setNextAnimation(int anim) {
 	sprite->setNextAnimation(anim);
 }
 
+/**
+ * Resets the animated sprite to 1st frame
+ */
 void Hero::resetAnimationFrame() {
 	sprite->resetAnimationFrame();
 }
@@ -171,7 +184,7 @@ void Hero::move(int direction, float delta){
 	}
     // 0 - up, 1 - right, 2 - down, 3 - left
 	// get the amount of units that the hero should move this update call
-	int units = static_cast<int>(speed*delta);
+	int units = static_cast<int>(HERO::BASE_SPEED * delta);
 	int newX = x;
 	int newY = y;
 	// calculate the new position
@@ -230,8 +243,8 @@ bool Hero::checkCollision(int xpos, int ypos) {
 			// make rectangles to represent the collision simulation
 			Rectangle target(targetX, targetY, 64, 64);
 			Rectangle newCollisionBox(*static_cast<Rectangle*>(collisionBox));
-			newCollisionBox.x = xpos + 4;
-			newCollisionBox.y = ypos + 4;
+			newCollisionBox.x = xpos + HERO::COLLISION_SPRITE_MARGIN_X;
+			newCollisionBox.y = ypos + HERO::COLLISION_SPRITE_MARGIN_Y;
 			if (isColliding(newCollisionBox, target)){
 				// return true only if both x and y intersect
 				return true;
