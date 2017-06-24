@@ -21,9 +21,7 @@ public:
 	virtual ~Hero() {};
 
 	// getter/setter functions
-	void setCollisionMap(std::vector<int>);
 	void setLevelWidth(int);
-	void setTileSize(int);
 	void setPos(int, int);
 	void setEntities(std::vector<Entity*>*);
 	int getX() const;
@@ -40,16 +38,13 @@ public:
 	void setNextAnimation(int);
 	void resetAnimationFrame();
 
-    void move(int, float);
+	void move(int, float);
 protected:
 	int dashDirection;
 	bool dashing;
 	float dashTimer;
 
 	std::vector<Entity*>* entityList;
-	std::vector<int> collisionMap;
-	int levelWidth, tileSize;
-	bool checkCollision(int, int);
 
 	std::vector<AnimatedSprite*> effects;
 
