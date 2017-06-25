@@ -55,7 +55,10 @@ private:
 	float attackBar;		// keeps track of how long the attack should last for
 	bool attacking;
 
+	int key1AttackCD, key2AttackCD;
+
 	void key1Attack();
 	void key2Attack();
 
+	void init();
 };

@@ -32,6 +32,9 @@ public:
 	virtual void key1Attack(int);
 	virtual void key2Attack(int);
 
+	virtual int getKey1Cooldown();
+	virtual int getKey2Cooldown();
+
 	// methods to interact with animated sprite from outside
 	void playAnimation(int);
 	void setNextAnimation(int);

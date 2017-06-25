@@ -8,16 +8,7 @@
 Player::Player(){
 	// set the player to a default hero at 0,0
     hero = new Hero(0, 0);
-	// TODO: Add variable initialization to an initialization function
-	moveUp = false;
-	moveDown = false;
-	moveRight = false;
-	moveLeft = false;
-	faceRight = true;
-	moving = false;
-	currentAnimation = IDLE_RIGHT;
-	attackCounter = 0.0;
-	attackBar = 0.0;
+	init();
 }
 
 /**
@@ -26,16 +17,7 @@ Player::Player(){
  */
 Player::Player(Hero * initHero){
     hero = initHero;
-	// TODO: Add variable initialization to an initialization function
-	moveUp = false;
-	moveDown = false;
-	moveRight = false;
-	moveLeft = false;
-	faceRight = true;
-	moving = false;
-	currentAnimation = IDLE_RIGHT;
-	attackCounter = 0.0;
-	attackBar = 0.0;
+	init();
 }
 
 /**
@@ -245,4 +227,18 @@ void Player::key2Attack() {
 		attackCounter = 0.0f;
 		attacking = true;
 	}
+}
+
+void Player::init() {
+	moveUp = false;
+	moveDown = false;
+	moveRight = false;
+	moveLeft = false;
+	faceRight = true;
+	moving = false;
+	currentAnimation = IDLE_RIGHT;
+	attackCounter = 0.0;
+	attackBar = 0.0;
+	key1AttackCD = hero->getKey1Cooldown();
+	key2AttackCD = hero->getKey2Cooldown();
 }

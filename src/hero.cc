@@ -146,6 +146,9 @@ void Hero::key2Attack(int direction) {
 	dashDirection = direction;
 }
 
+int Hero::getKey1Cooldown() { return HERO::ATTACK_1_TIME; }
+int Hero::getKey2Cooldown() { return HERO::ATTACK_2_TIME; }
+
 /**
  * Relays the animation information to the animated sprite
  * @param anim The integer representation of the row of animation to play
