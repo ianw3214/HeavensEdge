@@ -20,10 +20,10 @@ public:
 	void takeDamage(int);
 	int getHealth() const;
 	Shape * getCollisionBox() const;
-	void setCollisionMap(std::vector<int>);
-	void setTileSize(int);
-	void setLevelWidth(int);
-	void setCollisionData(std::vector<int>, int, int);
+	static void setCollisionMap(std::vector<int>);
+	static void setTileSize(int);
+	static void setLevelWidth(int);
+	static void setCollisionData(std::vector<int>, int, int);
 
 	void handleEvents(SDL_Event);
 	void update(float);
@@ -36,8 +36,8 @@ protected:
 
 	// use a pointer to prevent class slicing
 	Shape * collisionBox;
-	std::vector<int> collisionMap;
-	int levelWidth, tileSize;
+	static std::vector<int> collisionMap;
+	static int levelWidth, tileSize;
 
 	bool checkCollision(int, int);
 

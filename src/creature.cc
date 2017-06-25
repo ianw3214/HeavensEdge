@@ -1,5 +1,9 @@
 #include "creature.h"
 
+// define static variables
+std::vector<int> Creature::collisionMap;
+int Creature::levelWidth, Creature::tileSize;
+
 // Default constructor
 Creature::Creature() {
 	sprite = nullptr;

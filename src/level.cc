@@ -11,17 +11,15 @@ Level::Level(){
 // load a level and its data from a file
 Level::Level(std::string filePath) {
     map = new Map("levels/test.txt");
+	Creature::setCollisionData(map->getCollisionMap(), map->getWidth(), map->getTileSize());
 	// load the collision data to the player
     player = new Player();
 	player->setHeroEntities(&entities);
-	player->setCollisionData(map->getCollisionMap(), map->getWidth(), map->getTileSize());
     entities.push_back(player);
 	// temporarily set new enemies
 	Enemy * temp = new Enemy(100, 100);
-	temp->setCollisionData(map->getCollisionMap(), map->getWidth(), map->getTileSize());
 	entities.push_back(temp);
 	temp = new Enemy(200, 200);
-	temp->setCollisionData(map->getCollisionMap(), map->getWidth(), map->getTileSize());
 	entities.push_back(temp);
 }
 
@@ -129,10 +127,8 @@ void Level::handleKeyPress(SDL_Keycode key) {
 	// f key to spawn testing enemies
 	if (key == SDLK_f) {
 		Enemy * temp = new Enemy(100, 100);
-		temp->setCollisionData(map->getCollisionMap(), map->getWidth(), map->getTileSize());
 		entities.push_back(temp);
 		temp = new Enemy(200, 200);
-		temp->setCollisionData(map->getCollisionMap(), map->getWidth(), map->getTileSize());
 		entities.push_back(temp);
 	}
 	// space key to pause the game

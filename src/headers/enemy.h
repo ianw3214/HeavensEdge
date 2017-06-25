@@ -27,7 +27,6 @@ private:
 
 	// movement related variables/functions
 	void move(float);
-	bool checkCollision(int, int);
 	int currentDir;	// 0 - Up, 1 - Right, 2 - Down, 3 - Left
 	float idleTimer;
 

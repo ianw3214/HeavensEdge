@@ -19,7 +19,6 @@ Hero::Hero(int initX, int initY) : Creature (initX, initY, 5, 2, HERO::COLLISION
 }
 
 // getter/setter functions
-void Hero::setLevelWidth(int width) { levelWidth = width; }
 void Hero::setPos(int newX, int newY) { x = newX, y = newY; }
 void Hero::setEntities(std::vector<Entity*>* input) { entityList = input; }
 int Hero::getX() const { return x; }

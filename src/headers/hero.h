@@ -21,7 +21,6 @@ public:
 	virtual ~Hero() {};
 
 	// getter/setter functions
-	void setLevelWidth(int);
 	void setPos(int, int);
 	void setEntities(std::vector<Entity*>*);
 	int getX() const;
