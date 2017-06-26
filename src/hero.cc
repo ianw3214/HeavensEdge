@@ -33,8 +33,8 @@ void Hero::update(float delta){
 	// set the position of the sprite to match that of the hero
 	sprite->setPos(x, y);
 	// update the collision shape as well
-	collisionBox->x = x + 4;
-	collisionBox->y = y + 4;
+	collisionBox->x = x + collisionMarginX;
+	collisionBox->y = y + collisionMarginY;
 	// delete effects accordingly
 	for (int i = effects.size() - 1; i >= 0; i--) {
 		effects.at(i)->update(delta);

@@ -41,8 +41,8 @@ void Enemy::update(float delta) {
 		}
 	}
 	// update the collision rectangle as well
-	collisionBox->x = x;
-	collisionBox->y = y;
+	collisionBox->x = x + collisionMarginX;
+	collisionBox->y = y + collisionMarginY;
 }
 
 /**
@@ -69,5 +69,5 @@ void Enemy::init() {
 }
 
 void Enemy::move(float delta) {
-	Creature::move(1, speed * delta);
+	Creature::move(currentDir, speed * delta);
 }
