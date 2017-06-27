@@ -66,6 +66,8 @@ void Enemy::init() {
 	// set the initial movement flags
 	currentDir = rand() % 4;
 	idleTimer = 0.0f;
+	width = 64;
+	height = 64;
 }
 
 void Enemy::move(float delta) {

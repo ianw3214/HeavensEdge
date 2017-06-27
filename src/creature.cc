@@ -121,6 +121,8 @@ void Creature::init(int inputX, int inputY, int inputHealth, int inpType, int cM
 	collisionBox = new Rectangle(x, y, 0, 0);
 	collisionMarginX = cMarginX;
 	collisionMarginY = cMarginY;
+	width = 0;
+	height = 0;
 }
 
 /**
@@ -129,14 +131,14 @@ void Creature::init(int inputX, int inputY, int inputHealth, int inpType, int cM
 bool Creature::checkCollision(int xpos, int ypos) {
 	// TODO: check if player goes out of the map
 	std::vector<int> checkIndices;			// vector to hold indices of collision map to check
-											// get the players left and up most tile box
+	// get the players left and up most tile box
 	int tileX = static_cast<int>(xpos / tileSize);
 	int tileY = static_cast<int>(ypos / tileSize);
 	// we only have to check 4 boxes because the player spans at most 4 tiles
 	// since x and y round down, we know we only have to get the right and bottom tiles
 	int targetIndex = tileY * levelWidth + tileX;
 	checkIndices.push_back(targetIndex);	// add the current tile always
-											// if we aren't at the right most side of the level, add the tile 1 to the right
+	// if we aren't at the right most side of the level, add the tile 1 to the right
 	if (tileX != levelWidth - 1) { checkIndices.push_back(targetIndex + 1); }
 	// if we aren't at the bottom, add the bottom 2 tiles
 	if ((tileY + 1) * levelWidth < collisionMap.size()) {
@@ -146,7 +148,7 @@ bool Creature::checkCollision(int xpos, int ypos) {
 	for (unsigned int i = 0; i < checkIndices.size(); i++) {
 		int collisionIndex = checkIndices.at(i);
 		if (collisionMap.at(collisionIndex) == 1) {	// 1 means it is a collidable tile
-													// check the coords of the tile against player position
+			// check the coords of the tile against player position
 			int targetX = (collisionIndex % levelWidth) * tileSize;
 			int targetY = static_cast<int>(collisionIndex / levelWidth) * tileSize;
 			// make rectangles to represent the collision simulation

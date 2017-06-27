@@ -6,6 +6,8 @@
 #include "animatedSprite.h"
 #include "collision.h"
 
+#include <iostream>
+
 /**
  * Base creature class representing game entities with health.
  */
@@ -43,6 +45,7 @@ protected:
 
 	int x, y;
 	int collisionMarginX, collisionMarginY;
+	int width, height;
 
 	AnimatedSprite * sprite;
 

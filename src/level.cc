@@ -16,11 +16,13 @@ Level::Level(std::string filePath) {
     player = new Player();
 	player->setHeroEntities(&entities);
     entities.push_back(player);
+	/*
 	// temporarily set new enemies
 	Enemy * temp = new Enemy(100, 100);
 	entities.push_back(temp);
 	temp = new Enemy(200, 200);
 	entities.push_back(temp);
+	*/
 }
 
 /**

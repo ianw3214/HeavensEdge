@@ -15,7 +15,9 @@ Hero::Hero(int initX, int initY) : Creature (initX, initY, 5, 2, HERO::COLLISION
 	dashTimer = 0.0f;
 	dashDirection = -1;
 	// initialize the collision shape
-	collisionBox = new Rectangle(x, y, 56, 56);
+	collisionBox = new Rectangle(x, y, HERO::COLLISION_WIDTH, HERO::COLLISION_HEIGHT);
+	width = HERO::COLLISION_WIDTH;
+	height = HERO::COLLISION_HEIGHT;
 }
 
 // getter/setter functions
@@ -29,6 +31,7 @@ int Hero::getY() const { return y; }
  * @param delta Difference in time between update calls
  */
 void Hero::update(float delta){
+	Creature::update(delta);
     sprite->update(delta);
 	// set the position of the sprite to match that of the hero
 	sprite->setPos(x, y);
