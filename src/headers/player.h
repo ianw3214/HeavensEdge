@@ -30,32 +30,13 @@ public:
     void update(float);
     void render(SDL_Surface*, SDL_Rect);
 private:
-	enum ANIM_STATE {
-		IDLE_RIGHT = 0,
-		IDLE_LEFT = 1,
-		MOVE_RIGHT = 2,
-		MOVE_LEFT = 3,
-		ATTACK1RIGHT = 4,
-		ATTACK1LEFT = 5
-	};
 
     Hero * hero;
 
-	bool moving;
-	bool faceRight;
-	bool moveUp, moveDown, moveRight, moveLeft;
-
-	ANIM_STATE currentAnimation;
+	bool upPress, rightPress, downPress, leftPress;
 
     void handleKeyPress(SDL_Keycode);
     void handleKeyRelease(SDL_Keycode);
-	void changeAnimation();
-
-	float attackCounter;	// keeps track of how long the current attack has gone for
-	float attackBar;		// keeps track of how long the attack should last for
-	bool attacking;
-
-	int key1AttackCD, key2AttackCD;
 
 	void key1Attack();
 	void key2Attack();

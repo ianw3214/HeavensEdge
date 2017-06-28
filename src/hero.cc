@@ -18,6 +18,10 @@ Hero::Hero(int initX, int initY) : Creature (initX, initY, 5, 2, HERO::COLLISION
 	collisionBox = new Rectangle(x, y, HERO::COLLISION_WIDTH, HERO::COLLISION_HEIGHT);
 	width = HERO::COLLISION_WIDTH;
 	height = HERO::COLLISION_HEIGHT;
+	attacking = false;
+	attackTimer = 0.0f;
+	upPress = false, rightPress = false, downPress = false, leftPress = false;
+	faceRight = true;
 }
 
 // getter/setter functions
@@ -25,6 +29,12 @@ void Hero::setPos(int newX, int newY) { x = newX, y = newY; }
 void Hero::setEntities(std::vector<Entity*>* input) { entityList = input; }
 int Hero::getX() const { return x; }
 int Hero::getY() const { return y; }
+void Hero::syncMoveKeys(bool* up, bool* right, bool* down, bool* left) {
+	upPress = up;
+	rightPress = right;
+	downPress = down;
+	leftPress = left;
+}
 
 /**
  * Updates the hero
@@ -47,16 +57,14 @@ void Hero::update(float delta){
 			delete effect;
 		}
 	}
-	// update the dash timer if it isn't 0
-	if (dashTimer > 0.0f) {
+	// update movement if the hero is dashing
+	if (dashing) {
+		// update the dash timer
 		dashTimer -= delta;
 		if (dashTimer <= 0.0f) {
 			dashing = false;
 			dashTimer = 0.0f;
 		}
-	}
-	// update movement if the hero is dashing
-	if (dashing) {
 		int distance = delta / 0.2f * HERO::DASH_DISTANCE;
 		if (dashDirection == 0 || dashDirection == 2) {
 			int newY = (dashDirection == 0 ? -distance : distance) + y;
@@ -85,6 +93,18 @@ void Hero::update(float delta){
 			else { x = newX; }
 		}
 	}
+	else if (attacking) {
+		// update the attack timer
+		attackTimer -= delta;
+		if (attackTimer <= 0.0f) {
+			attacking = false;
+			attackTimer = 0.0f;
+		}
+	}
+	else {
+		// move the player according to key presses
+		move(delta);
+	}
 }
 
 /**
@@ -106,10 +126,10 @@ void Hero::render(SDL_Surface * display, SDL_Rect camera){
  *
  *	- Direction 0 for left, 1 for right
  */
-void Hero::key1Attack(int direction) {
+void Hero::key1Attack() {
 	// set up the collision rectangle for determing attack collisions with enemy
 	Rectangle attackCollision(getX(), getY(), HERO::ATTACK_1_WIDTH, HERO::ATTACK_1_HEIGHT);
-	if (direction == 0) {
+	if (!faceRight) {
 		attackCollision.x -= 64;
 	}
 	// loop through all entities and deal damage if enemy type
@@ -127,7 +147,7 @@ void Hero::key1Attack(int direction) {
 	// add an attack effect to the player
 	AnimatedSprite* effect = new AnimatedSprite("assets/attack.png", 100, 64, 10, true);
 	effect->setAnimationData({ 10 , 10});
-	if (direction == 1) { 
+	if (faceRight) { 
 		effect->setPos(getX(), getY()); 
 		effect->playAnimation(0);
 	} else { 
@@ -135,6 +155,13 @@ void Hero::key1Attack(int direction) {
 		effect->playAnimation(1);
 	}
 	effects.push_back(effect);
+	attackTimer = HERO::ATTACK_1_TIME;
+	attacking = true;
+	// update animations
+	animState = faceRight ? ATTACK1RIGHT : ATTACK1LEFT;
+	setNextAnimation(faceRight ? IDLE_RIGHT : IDLE_LEFT);
+	playAnimation(animState);
+	resetAnimationFrame();
 }
 
 /**
@@ -143,14 +170,15 @@ void Hero::key1Attack(int direction) {
  *
  *	- Direction: 0 - up, 1 - right, 2 - down, 3 - left
  */
-void Hero::key2Attack(int direction) {
+void Hero::key2Attack() {
 	dashing = true;
 	dashTimer = 0.2f;
-	dashDirection = direction;
+	if (*upPress) dashDirection = 0;
+	else if (*rightPress) dashDirection = 1;
+	else if (*downPress) dashDirection = 2;
+	else if (*leftPress) dashDirection = 3;
+	else dashDirection = faceRight ? 1 : 3;
 }
-
-int Hero::getKey1Cooldown() { return HERO::ATTACK_1_TIME; }
-int Hero::getKey2Cooldown() { return HERO::ATTACK_2_TIME; }
 
 /**
  * Relays the animation information to the animated sprite
@@ -175,10 +203,31 @@ void Hero::resetAnimationFrame() {
 	sprite->resetAnimationFrame();
 }
 
-void Hero::move(int direction, float delta) {
-	if (dashing) {
+void Hero::move(float delta) {
+	if (attacking || dashing) return;
+	// update animations accordingly if the hero is not moving
+	if (!*upPress && !*rightPress && !*downPress && !*leftPress) {
+		animState = faceRight ? IDLE_RIGHT : IDLE_LEFT;
+		playAnimation(animState);
 		return;
 	}
-	int units = HERO::BASE_SPEED * delta;
-	Creature::move(direction, units);
+	int moveDistance = delta * HERO::BASE_SPEED;
+	if (*upPress) {
+		Creature::move(0, moveDistance);
+	}
+	if (*rightPress) {
+		Creature::move(1, moveDistance);
+		faceRight = true;
+	}
+	if (*downPress) {
+		Creature::move(2, moveDistance);
+	}
+	if (*leftPress) {
+		Creature::move(3, moveDistance);
+		faceRight = false;
+	}
+	// update the animations (up to this point, the hero is definitely moving)
+	if (faceRight) animState = MOVE_RIGHT;
+	else animState = MOVE_LEFT;
+	sprite->playAnimation(animState);
 }

@@ -25,29 +25,41 @@ public:
 	void setEntities(std::vector<Entity*>*);
 	int getX() const;
 	int getY() const;
+	void syncMoveKeys(bool*, bool*, bool*, bool*);
 
     virtual void update(float);
     virtual void render(SDL_Surface*, SDL_Rect);
 
-	virtual void key1Attack(int);
-	virtual void key2Attack(int);
-
-	virtual int getKey1Cooldown();
-	virtual int getKey2Cooldown();
+	virtual void key1Attack();
+	virtual void key2Attack();
 
 	// methods to interact with animated sprite from outside
 	void playAnimation(int);
 	void setNextAnimation(int);
 	void resetAnimationFrame();
 
-	void move(int, float);
 protected:
+	int animState;
+	bool faceRight;
+	bool *upPress, *rightPress, *downPress, *leftPress;
+
 	int dashDirection;
-	bool dashing;
-	float dashTimer;
+	bool dashing, attacking;
+	float dashTimer, attackTimer;
 
 	std::vector<Entity*>* entityList;
 
 	std::vector<AnimatedSprite*> effects;
 
+private:
+	enum ANIM_STATE {
+		IDLE_RIGHT = 0,
+		IDLE_LEFT = 1,
+		MOVE_RIGHT = 2,
+		MOVE_LEFT = 3,
+		ATTACK1RIGHT = 4,
+		ATTACK1LEFT = 5
+	};
+
+	void move(float);
 };
