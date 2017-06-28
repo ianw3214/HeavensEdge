@@ -35,7 +35,7 @@ bool Engine::init(State* initialState){
         display = SDL_GetWindowSurface(gWindow);
         // initialize image loading library
         int success = IMG_Init(IMG_INIT_PNG);
-        if(success&IMG_INIT_PNG != IMG_INIT_PNG){
+        if((success & IMG_INIT_PNG) != IMG_INIT_PNG){
             std::cout << "Image initialization failed: " << IMG_GetError() << std::endl;
             return false;
         }
@@ -89,7 +89,7 @@ void Engine::handleEvents(){
  */
 void Engine::update(){
     currentTime = SDL_GetTicks();
-    deltaTime = static_cast<float>(currentTime - lastTime)/1000.0;
+    deltaTime = static_cast<float>(currentTime - lastTime)/1000.0f;
     lastTime = currentTime;
     currentState->update(deltaTime);
     // check to see if the state should be changed

@@ -71,5 +71,5 @@ void Enemy::init() {
 }
 
 void Enemy::move(float delta) {
-	Creature::move(currentDir, speed * delta);
+	Creature::move(currentDir, static_cast<int>(speed * delta));
 }

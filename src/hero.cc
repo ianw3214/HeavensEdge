@@ -65,7 +65,7 @@ void Hero::update(float delta){
 			dashing = false;
 			dashTimer = 0.0f;
 		}
-		int distance = delta / 0.2f * HERO::DASH_DISTANCE;
+		int distance = static_cast<int>(delta / 0.2f * HERO::DASH_DISTANCE);
 		if (dashDirection == 0 || dashDirection == 2) {
 			int newY = (dashDirection == 0 ? -distance : distance) + y;
 			// if a collision occured, move by 1 pixel until collision again
@@ -218,7 +218,7 @@ void Hero::move(float delta) {
 		playAnimation(animState);
 		return;
 	}
-	int moveDistance = delta * HERO::BASE_SPEED;
+	int moveDistance = static_cast<int>(delta * HERO::BASE_SPEED);
 	if (*upPress) {
 		Creature::move(0, moveDistance);
 	}
