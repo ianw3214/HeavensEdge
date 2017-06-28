@@ -11,7 +11,7 @@
 Hero::Hero(int initX, int initY) : Creature (initX, initY, 5, 2, HERO::COLLISION_SPRITE_MARGIN_X, HERO::COLLISION_SPRITE_MARGIN_Y) {
     // TODO: get default variables from input/global variable/something like that
 	sprite = new AnimatedSprite("assets/hero.png", 64, 64, 10, false);
-    sprite->setAnimationData({10, 10, 6, 6, 10, 10});
+    sprite->setAnimationData({10, 10, 6, 6, 10, 10, 10, 10});
 	dashTimer = 0.0f;
 	dashDirection = -1;
 	// initialize the collision shape
@@ -127,6 +127,7 @@ void Hero::render(SDL_Surface * display, SDL_Rect camera){
  *	- Direction 0 for left, 1 for right
  */
 void Hero::key1Attack() {
+	if (dashing || attacking) return;
 	// set up the collision rectangle for determing attack collisions with enemy
 	Rectangle attackCollision(getX(), getY(), HERO::ATTACK_1_WIDTH, HERO::ATTACK_1_HEIGHT);
 	if (!faceRight) {
@@ -171,6 +172,7 @@ void Hero::key1Attack() {
  *	- Direction: 0 - up, 1 - right, 2 - down, 3 - left
  */
 void Hero::key2Attack() {
+	if (dashing || attacking) return;
 	dashing = true;
 	dashTimer = 0.2f;
 	if (*upPress) dashDirection = 0;
@@ -178,6 +180,11 @@ void Hero::key2Attack() {
 	else if (*downPress) dashDirection = 2;
 	else if (*leftPress) dashDirection = 3;
 	else dashDirection = faceRight ? 1 : 3;
+	// update animations
+	animState = faceRight ? DASH_RIGHT : DASH_LEFT;
+	setNextAnimation(faceRight ? IDLE_RIGHT : IDLE_LEFT);
+	playAnimation(animState);
+	resetAnimationFrame();
 }
 
 /**

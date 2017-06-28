@@ -33,11 +33,11 @@ View the [devlog](devlog/list.md).
 
 ## Secondary Features
 
-  - [ ] Dash
+  - [x] Dash
   - [ ] Dash attack
   - [ ] Change window size
   - [ ] Basic enemy attack
-  - [ ] Random enemy movement
+  - [x] Random enemy movement
   - [ ] Particle effects
   - [ ] Audio loader
   - [ ] Font/Text loading
@@ -45,9 +45,9 @@ View the [devlog](devlog/list.md).
 
 ## Art
 
-  - [ ] Hero idle
-  - [ ] Hero movement
-  - [ ] Hero basic attack
+  - [x] Hero idle
+  - [x] Hero movement
+  - [x] Hero basic attack
   - [ ] Enemy idle
   - [ ] Enemy attack
   - [ ] Starting tileset
