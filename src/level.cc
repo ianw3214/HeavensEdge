@@ -5,24 +5,32 @@
 
 // default constructor for levels just for the sake of it
 Level::Level(){
-
-}
-
-// load a level and its data from a file
-Level::Level(std::string filePath) {
-    map = new Map("levels/test.txt");
+	map = new Map("levels/test.txt");
 	Creature::setCollisionData(map->getCollisionMap(), map->getWidth(), map->getTileSize());
 	// load the collision data to the player
-    player = new Player();
+	player = new Player();
 	player->setHeroEntities(&entities);
-    entities.push_back(player);
-	/*
+	entities.push_back(player);
 	// temporarily set new enemies
 	Enemy * temp = new Enemy(100, 100);
 	entities.push_back(temp);
 	temp = new Enemy(200, 200);
 	entities.push_back(temp);
-	*/
+}
+
+// load a level and its data from a file
+Level::Level(std::string filePath) {
+    map = new Map(filePath);
+	Creature::setCollisionData(map->getCollisionMap(), map->getWidth(), map->getTileSize());
+	// load the collision data to the player
+    player = new Player();
+	player->setHeroEntities(&entities);
+    entities.push_back(player);
+	// temporarily set new enemies
+	Enemy * temp = new Enemy(100, 100);
+	entities.push_back(temp);
+	temp = new Enemy(200, 200);
+	entities.push_back(temp);
 }
 
 /**
@@ -32,8 +40,8 @@ void Level::init() {
     // TODO: initialize camera from NOT hard coded code
     camera.w = 1280;
     camera.h = 720;
-	camSpeed = 2;
-	camMargin = 30;
+	camSpeed = CAMERA_SPEED;
+	camMargin = CAMERA_MARGIN;
 	pause = false;
 	player->setPos(map->getStartingX()*map->getTileSize(), map->getStartingY()*map->getTileSize());
 	// set initial camera position to player position

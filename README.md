@@ -60,5 +60,5 @@ View the [devlog](devlog/list.md).
   - [ ] Menu sound effect
   - [ ] Hero footsteps
   - [ ] Hero attack sound
-  = [ ] Hero damage sound
+  - [ ] Hero damage sound
   - [ ] Enemy damage sound
