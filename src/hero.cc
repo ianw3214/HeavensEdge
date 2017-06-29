@@ -11,7 +11,7 @@
 Hero::Hero(int initX, int initY) : Creature (initX, initY, 5, 2, HERO::COLLISION_SPRITE_MARGIN_X, HERO::COLLISION_SPRITE_MARGIN_Y) {
     // TODO: get default variables from input/global variable/something like that
 	sprite = new AnimatedSprite("assets/hero.png", 64, 64, 10, false);
-    sprite->setAnimationData({10, 10, 6, 6, 10, 10, 10, 10});
+    sprite->setAnimationData({10, 10, 6, 6, 10, 10, 10, 10, 10});
 	dashTimer = 0.0f;
 	dashDirection = -1;
 	// initialize the collision shape
@@ -127,7 +127,14 @@ void Hero::render(SDL_Surface * display, SDL_Rect camera){
  *	- Direction 0 for left, 1 for right
  */
 void Hero::key1Attack() {
-	if (dashing || attacking) return;
+	if (attacking) {
+		return;
+	}
+	if (dashing) {
+		std::cout << "HELL YA" << std::endl;
+		combo1Attack();
+		return;
+	}
 	// set up the collision rectangle for determing attack collisions with enemy
 	Rectangle attackCollision(getX(), getY(), HERO::ATTACK_1_WIDTH, HERO::ATTACK_1_HEIGHT);
 	if (!faceRight) {
@@ -237,4 +244,18 @@ void Hero::move(float delta) {
 	if (faceRight) animState = MOVE_RIGHT;
 	else animState = MOVE_LEFT;
 	sprite->playAnimation(animState);
+}
+
+void Hero::combo1Attack() {
+	// stop dashing and perform a combo attack
+	dashing = false;
+	dashTimer = 0.0f;
+	// start attack timer again
+	attacking = true;
+	attackTimer = HERO::COMBO_1_TIME;
+	// update animations
+	animState = COMBO1;
+	setNextAnimation(faceRight ? IDLE_RIGHT : IDLE_LEFT);
+	playAnimation(animState);
+	resetAnimationFrame();
 }

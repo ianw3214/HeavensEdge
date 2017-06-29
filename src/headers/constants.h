@@ -17,4 +17,6 @@ namespace HERO {
 	int const COLLISION_SPRITE_MARGIN_Y = 3;
 	int const ATTACK_1_WIDTH = 100;
 	int const ATTACK_1_HEIGHT = 64;
+
+	float const COMBO_1_TIME = 0.5f;
 }

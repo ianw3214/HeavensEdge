@@ -60,8 +60,12 @@ private:
 		ATTACK1RIGHT = 4,
 		ATTACK1LEFT = 5,
 		DASH_RIGHT = 6,
-		DASH_LEFT = 7
+		DASH_LEFT = 7,
+		COMBO1 = 8
 	};
 
 	void move(float);
+
+	// handle all combo attacks in each specific class, so it is private
+	void combo1Attack();
 };
