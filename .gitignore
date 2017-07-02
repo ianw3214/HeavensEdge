@@ -13,3 +13,7 @@ HeavensEdge.VC.VC.opendb
 *.vcxproj
 HeavensEdge.vcxproj.filters
 resource.h
+LevelEditor/.vs/
+LevelEditor/Debug/
+LevelEditor/LevelEditor.vcxproj.filters
+LevelEditor/LevelEditor.vcxproj.user
