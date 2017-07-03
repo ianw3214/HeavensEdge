@@ -3,10 +3,19 @@
 
 #include <iostream>
 
+#include "map.h"
+
 // global variables
 SDL_Window * gWindow;
 SDL_Surface * display;
 bool running;
+
+Map *map;
+int xOffset, yOffset;
+int xMouseStartPos, yMouseStartPos;
+int xOffsetStart, yOffsetStart;
+
+bool SPACE, LMB;
 
 // function declarations
 bool init();
@@ -21,6 +30,8 @@ int main(int argc, char* argv[]) {
 	std::cout << "hello world" << std::endl;
 	init();
 
+	map = new Map();
+
 	while (running) {
 		handleEvents();
 		update();
@@ -28,8 +39,6 @@ int main(int argc, char* argv[]) {
 	}
 
 	cleanUp();
-
-	std::cin.get();
 
 	return 0;
 
@@ -58,6 +67,9 @@ bool init() {
 	}
 	// initialize variables
 	running = true;
+	xOffset = 0, yOffset = 0;
+	xMouseStartPos = 0, yMouseStartPos = 0;
+	xOffsetStart = 0, yOffsetStart = 0;
 }
 
 void cleanUp() {
@@ -73,14 +85,50 @@ void handleEvents() {
 		if (e.type == SDL_QUIT) {
 			running = false;
 		}
+		if (e.type == SDL_KEYDOWN) {
+			if (e.key.keysym.sym == SDLK_ESCAPE) {
+				running = false;
+			}
+			if (e.key.keysym.sym == SDLK_SPACE) {
+				SPACE = true;
+			}
+		}
+		if (e.type == SDL_KEYUP) {
+			if (e.key.keysym.sym == SDLK_SPACE) {
+				SPACE = false;
+			}
+		}
+		if (e.type == SDL_MOUSEBUTTONDOWN) {
+			if (e.button.button == SDL_BUTTON_LEFT) {
+				LMB = true;
+				// set the starting mouse position to move map
+				SDL_GetMouseState(&xMouseStartPos, &yMouseStartPos);
+				xOffsetStart = xOffset, yOffsetStart = yOffset;
+			}
+		}
+		if (e.type == SDL_MOUSEBUTTONUP) {
+			if (e.button.button == SDL_BUTTON_LEFT) {
+				LMB = false;
+			}
+		}
 	}
 }
 
 void update() {
-
+	map->update();
+	if (SPACE && LMB) {
+		int mouseX, mouseY;
+		SDL_GetMouseState(&mouseX, &mouseY);
+		int xMouseDiff = mouseX - xMouseStartPos;
+		int yMouseDiff = mouseY - yMouseStartPos;
+		xOffset = xOffsetStart + xMouseDiff;
+		yOffset = yOffsetStart + yMouseDiff;
+	}
 }
 
 void render() {
 	SDL_FillRect(display, nullptr, SDL_MapRGB(display->format, 0, 0, 0));
+	// render the map
+	map->render(display, xOffset, yOffset);
 	SDL_UpdateWindowSurface(gWindow);
 }
