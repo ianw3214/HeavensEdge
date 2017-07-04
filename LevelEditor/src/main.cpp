@@ -32,6 +32,9 @@ bool SPACE, LMB;
 
 tileNode * currentTile;
 
+// asset surfaces
+SDL_Surface * rectOutline;
+
 // function declarations
 bool init();
 void cleanUp();
@@ -43,6 +46,7 @@ void render();
 void setTileLinkedList();
 void renderTileLinkedList();
 void addTileLinkedListPos(int);
+void renderRectOutline(int, int);
 
 int main(int argc, char* argv[]) {
 
@@ -92,6 +96,11 @@ bool init() {
 	xOffsetStart = 0, yOffsetStart = 0;
 	currentTime = lastTime = SDL_GetTicks();
 	deltaTime = 0.0f;
+	// initialize asset surfaces
+	rectOutline = IMG_Load(RECT_OUTLINE_FILE_PATH.c_str());
+	if (!rectOutline) {
+		std::cout << "failed to load: outline1.png; ERROR: " << IMG_GetError() << std::endl;
+	}
 	return true;
 }
 
@@ -180,6 +189,7 @@ void render() {
 	map->render(display, xOffset, yOffset);
 	// render the tiles
 	renderTileLinkedList();
+	renderRectOutline(64, 64);
 	SDL_UpdateWindowSurface(gWindow);
 }
 
@@ -227,5 +237,12 @@ void addTileLinkedListPos(int distance) {
 	while (prev) {
 		prev->xPos += distance;
 		prev = prev->previous;
+	}
+}
+
+void renderRectOutline(int x, int y) {
+	SDL_Rect targetRect = { x - RECT_OUTLINE_MARGIN, y - RECT_OUTLINE_MARGIN, 0, 0};
+	if (SDL_BlitSurface(rectOutline, nullptr, display, &targetRect) < 0) {
+		std::cout << "Image unable to blit, error: " << SDL_GetError() << std::endl;
 	}
 }

@@ -2,8 +2,9 @@
 
 #include <string>
 
-std::string const TILE_SHEET_FILE_PATH = "../assets/tiles.png";
-std::string const OUTPUT_FILE_PATH = "../levels/test.txt";
+std::string const TILE_SHEET_FILE_PATH = "assets/tiles.png";
+std::string const OUTPUT_FILE_PATH = "levels/test.txt";
+std::string const RECT_OUTLINE_FILE_PATH = "assets/outline1.png";
 
 int const TILE_WIDTH = 64;
 int const TILE_HEIGHT = 64;
@@ -15,3 +16,5 @@ int const SCREEN_WIDTH = 1280;
 int const SCREEN_HEIGHT = 720;
 
 int const PALETTE_MOVE_SPEED = 500;
+
+int const RECT_OUTLINE_MARGIN = 2;
