@@ -20,6 +20,8 @@ struct tileNode {
 SDL_Window * gWindow;
 SDL_Surface * display;
 bool running;
+Uint32 currentTime, lastTime;
+float deltaTime;
 
 Map *map;
 int xOffset, yOffset;
@@ -40,6 +42,7 @@ void render();
 
 void setTileLinkedList();
 void renderTileLinkedList();
+void addTileLinkedListPos(int);
 
 int main(int argc, char* argv[]) {
 
@@ -68,7 +71,7 @@ bool init() {
 	}
 	else {
 		// create a game window
-		gWindow = SDL_CreateWindow("Heaven's Edge", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1280, 720, SDL_WINDOW_SHOWN);
+		gWindow = SDL_CreateWindow("Heaven's Edge", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 		if (gWindow == nullptr) {
 			std::cout << "Window initialization failed: " << SDL_GetError() << std::endl;
 			return false;
@@ -87,6 +90,9 @@ bool init() {
 	xOffset = 0, yOffset = 0;
 	xMouseStartPos = 0, yMouseStartPos = 0;
 	xOffsetStart = 0, yOffsetStart = 0;
+	currentTime = lastTime = SDL_GetTicks();
+	deltaTime = 0.0f;
+	return true;
 }
 
 void cleanUp() {
@@ -108,6 +114,16 @@ void handleEvents() {
 			}
 			if (e.key.keysym.sym == SDLK_SPACE) {
 				SPACE = true;
+			}
+			if (e.key.keysym.sym == SDLK_RIGHT) {
+				if (currentTile->next) {
+					currentTile = currentTile->next;
+				}
+			}
+			if (e.key.keysym.sym == SDLK_LEFT) {
+				if (currentTile->previous) {
+					currentTile = currentTile->previous;
+				}
 			}
 		}
 		if (e.type == SDL_KEYUP) {
@@ -132,6 +148,9 @@ void handleEvents() {
 }
 
 void update() {
+	currentTime = SDL_GetTicks();
+	deltaTime = static_cast<float>(currentTime - lastTime) / 1000.0f;
+	lastTime = currentTime;
 	map->update();
 	if (SPACE && LMB) {
 		int mouseX, mouseY;
@@ -140,6 +159,18 @@ void update() {
 		int yMouseDiff = mouseY - yMouseStartPos;
 		xOffset = xOffsetStart + xMouseDiff;
 		yOffset = yOffsetStart + yMouseDiff;
+	}
+	// update the position of tiles if current tile is not centered
+	int center = (SCREEN_WIDTH - TILE_WIDTH) / 2;
+	if (currentTile->xPos != center) {
+		int distance = static_cast<int>(deltaTime * PALETTE_MOVE_SPEED * (currentTile->xPos < center ? 1 : -1));
+		int newX = currentTile->xPos + distance;
+		// make sure the movement didn't overshoot the center
+		if ((newX > center && currentTile->xPos < center) || (newX < center && currentTile->xPos > center)) {
+			// otherwise, correct the distance
+			distance = center - currentTile->xPos;
+		}
+		addTileLinkedListPos(distance);
 	}
 }
 
@@ -153,12 +184,13 @@ void render() {
 }
 
 void setTileLinkedList() {
+	int startPos = (SCREEN_WIDTH - TILE_WIDTH) / 2;
 	tileNode * lastNode = nullptr;
 	for ( auto const &i : map->getIndexMap() ) {
 		int index = i.first;
 		Tile * tile = i.second;
 		tileNode* temp = new tileNode(tile, lastNode, nullptr, index);
-		temp->xPos = index * 100;
+		temp->xPos = index * 100 + startPos;
 		if (lastNode) {
 			lastNode->next = temp;
 			lastNode = temp;
@@ -180,6 +212,20 @@ void renderTileLinkedList() {
 	tileNode *prev = currentTile->previous;
 	while (prev != nullptr) {
 		prev->tile->render(display, prev->xPos, 650);
+		prev = prev->previous;
+	}
+}
+
+void addTileLinkedListPos(int distance) {
+	currentTile->xPos += distance;
+	tileNode *next = currentTile->next;
+	while (next) {
+		next->xPos += distance;
+		next = next->next;
+	}
+	tileNode *prev = currentTile->previous;
+	while (prev) {
+		prev->xPos += distance;
 		prev = prev->previous;
 	}
 }
