@@ -2,8 +2,19 @@
 #include <SDL_image.h>
 
 #include <iostream>
+#include <map>
 
 #include "map.h"
+
+// custom data structures
+struct tileNode {
+	tileNode(Tile* iTile, tileNode* iPrev, tileNode* iNext, int iIndex) : tile(iTile), previous(iPrev), next(iNext), index(iIndex) {}
+	Tile * tile;
+	tileNode * next;
+	tileNode * previous;
+	int index;
+	int xPos;
+};
 
 // global variables
 SDL_Window * gWindow;
@@ -17,6 +28,8 @@ int xOffsetStart, yOffsetStart;
 
 bool SPACE, LMB;
 
+tileNode * currentTile;
+
 // function declarations
 bool init();
 void cleanUp();
@@ -25,12 +38,16 @@ void handleEvents();
 void update();
 void render();
 
+void setTileLinkedList();
+void renderTileLinkedList();
+
 int main(int argc, char* argv[]) {
 
-	std::cout << "hello world" << std::endl;
 	init();
 
 	map = new Map();
+
+	setTileLinkedList();
 
 	while (running) {
 		handleEvents();
@@ -130,5 +147,39 @@ void render() {
 	SDL_FillRect(display, nullptr, SDL_MapRGB(display->format, 0, 0, 0));
 	// render the map
 	map->render(display, xOffset, yOffset);
+	// render the tiles
+	renderTileLinkedList();
 	SDL_UpdateWindowSurface(gWindow);
+}
+
+void setTileLinkedList() {
+	tileNode * lastNode = nullptr;
+	for ( auto const &i : map->getIndexMap() ) {
+		int index = i.first;
+		Tile * tile = i.second;
+		tileNode* temp = new tileNode(tile, lastNode, nullptr, index);
+		temp->xPos = index * 100;
+		if (lastNode) {
+			lastNode->next = temp;
+			lastNode = temp;
+		}
+		else {
+			lastNode = temp;
+			currentTile = temp;
+		}
+	}
+}
+
+void renderTileLinkedList() {
+	currentTile->tile->render(display, currentTile->xPos, 650);
+	tileNode *next = currentTile->next;
+	while (next != nullptr) {
+		next->tile->render(display, next->xPos, 650);
+		next = next->next;
+	}
+	tileNode *prev = currentTile->previous;
+	while (prev != nullptr) {
+		prev->tile->render(display, prev->xPos, 650);
+		prev = prev->previous;
+	}
 }

@@ -9,8 +9,10 @@ Map::~Map()
 {
 }
 
-void Map::update() {
+std::map<int, Tile*> Map::getIndexMap() { return indexMap; }
 
+void Map::update() {
+	// eventually do something here I guess
 }
 
 void Map::render(SDL_Surface* display, int x, int y) {

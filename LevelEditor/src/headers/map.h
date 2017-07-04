@@ -15,6 +15,9 @@ public:
 	Map();
 	~Map();
 
+	// getter/setters
+	std::map<int, Tile*> getIndexMap();
+
 	void update();
 	void render(SDL_Surface*, int, int);
 
