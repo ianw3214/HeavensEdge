@@ -46,6 +46,8 @@ void render();
 void setTileLinkedList();
 void renderTileLinkedList();
 void addTileLinkedListPos(int);
+
+void setMouseOutline();
 void renderRectOutline(int, int);
 
 int main(int argc, char* argv[]) {
@@ -89,6 +91,8 @@ bool init() {
 			return false;
 		}
 	}
+	// set SDL settings
+	SDL_ShowCursor(SDL_DISABLE);
 	// initialize variables
 	running = true;
 	xOffset = 0, yOffset = 0;
@@ -189,7 +193,8 @@ void render() {
 	map->render(display, xOffset, yOffset);
 	// render the tiles
 	renderTileLinkedList();
-	renderRectOutline(64, 64);
+	// render a rectangle outline where the mouse is
+	setMouseOutline();
 	SDL_UpdateWindowSurface(gWindow);
 }
 
@@ -238,6 +243,31 @@ void addTileLinkedListPos(int distance) {
 		prev->xPos += distance;
 		prev = prev->previous;
 	}
+}
+
+void setMouseOutline() {
+	// get the current position of the mouse
+	int x, y;
+	SDL_GetMouseState(&x, &y);
+	// stop executing the function if the mouse is on the palette
+	if (y > 600) return;
+	// calulate the offset of the map in relation to the origin
+	int xMapOffset = xOffset % 64;
+	int yMapOffset = yOffset % 64;
+	// if the offset is negative, inverse it (don't think inverse is the right word but whatever)
+	if (xMapOffset < 0) xMapOffset = 64 + xMapOffset;
+	if (yMapOffset < 0) yMapOffset = 64 + yMapOffset;
+	// figure out the position of the rectangle the mouse is hovering over (in relation to origin)
+	int xOutline = x / 64;
+	int yOutline = y / 64;
+	// expand the position back to pixel coordinates and apply the offset
+	int xFinalPos = xOutline * 64 + xMapOffset;
+	int yFinalPos = yOutline * 64 + yMapOffset;
+	// if the offset brings the rectangle out of position, bring it back by a tile
+	xFinalPos -= xFinalPos > x ? 64 : 0;
+	yFinalPos -= yFinalPos > y ? 64 : 0;
+	// finally, render the outline
+	renderRectOutline(xFinalPos, yFinalPos);
 }
 
 void renderRectOutline(int x, int y) {
