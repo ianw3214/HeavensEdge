@@ -5,6 +5,8 @@
 std::string const TILE_SHEET_FILE_PATH = "assets/tiles.png";
 std::string const OUTPUT_FILE_PATH = "levels/test.txt";
 std::string const RECT_OUTLINE_FILE_PATH = "assets/outline1.png";
+std::string const CURSOR_FILE_PATH = "assets/cursor.png";
+std::string const CURSOR_PRESS_FILE_PATH = "assets/cursor_press.png";
 
 int const TILE_WIDTH = 64;
 int const TILE_HEIGHT = 64;

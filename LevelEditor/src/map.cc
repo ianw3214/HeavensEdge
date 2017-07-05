@@ -26,6 +26,22 @@ void Map::render(SDL_Surface* display, int x, int y) {
 	}
 }
 
+void Map::editTileAt(int x, int y, int index) {
+	// make sure the input position is within the map
+	if (x < 0 || y < 0 || x > BASE_MAP_WIDTH * TILE_WIDTH || y > BASE_MAP_HEIGHT * TILE_HEIGHT) {
+		return;
+	}
+	// make sure the target index is within the index map
+	if (index < 0 || index > indexMap.size()) {
+		return;
+	}
+	int xTile = static_cast<int>(x / 64);
+	int yTile = static_cast<int>(y / 64);
+	int target = yTile * BASE_MAP_WIDTH + xTile;
+	tileMap[target] = index;
+	return;
+}
+
 void Map::saveToFile() {
 
 }

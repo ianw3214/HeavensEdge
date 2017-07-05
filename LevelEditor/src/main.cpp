@@ -20,6 +20,8 @@ struct tileNode {
 SDL_Window * gWindow;
 SDL_Surface * display;
 bool running;
+int xCursor, yCursor;
+int cursorState;
 Uint32 currentTime, lastTime;
 float deltaTime;
 
@@ -34,6 +36,8 @@ tileNode * currentTile;
 
 // asset surfaces
 SDL_Surface * rectOutline;
+SDL_Surface * cursor;
+SDL_Surface * cursorPress;
 
 // function declarations
 bool init();
@@ -48,7 +52,9 @@ void renderTileLinkedList();
 void addTileLinkedListPos(int);
 
 void setMouseOutline();
+
 void renderRectOutline(int, int);
+void renderCursorSymbol();
 
 int main(int argc, char* argv[]) {
 
@@ -95,6 +101,8 @@ bool init() {
 	SDL_ShowCursor(SDL_DISABLE);
 	// initialize variables
 	running = true;
+	cursorState = 0;
+	SDL_GetMouseState(&xCursor, &yCursor);
 	xOffset = 0, yOffset = 0;
 	xMouseStartPos = 0, yMouseStartPos = 0;
 	xOffsetStart = 0, yOffsetStart = 0;
@@ -102,9 +110,11 @@ bool init() {
 	deltaTime = 0.0f;
 	// initialize asset surfaces
 	rectOutline = IMG_Load(RECT_OUTLINE_FILE_PATH.c_str());
-	if (!rectOutline) {
-		std::cout << "failed to load: outline1.png; ERROR: " << IMG_GetError() << std::endl;
-	}
+	if (!rectOutline) std::cout << "failed to load: outline1.png; ERROR: " << IMG_GetError() << std::endl;
+	cursor = IMG_Load(CURSOR_FILE_PATH.c_str());
+	if (!cursor) std::cout << "failed to load: cursor.png; ERROR: " << IMG_GetError() << std::endl;
+	cursorPress = IMG_Load(CURSOR_PRESS_FILE_PATH.c_str());
+	if (!cursorPress) std::cout << "failed to load: cursor_press.png; ERROR: " << IMG_GetError() << std::endl;
 	return true;
 }
 
@@ -147,9 +157,12 @@ void handleEvents() {
 		if (e.type == SDL_MOUSEBUTTONDOWN) {
 			if (e.button.button == SDL_BUTTON_LEFT) {
 				LMB = true;
-				// set the starting mouse position to move map
-				SDL_GetMouseState(&xMouseStartPos, &yMouseStartPos);
-				xOffsetStart = xOffset, yOffsetStart = yOffset;
+				// if space is true, then panning
+				if (SPACE) {
+					// set the starting mouse position to move map
+					SDL_GetMouseState(&xMouseStartPos, &yMouseStartPos);
+					xOffsetStart = xOffset, yOffsetStart = yOffset;
+				}
 			}
 		}
 		if (e.type == SDL_MOUSEBUTTONUP) {
@@ -185,6 +198,24 @@ void update() {
 		}
 		addTileLinkedListPos(distance);
 	}
+	// if the left mouse button is clicked and panning is not on
+	if (LMB && !SPACE) {
+		// change the mouse tile
+		int x, y;
+		SDL_GetMouseState(&x, &y);
+		int target_x = x - xOffset;
+		int target_y = y - yOffset;
+		map->editTileAt(target_x, target_y, currentTile->index);
+	}
+	// update the cursor position
+	SDL_GetMouseState(&xCursor, &yCursor);
+	// update whether the cursor symbol should be shown
+	if (LMB) {
+		cursorState = 1;
+	}
+	else {
+		cursorState = 0;
+	}
 }
 
 void render() {
@@ -195,6 +226,8 @@ void render() {
 	renderTileLinkedList();
 	// render a rectangle outline where the mouse is
 	setMouseOutline();
+	// render the cursor symbol where the cursor is
+	renderCursorSymbol();
 	SDL_UpdateWindowSurface(gWindow);
 }
 
@@ -274,5 +307,24 @@ void renderRectOutline(int x, int y) {
 	SDL_Rect targetRect = { x - RECT_OUTLINE_MARGIN, y - RECT_OUTLINE_MARGIN, 0, 0};
 	if (SDL_BlitSurface(rectOutline, nullptr, display, &targetRect) < 0) {
 		std::cout << "Image unable to blit, error: " << SDL_GetError() << std::endl;
+	}
+}
+
+void renderCursorSymbol() {
+	SDL_Rect targetRect = { xCursor - 5, yCursor - 5, 0, 0 };
+	SDL_Surface * cursorImage;
+	switch (cursorState){
+	case 0: {
+		cursorImage = cursor;
+	} break;
+	case 1: {
+		cursorImage = cursorPress;
+	} break;
+	default: {
+		cursorImage = cursor;
+	}
+	}
+	if (SDL_BlitSurface(cursorImage, nullptr, display, &targetRect) < 0) {
+		std::cout << "COULDN'T RENDER CURSOR" << SDL_GetError() << std::endl;
 	}
 }

@@ -21,6 +21,8 @@ public:
 	void update();
 	void render(SDL_Surface*, int, int);
 
+	void editTileAt(int, int, int);
+
 	void saveToFile();
 private:
 	std::vector<int> tileMap;
