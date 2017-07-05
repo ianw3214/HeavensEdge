@@ -43,7 +43,41 @@ void Map::editTileAt(int x, int y, int index) {
 }
 
 void Map::saveToFile() {
-
+	std::ofstream target;
+	target.open(OUTPUT_FILE_PATH);
+	std::cout << "FLAG" << std::endl;
+	target << TILE_WIDTH << "\n";
+	target << TILE_HEIGHT << "\n";
+	target << BASE_MAP_WIDTH << "\n";
+	target << BASE_MAP_HEIGHT << "\n";
+	target << PLAYER_START_X << "\n";
+	target << PLAYER_START_Y << "\n";
+	// add all of the tile indices
+	// first calculate the width and height of the input image used to calculate the position of each index
+	SDL_Surface* tileSheet = IMG_Load(TILE_SHEET_FILE_PATH.c_str());
+	int width = tileSheet->w / TILE_WIDTH;
+	for ( auto const &i : indexMap) {
+		int x = i.first % width;
+		int y = static_cast<int>(i.first / width);
+		target << i.first << "#" << TILE_SHEET_FILE_PATH << "#" << x << "#" << y << "\n";
+	}
+	target << "---\n";
+	for (int i = 0; i < BASE_MAP_HEIGHT; i++) {
+		for (int j = 0; j < BASE_MAP_WIDTH; j++) {
+			target << tileMap[i * BASE_MAP_WIDTH + j];
+			if (j == BASE_MAP_WIDTH - 1) target << "\n";
+			else target << "#";
+		}
+	}
+	target << "***\n";
+	for (int i = 0; i < BASE_MAP_HEIGHT; i++) {
+		for (int j = 0; j < BASE_MAP_WIDTH; j++) {
+			target << collisionMap[i * BASE_MAP_WIDTH + j];
+			if (j == BASE_MAP_WIDTH - 1) target << "\n";
+			else target << "#";
+		}
+	}
+	target.close();
 }
 
 void Map::init() {

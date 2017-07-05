@@ -6,6 +6,8 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <iostream>
+#include <fstream>
 
 #include "tile.h"
 #include "constants.h"

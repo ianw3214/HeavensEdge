@@ -148,6 +148,9 @@ void handleEvents() {
 					currentTile = currentTile->previous;
 				}
 			}
+			if (e.key.keysym.sym == SDLK_s) {
+				map->saveToFile();
+			}
 		}
 		if (e.type == SDL_KEYUP) {
 			if (e.key.keysym.sym == SDLK_SPACE) {
