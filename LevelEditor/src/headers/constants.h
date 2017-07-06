@@ -8,6 +8,8 @@ std::string const TILE_SHEET_FILE_PATH = "assets/tiles.png";
 std::string const RECT_OUTLINE_FILE_PATH = "assets/outline1.png";
 std::string const CURSOR_FILE_PATH = "assets/cursor.png";
 std::string const CURSOR_PRESS_FILE_PATH = "assets/cursor_press.png";
+std::string const COLLISION_TILE_FILE_PATH = "assets/collision.png";
+std::string const OVERLAY_FILE_PATH = "assets/overlay.png";
 
 int const TILE_WIDTH = 64;
 int const TILE_HEIGHT = 64;

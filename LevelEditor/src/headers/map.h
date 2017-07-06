@@ -23,7 +23,10 @@ public:
 	void update();
 	void render(SDL_Surface*, int, int);
 
+	void renderCollisionTiles(SDL_Surface*, int, int);
+
 	void editTileAt(int, int, int);
+	void editCollision(int, int, bool);
 
 	void saveToFile();
 private:
@@ -35,4 +38,6 @@ private:
 
 	void init();
 	void initTileIndexMap();
+
+	SDL_Surface * collisionImage;
 };

@@ -24,6 +24,8 @@ int xCursor, yCursor;
 int cursorState;
 Uint32 currentTime, lastTime;
 float deltaTime;
+bool collisionMode;
+bool collisionAdd;
 
 Map *map;
 int xOffset, yOffset;
@@ -38,6 +40,7 @@ tileNode * currentTile;
 SDL_Surface * rectOutline;
 SDL_Surface * cursor;
 SDL_Surface * cursorPress;
+SDL_Surface * overlay;
 
 // function declarations
 bool init();
@@ -108,6 +111,8 @@ bool init() {
 	xOffsetStart = 0, yOffsetStart = 0;
 	currentTime = lastTime = SDL_GetTicks();
 	deltaTime = 0.0f;
+	collisionMode = false;
+	collisionAdd = true;
 	// initialize asset surfaces
 	rectOutline = IMG_Load(RECT_OUTLINE_FILE_PATH.c_str());
 	if (!rectOutline) std::cout << "failed to load: outline1.png; ERROR: " << IMG_GetError() << std::endl;
@@ -115,6 +120,8 @@ bool init() {
 	if (!cursor) std::cout << "failed to load: cursor.png; ERROR: " << IMG_GetError() << std::endl;
 	cursorPress = IMG_Load(CURSOR_PRESS_FILE_PATH.c_str());
 	if (!cursorPress) std::cout << "failed to load: cursor_press.png; ERROR: " << IMG_GetError() << std::endl;
+	overlay = IMG_Load(OVERLAY_FILE_PATH.c_str());
+	if (!overlay) std::cout << "failed to load: overlay.png; ERROR: " << IMG_GetError() << std::endl;
 	return true;
 }
 
@@ -150,6 +157,12 @@ void handleEvents() {
 			}
 			if (e.key.keysym.sym == SDLK_s) {
 				map->saveToFile();
+			}
+			if (e.key.keysym.sym == SDLK_c) {
+				collisionMode = !collisionMode;
+			}
+			if (e.key.keysym.sym == SDLK_v) {
+				collisionAdd = !collisionAdd;
 			}
 		}
 		if (e.type == SDL_KEYUP) {
@@ -208,23 +221,28 @@ void update() {
 		SDL_GetMouseState(&x, &y);
 		int target_x = x - xOffset;
 		int target_y = y - yOffset;
-		map->editTileAt(target_x, target_y, currentTile->index);
+		if (collisionMode) map->editCollision(target_x, target_y, collisionAdd);
+		else map->editTileAt(target_x, target_y, currentTile->index);
 	}
 	// update the cursor position
 	SDL_GetMouseState(&xCursor, &yCursor);
 	// update whether the cursor symbol should be shown
-	if (LMB) {
-		cursorState = 1;
-	}
-	else {
-		cursorState = 0;
-	}
+	if (LMB) cursorState = 1;
+	else cursorState = 0;
 }
 
 void render() {
 	SDL_FillRect(display, nullptr, SDL_MapRGB(display->format, 0, 0, 0));
 	// render the map
 	map->render(display, xOffset, yOffset);
+	if (collisionMode) {
+		// render an overlay of white to distinguish between collision and tile mode
+		if (SDL_BlitSurface(overlay, nullptr, display, nullptr) < 0) {
+			std::cout << "COULDN'T RENDER OVERLAY" << SDL_GetError() << std::endl;
+		}
+		// render the collision tiles of the map
+		map->renderCollisionTiles(display, xOffset, yOffset);
+	}
 	// render the tiles
 	renderTileLinkedList();
 	// render a rectangle outline where the mouse is

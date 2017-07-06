@@ -26,6 +26,20 @@ void Map::render(SDL_Surface* display, int x, int y) {
 	}
 }
 
+void Map::renderCollisionTiles(SDL_Surface* display, int x, int y) {
+	for (unsigned int i = 0; i < collisionMap.size(); i++) {
+		int tileX = (i % BASE_MAP_WIDTH) * TILE_WIDTH;
+		int tileY = (i / BASE_MAP_WIDTH) * TILE_HEIGHT;
+		int key = collisionMap.at(i);
+		SDL_Rect targetRect = { tileX + x, tileY + y, 0, 0 };
+		if (key == 1){
+			if (SDL_BlitSurface(collisionImage, nullptr, display, &targetRect) < 0) {
+				std::cout << "Image unable to blit, error: " << SDL_GetError() << std::endl;
+			}
+		}
+	}
+}
+
 void Map::editTileAt(int x, int y, int index) {
 	// make sure the input position is within the map
 	if (x < 0 || y < 0 || x > BASE_MAP_WIDTH * TILE_WIDTH || y > BASE_MAP_HEIGHT * TILE_HEIGHT) {
@@ -39,6 +53,18 @@ void Map::editTileAt(int x, int y, int index) {
 	int yTile = static_cast<int>(y / 64);
 	int target = yTile * BASE_MAP_WIDTH + xTile;
 	tileMap[target] = index;
+	return;
+}
+
+void Map::editCollision(int x, int y, bool add) {
+	// make sure the input position is within the map
+	if (x < 0 || y < 0 || x > BASE_MAP_WIDTH * TILE_WIDTH || y > BASE_MAP_HEIGHT * TILE_HEIGHT) {
+		return;
+	}
+	int xTile = static_cast<int>(x / 64);
+	int yTile = static_cast<int>(y / 64);
+	int target = yTile * BASE_MAP_WIDTH + xTile;
+	collisionMap[target] = add ? 1 : 0;
 	return;
 }
 
@@ -87,6 +113,9 @@ void Map::init() {
 	}
 
 	tileSheetPath = TILE_SHEET_FILE_PATH;
+	// load the image for the collision mode tiles
+	collisionImage = IMG_Load(COLLISION_TILE_FILE_PATH.c_str());
+	if (!collisionImage) std::cout << "Could not load image: assets/collision.png, ERROR: " << IMG_GetError() << std::endl;
 }
 
 void Map::initTileIndexMap() {
