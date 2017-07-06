@@ -11,7 +11,7 @@
 Hero::Hero(int initX, int initY) : Creature (initX, initY, 5, 2, HERO::COLLISION_SPRITE_MARGIN_X, HERO::COLLISION_SPRITE_MARGIN_Y) {
     // TODO: get default variables from input/global variable/something like that
 	sprite = new AnimatedSprite("assets/hero.png", 64, 64, 10, false);
-    sprite->setAnimationData({10, 10, 6, 6, 10, 10, 10, 10, 10});
+    sprite->setAnimationData({10, 10, 6, 6, 10, 10, 10, 10, 10, 10});
 	dashTimer = 0.0f;
 	dashDirection = -1;
 	// initialize the collision shape
@@ -148,7 +148,7 @@ void Hero::key1Attack() {
 			Creature * temp = dynamic_cast<Creature*>(entityList->at(i));
 			// check for collisions
 			if (isColliding(attackCollision, *temp->getCollisionBox())) {
-				temp->takeDamage(5);
+				temp->takeDamage(HERO::ATTACK_1_DAMAGE);
 			}
 		}
 	}
@@ -254,8 +254,22 @@ void Hero::combo1Attack() {
 	attacking = true;
 	attackTimer = HERO::COMBO_1_TIME;
 	// update animations
-	animState = COMBO1;
+	animState = faceRight ? COMBO1_RIGHT : COMBO1_LEFT;
 	setNextAnimation(faceRight ? IDLE_RIGHT : IDLE_LEFT);
 	playAnimation(animState);
 	resetAnimationFrame();
+	// update the enemies to take damage
+	// set up the collision rectangle for determing attack collisions with enemy
+	Rectangle attackCollision(getX() - HERO::COMBO1_MARGIN_X, getY() - HERO::COMBO1_MARGIN_Y, HERO::COMBO1_WIDTH, HERO::COMBO1_HEIGHT);
+	// loop through all entities and deal damage if enemy type
+	for (unsigned int i = 0; i < entityList->size(); i++) {
+		if (entityList->at(i)->getType() == 2) {
+			// cast the type to an entity to access it's functions
+			Creature * temp = dynamic_cast<Creature*>(entityList->at(i));
+			// check for collisions
+			if (isColliding(attackCollision, *temp->getCollisionBox())) {
+				temp->takeDamage(HERO::COMBO1_DAMAGE);
+			}
+		}
+	}
 }

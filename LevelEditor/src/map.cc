@@ -61,7 +61,7 @@ void Map::saveToFile() {
 		int y = static_cast<int>(i.first / width);
 		target << i.first << "#" << TILE_SHEET_FILE_PATH << "#" << x << "#" << y << "\n";
 	}
-	target << "---\n";
+	target << "---\n";	
 	for (int i = 0; i < BASE_MAP_HEIGHT; i++) {
 		for (int j = 0; j < BASE_MAP_WIDTH; j++) {
 			target << tileMap[i * BASE_MAP_WIDTH + j];

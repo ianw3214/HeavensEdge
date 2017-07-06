@@ -61,7 +61,8 @@ private:
 		ATTACK1LEFT = 5,
 		DASH_RIGHT = 6,
 		DASH_LEFT = 7,
-		COMBO1 = 8
+		COMBO1_RIGHT = 8,
+		COMBO1_LEFT = 9
 	};
 
 	void move(float);

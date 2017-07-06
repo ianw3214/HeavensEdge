@@ -12,8 +12,8 @@ std::string const CURSOR_PRESS_FILE_PATH = "assets/cursor_press.png";
 int const TILE_WIDTH = 64;
 int const TILE_HEIGHT = 64;
 
-int const BASE_MAP_WIDTH = 10;
-int const BASE_MAP_HEIGHT = 10;
+int const BASE_MAP_WIDTH = 20;
+int const BASE_MAP_HEIGHT = 20;
 
 // change these to be customizable in the editor
 int const PLAYER_START_X = 1;
