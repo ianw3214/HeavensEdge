@@ -49,6 +49,9 @@ bool Engine::init(State* initialState){
     this->currentState = initialState;
     this->currentState->init();
     this->running = true;
+	// initialize variables
+	fps = 0, frames = 0;
+	fpsCounter = 0.0f;
     return true;
 }
 
@@ -105,6 +108,16 @@ void Engine::update(){
             running = false;
         }
     }
+	if (fpsCounter > 1.0f) {
+		fps = frames;
+		std::cout << "FPS: " << fps << std::endl;
+		frames = 0;
+		fpsCounter = 0.0f;
+	}
+	else {
+		fpsCounter += deltaTime;
+		frames++;
+	}
 }
 
 /**

@@ -38,4 +38,7 @@ private:
 
     SDL_Window * gWindow;
     SDL_Surface * display;
+
+	int fps, frames;
+	float fpsCounter;
 };
