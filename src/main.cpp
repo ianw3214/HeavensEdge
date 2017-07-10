@@ -10,11 +10,12 @@
 
 int main(int argc, char* argv[]){
 
+	// create a game engine and initialize it, quit if an error occured
     Engine game(WINDOW_WIDTH, WINDOW_HEIGHT);
+	if (!game.init()) { return 1; }
 	// Menu* test = new Menu();
 	Level* test = new Level("levels/test.txt");
-	// return an error if the engine can't initialize with the starting level
-    if(!game.init(test)){ return 1; }
+	game.setState(test);
     while(game.isRunning()){
         game.handleEvents();
         game.render();

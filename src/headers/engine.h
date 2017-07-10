@@ -5,6 +5,7 @@
 #include <SDL_mixer.h>
 
 #include "state.h"
+#include "tile.h"
 
 #include <ctime>
 
@@ -19,8 +20,13 @@ class Engine{
 
 public:
     Engine(int, int);
-    bool init(State*);
+    bool init();
+	void setState(State*);
     void cleanUp();
+
+	// getter for game window / surface
+	SDL_Window* getWindow();
+	SDL_Surface* getSurface();
 
     void handleEvents();
     void update();

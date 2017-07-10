@@ -2,18 +2,29 @@
 
 #include <iostream>
 
+// declare static variables
+SDL_Surface* Tile::screenSurface;
+
 /**
  * Default tile constructor
  */
 Tile::Tile(std::string path, int w, int h, int xPos, int yPos){
-    // load the sprite sheet to the tile
-    spriteSheet = IMG_Load(path.c_str());
-    if(!spriteSheet){
+    // load the sprite sheet to a temporary surface
+    SDL_Surface * tempSurface = IMG_Load(path.c_str());
+    if(!tempSurface){
         std::cout << "Image unable to load, error: " << IMG_GetError() << std::endl;
     }
+	// optimize the temporary surface and set it to the sprite sheet
+	spriteSheet = SDL_ConvertSurface(tempSurface, screenSurface->format, NULL);
+	if (spriteSheet == NULL) {
+		std::cout << "Unable to optimize image, Error: " << SDL_GetError() << std::endl;
+	}
+	SDL_FreeSurface(tempSurface);
     // set up the blit Rect of the tile
     blitRect = {xPos*w, yPos*h, w, h};
 }
+
+void Tile::setDisplay(SDL_Surface * display) { screenSurface = display; }
 
 /**
  * Base update function for tiles in the tile map

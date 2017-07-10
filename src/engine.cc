@@ -17,7 +17,7 @@ Engine::Engine(int width, int height){
  * @param  initialState The first state to be played upon engine creation
  * @return              returns whether initialization was successful
  */
-bool Engine::init(State* initialState){
+bool Engine::init(){
 	// initialize random seed
 	srand(time(nullptr));
 
@@ -45,14 +45,19 @@ bool Engine::init(State* initialState){
             return false;
         }
     }
-    // set intiial state of game engine
-    this->currentState = initialState;
-    this->currentState->init();
-    this->running = true;
+	// give the tile class the display for optimizing
+	Tile::setDisplay(display);
 	// initialize variables
 	fps = 0, frames = 0;
 	fpsCounter = 0.0f;
+	this->running = true;
     return true;
+}
+
+void Engine::setState(State* state) {
+	// set intiial state of game engine
+	this->currentState = state;
+	this->currentState->init();
 }
 
 /**
@@ -71,6 +76,14 @@ void Engine::cleanUp(){
 
 	// Quit SDL subsystems
 	SDL_Quit();
+}
+
+SDL_Window* Engine::getWindow() {
+	return gWindow;
+}
+
+SDL_Surface* Engine::getSurface() {
+	return display;
 }
 
 /**

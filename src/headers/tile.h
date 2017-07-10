@@ -12,6 +12,8 @@ class Tile{
 public:
     Tile(std::string, int, int, int, int);
 
+	static void setDisplay(SDL_Surface*);
+
     virtual void update(float);
     virtual void render(SDL_Surface*, int, int);
 protected:
@@ -19,4 +21,6 @@ protected:
 
     SDL_Surface * spriteSheet;
     SDL_Rect blitRect;
+
+	static SDL_Surface * screenSurface;
 };
