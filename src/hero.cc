@@ -131,7 +131,6 @@ void Hero::key1Attack() {
 		return;
 	}
 	if (dashing) {
-		std::cout << "HELL YA" << std::endl;
 		combo1Attack();
 		return;
 	}

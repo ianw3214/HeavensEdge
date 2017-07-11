@@ -17,8 +17,6 @@ int main(int argc, char* argv[]){
 	Level* test = new Level("levels/test.txt");
 	game.setState(test);
     while(game.isRunning()){
-        game.handleEvents();
-        game.render();
 		game.update();
     }
 

@@ -6,6 +6,7 @@
 
 #include "state.h"
 #include "tile.h"
+#include "constants.h"
 
 #include <ctime>
 
@@ -47,4 +48,5 @@ private:
 
 	int fps, frames;
 	float fpsCounter;
+	int timePerFrame;
 };

@@ -110,7 +110,6 @@ void Map::update(float delta) {
  * @param camera  SDL_Rect representing the game camera
  */
 void Map::render(SDL_Surface * display, SDL_Rect camera) {
-
     // variables used to calculate whether a tile is on screen and should be rendered
     int startX = camera.x;
     int startY = camera.y;

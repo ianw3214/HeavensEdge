@@ -6,6 +6,8 @@ int const WINDOW_HEIGHT = 720;
 int const CAMERA_SPEED = 2;
 int const CAMERA_MARGIN = 30;
 
+int const FRAME_RATE_CAP = 120;
+
 namespace HERO {
 	int const BASE_SPEED = 300;
 	int const COLLISION_WIDTH = 56;

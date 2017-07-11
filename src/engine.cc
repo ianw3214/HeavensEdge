@@ -50,6 +50,7 @@ bool Engine::init(){
 	// initialize variables
 	fps = 0, frames = 0;
 	fpsCounter = 0.0f;
+	timePerFrame = static_cast<int>(1000 / FRAME_RATE_CAP);
 	this->running = true;
     return true;
 }
@@ -104,10 +105,16 @@ void Engine::handleEvents(){
  * Updates the game state and calculates time difference between each call
  */
 void Engine::update(){
+	// calculate the deltaTime
     currentTime = SDL_GetTicks();
     deltaTime = static_cast<float>(currentTime - lastTime)/1000.0f;
     lastTime = currentTime;
+	// handle events before each update
+	handleEvents();
+	// call the update function of the state
     currentState->update(deltaTime);
+	// render the state after each update
+	render();
     // check to see if the state should be changed
     if(currentState->shouldQuit()){
         currentState->exit();
@@ -130,6 +137,13 @@ void Engine::update(){
 	else {
 		fpsCounter += deltaTime;
 		frames++;
+	}
+	// get the time to see if frame rate needs to be capped
+	int tempTime = SDL_GetTicks();
+	int difference = tempTime - lastTime;
+	// if the difference in time is too small, delay the next update
+	if (difference < timePerFrame) {
+		SDL_Delay(timePerFrame - difference);
 	}
 }
 
