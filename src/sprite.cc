@@ -76,14 +76,9 @@ void Sprite::init(int _x, int _y, int _w, int _h){
  * @param path Path to desired sprite image
  */
 void Sprite::loadImage(std::string path){
-    SDL_Surface * tempSurface = IMG_Load(path.c_str());
-    if(!tempSurface){
+	// load the image to a temporary surface first to optimize later
+    img = IMG_Load(path.c_str());
+    if(!img){
         std::cout << "Image loading failed: " << path << ", error: " << IMG_GetError() << std::endl;
     }
-	img = SDL_ConvertSurface(tempSurface, Entity::screenDisplay->format, NULL);
-	if (img == NULL) {
-		std::cout << "Unable to optimize image, Error: " << SDL_GetError() << std::endl;
-	}
-	SDL_SetColorKey(img, SDL_TRUE, SDL_MapRGB(Entity::screenDisplay->format, 0, 0, 0));
-	SDL_FreeSurface(tempSurface);
 }

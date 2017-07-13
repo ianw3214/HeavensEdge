@@ -1,7 +1,8 @@
 #pragma once
 
 enum SHAPE_TYPE {
-	RECT = 0
+	RECT = 0, 
+	LINE = 1
 };
 
 struct Shape {
@@ -22,10 +23,21 @@ struct Rectangle : Shape {
 	Rectangle(const Rectangle &obj) : Shape(obj.x, obj.y, RECT), w(obj.w), h(obj.h) {}
 };
 
+struct Line : Shape {
+	int x2, y2;
+	Line() : Shape(LINE) {}
+	Line(int _x1, int _y1) : Shape(_x1, _y1, LINE) {}
+	Line(int _x1, int _y1, int _x2, int _y2) : Shape(_x1, _y1, LINE) {}
+	// copy constructor
+	Line(const Line &obj) : Line(obj.x, obj.y, obj.x2, obj.y2) {}
+};
+
 // pass shape parameters by reference to avoid slicing	
 
 // functions to get collisions
 bool isColliding(Shape&, Shape&);
 
 // helper functions for different collisions of different shapes
-bool collisionRectRect(Rectangle&, Rectangle&);
+bool collisionRectRect(const Rectangle&, const Rectangle&);
+bool collisionLineLine(const Line&, const Line&);
+bool collisionLineRect(const Line&, const Rectangle&);

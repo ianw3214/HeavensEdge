@@ -19,7 +19,6 @@ int main(int argc, char* argv[]){
     while(game.isRunning()){
 		game.update();
     }
-
     game.cleanUp();
 
     return 0;
