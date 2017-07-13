@@ -47,6 +47,8 @@ bool Engine::init(){
     }
 	// give the tile class the display for optimizing
 	Tile::setDisplay(display);
+	Entity::setDisplay(display);
+	SDL_SetSurfaceBlendMode(display, SDL_BLENDMODE_BLEND);
 	// initialize variables
 	fps = 0, frames = 0;
 	fpsCounter = 0.0f;

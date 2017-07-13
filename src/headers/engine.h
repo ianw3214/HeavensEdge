@@ -5,8 +5,9 @@
 #include <SDL_mixer.h>
 
 #include "state.h"
-#include "tile.h"
 #include "constants.h"
+#include "tile.h"
+#include "entity.h"
 
 #include <ctime>
 
