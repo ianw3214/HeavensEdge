@@ -3,7 +3,7 @@
 /**
  * Default enemy constructor
  */
-Enemy::Enemy() : Creature(0, 0, 10, 2) , speed(200) {
+Enemy::Enemy() : Creature(0, 0, 10, 3) , speed(200) {
 	// set default variables
 	init();
 }
@@ -13,7 +13,7 @@ Enemy::Enemy() : Creature(0, 0, 10, 2) , speed(200) {
  * @param initX Integer corresponding to the initial x position
  * @param initY Integer corresponding to the initial y position
  */
-Enemy::Enemy(int initX, int initY) : Creature(initX, initY, 10, 2), speed(200) {
+Enemy::Enemy(int initX, int initY) : Creature(initX, initY, 10, 3), speed(200) {
 	init();
 }
 
@@ -66,8 +66,6 @@ void Enemy::init() {
 	// set the initial movement flags
 	currentDir = rand() % 4;
 	idleTimer = 0.0f;
-	width = 64;
-	height = 64;
 }
 
 void Enemy::move(float delta) {

@@ -33,7 +33,6 @@ void Player::setCollisionData(std::vector<int> inputMap, int width, int tileSize
 	hero->setLevelWidth(width);
 	hero->setTileSize(tileSize);
 }
-void Player::setHeroEntities(std::vector<Entity*>* input) { hero->setEntities(input); }
 void Player::setPos(int newX, int newY) {
 	hero->setPos(newX, newY);
 }

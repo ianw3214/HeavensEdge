@@ -12,6 +12,7 @@
 #include "map.h"
 #include "player.h"
 #include "enemy.h"
+#include "chargeEnemy.h"
 
 /**
  * Level game state

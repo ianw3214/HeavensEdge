@@ -53,7 +53,7 @@ void Sprite::render(SDL_Surface * display, SDL_Rect camera){
     SDL_Rect targetRect = {x - camera.x, y - camera.y, 0, 0};
     if(SDL_BlitSurface(img, nullptr, display, &targetRect) < 0){
         std::cout << "Image unable to blit, error: " << SDL_GetError() << std::endl;
-    }
+	}
 }
 
 /**
@@ -80,5 +80,5 @@ void Sprite::loadImage(std::string path){
     img = IMG_Load(path.c_str());
     if(!img){
         std::cout << "Image loading failed: " << path << ", error: " << IMG_GetError() << std::endl;
-    }
+	}
 }

@@ -26,6 +26,7 @@ public:
 	static void setTileSize(int);
 	static void setLevelWidth(int);
 	static void setCollisionData(std::vector<int>, int, int);
+	static void setEntityList(std::vector<Entity*>*);
 
 	void handleEvents(SDL_Event);
 	void update(float);
@@ -40,12 +41,12 @@ protected:
 	Shape * collisionBox;
 	static std::vector<int> collisionMap;
 	static int levelWidth, tileSize;
+	static std::vector<Entity*>* entityList;
 
 	bool checkCollision(int, int);
 
 	int x, y;
 	int collisionMarginX, collisionMarginY;
-	int width, height;
 
 	AnimatedSprite * sprite;
 

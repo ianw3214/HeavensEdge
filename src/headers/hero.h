@@ -22,7 +22,6 @@ public:
 
 	// getter/setter functions
 	void setPos(int, int);
-	void setEntities(std::vector<Entity*>*);
 	int getX() const;
 	int getY() const;
 	void syncMoveKeys(bool*, bool*, bool*, bool*);
@@ -46,8 +45,6 @@ protected:
 	int dashDirection;
 	bool dashing, attacking;
 	float dashTimer, attackTimer;
-
-	std::vector<Entity*>* entityList;
 
 	std::vector<AnimatedSprite*> effects;
 

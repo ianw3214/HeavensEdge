@@ -1,6 +1,9 @@
 #include "creature.h"
 
 // define static variables
+std::vector<Entity*>* Creature::entityList;
+
+// define static variables
 std::vector<int> Creature::collisionMap;
 int Creature::levelWidth, Creature::tileSize;
 
@@ -45,6 +48,9 @@ void Creature::setCollisionData(std::vector<int> a, int b, int c) {
 	setCollisionMap(a);
 	setLevelWidth(b);
 	setTileSize(c);
+}
+void Creature::setEntityList(std::vector<Entity*>* inputList) {
+	entityList = inputList;
 }
 
 // method for event handling, does nothing by default.
@@ -121,8 +127,6 @@ void Creature::init(int inputX, int inputY, int inputHealth, int inpType, int cM
 	collisionBox = new Rectangle(x, y, 0, 0);
 	collisionMarginX = cMarginX;
 	collisionMarginY = cMarginY;
-	width = 0;
-	height = 0;
 }
 
 /**

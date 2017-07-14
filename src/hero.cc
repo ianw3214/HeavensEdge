@@ -16,8 +16,6 @@ Hero::Hero(int initX, int initY) : Creature (initX, initY, 5, 2, HERO::COLLISION
 	dashDirection = -1;
 	// initialize the collision shape
 	collisionBox = new Rectangle(x, y, HERO::COLLISION_WIDTH, HERO::COLLISION_HEIGHT);
-	width = HERO::COLLISION_WIDTH;
-	height = HERO::COLLISION_HEIGHT;
 	attacking = false;
 	attackTimer = 0.0f;
 	upPress = false, rightPress = false, downPress = false, leftPress = false;
@@ -26,7 +24,6 @@ Hero::Hero(int initX, int initY) : Creature (initX, initY, 5, 2, HERO::COLLISION
 
 // getter/setter functions
 void Hero::setPos(int newX, int newY) { x = newX, y = newY; }
-void Hero::setEntities(std::vector<Entity*>* input) { entityList = input; }
 int Hero::getX() const { return x; }
 int Hero::getY() const { return y; }
 void Hero::syncMoveKeys(bool* up, bool* right, bool* down, bool* left) {
@@ -140,11 +137,11 @@ void Hero::key1Attack() {
 		attackCollision.x -= 64;
 	}
 	// loop through all entities and deal damage if enemy type
-	if (!entityList) { return; }
-	for (unsigned int i = 0; i < entityList->size(); i++) {
-		if (entityList->at(i)->getType() == 2) {
+	if (!Creature::entityList) { return; }
+	for (unsigned int i = 0; i < Creature::entityList->size(); i++) {
+		if (Creature::entityList->at(i)->getType() == 3) {
 			// cast the type to an entity to access it's functions
-			Creature * temp = dynamic_cast<Creature*>(entityList->at(i));
+			Creature * temp = dynamic_cast<Creature*>(Creature::entityList->at(i));
 			// check for collisions
 			if (isColliding(attackCollision, *temp->getCollisionBox())) {
 				temp->takeDamage(HERO::ATTACK_1_DAMAGE);
@@ -261,10 +258,10 @@ void Hero::combo1Attack() {
 	// set up the collision rectangle for determing attack collisions with enemy
 	Rectangle attackCollision(getX() - HERO::COMBO1_MARGIN_X, getY() - HERO::COMBO1_MARGIN_Y, HERO::COMBO1_WIDTH, HERO::COMBO1_HEIGHT);
 	// loop through all entities and deal damage if enemy type
-	for (unsigned int i = 0; i < entityList->size(); i++) {
-		if (entityList->at(i)->getType() == 2) {
+	for (unsigned int i = 0; i < Creature::entityList->size(); i++) {
+		if (Creature::entityList->at(i)->getType() == 3) {
 			// cast the type to an entity to access it's functions
-			Creature * temp = dynamic_cast<Creature*>(entityList->at(i));
+			Creature * temp = dynamic_cast<Creature*>(Creature::entityList->at(i));
 			// check for collisions
 			if (isColliding(attackCollision, *temp->getCollisionBox())) {
 				temp->takeDamage(HERO::COMBO1_DAMAGE);
