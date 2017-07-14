@@ -19,6 +19,40 @@ void ChargeEnemy::update(float delta) {
 	if (health <= 0) {
 		REMOVE = true;
 	}
+	// if the creature is not charging, determine if it should
+	if (!charging) {
+		// make 4 collision lines to determine if the player is within sight
+		Line up(x + 32, y + 32, x + 32, y - 400 + 32);
+		Line right(x + 32, y + 32, x + 400 + 32, y + 32);
+		Line down(x + 32, y + 32, x + 32, y + 400 + 32);
+		Line left(x + 32, y + 32, x - 400 + 32, y + 32);
+		if (isColliding(up, *(hero->getCollisionBox()))) {
+			charging = true;
+			direction = 0;
+		}
+		else if (isColliding(right, *(hero->getCollisionBox()))) {
+			charging = true;
+			direction = 1;
+		}
+		else if (isColliding(down, *(hero->getCollisionBox()))) {
+			charging = true;
+			direction = 2;
+		}
+		else if (isColliding(left, *(hero->getCollisionBox()))) {
+			charging = true;
+			direction = 3;
+		}
+	}
+	// otherwise, update the creature accordingly
+	else {
+		Creature::move(direction, CHARGESPEED * delta);
+		// update the timer
+		chargeTimer += delta;
+		if (chargeTimer >= CHARGEBAR) {
+			chargeTimer = 0.0f;
+			charging = false;
+		}
+	}
 }
 
 void ChargeEnemy::render(SDL_Surface * display, SDL_Rect camera) {
@@ -33,4 +67,12 @@ void ChargeEnemy::init(int inpX, int inpY) {
 	x = inpX, y = inpY;
 	health = 10;
 	type = 3;
+	// look for the hero from the entity list
+	for (int i = 0; i < Creature::entityList->size(); i++) {
+		if (entityList->at(i)->getType() == 2) {
+			Player * temp = dynamic_cast<Player*>(entityList->at(i));
+			hero = dynamic_cast<Hero*>(temp->getHero());
+		}
+	}
+	if (!hero) std::cout << "ERROR: Could not find a hero entity." << std::endl;
 }

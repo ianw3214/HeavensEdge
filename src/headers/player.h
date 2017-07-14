@@ -24,6 +24,7 @@ public:
 	void setPos(int, int);
 	int getCenterX() const;
 	int getCenterY() const;
+	Hero * getHero() const;
 
     void handleEvents(SDL_Event);
     void update(float);

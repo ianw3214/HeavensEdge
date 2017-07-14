@@ -27,7 +27,10 @@ struct Line : Shape {
 	int x2, y2;
 	Line() : Shape(LINE) {}
 	Line(int _x1, int _y1) : Shape(_x1, _y1, LINE) {}
-	Line(int _x1, int _y1, int _x2, int _y2) : Shape(_x1, _y1, LINE) {}
+	Line(int _x1, int _y1, int _x2, int _y2) : Shape(_x1, _y1, LINE) {
+		x2 = _x2;
+		y2 = _y2;
+	}
 	// copy constructor
 	Line(const Line &obj) : Line(obj.x, obj.y, obj.x2, obj.y2) {}
 };

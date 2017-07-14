@@ -5,6 +5,10 @@
 #include <SDL_mixer.h>
 
 #include "enemy.h"
+#include "hero.h"
+#include "player.h"
+
+#include "collision.h"
 
 #include <iostream>
 
@@ -24,4 +28,9 @@ private:
 	bool charging;
 	int direction;
 	float chargeTimer;
+	float CHARGEBAR = 1.5f;
+
+	Hero * hero;
+
+	int const CHARGESPEED = 400;
 };

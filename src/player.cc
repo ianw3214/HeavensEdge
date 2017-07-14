@@ -5,7 +5,7 @@
 /**
  * Default player constructor
  */
-Player::Player(){
+Player::Player() : Entity(2) {
 	// set the player to a default hero at 0,0
     hero = new Hero(0, 0);
 	init();
@@ -15,7 +15,7 @@ Player::Player(){
  * Player constructor with a hero class passed in as the player hero
  * @param initHero The hero that the player is playing
  */
-Player::Player(Hero * initHero){
+Player::Player(Hero * initHero) : Entity(2) {
     hero = initHero;
 	init();
 }
@@ -39,6 +39,7 @@ void Player::setPos(int newX, int newY) {
 // TODO: change getCenterPos functions to get sprite widths from hero
 int Player::getCenterX() const { return hero->getX()+32; }
 int Player::getCenterY() const { return hero->getY()+32; }
+Hero * Player::getHero() const { return hero; }
 
 /**
  * Processes events from the event queue
