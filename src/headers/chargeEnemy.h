@@ -8,11 +8,12 @@
 #include "hero.h"
 #include "player.h"
 
+#include "constants.h"
 #include "collision.h"
 
 #include <iostream>
 
-class ChargeEnemy : public Enemy {
+class ChargeEnemy : public Enemy { 
 
 public:
 
@@ -28,9 +29,6 @@ private:
 	bool charging;
 	int direction;
 	float chargeTimer;
-	float CHARGEBAR = 1.5f;
 
 	Hero * hero;
-
-	int const CHARGESPEED = 400;
 };

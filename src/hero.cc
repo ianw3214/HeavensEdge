@@ -20,6 +20,8 @@ Hero::Hero(int initX, int initY) : Creature (initX, initY, 5, 2, HERO::COLLISION
 	attackTimer = 0.0f;
 	upPress = false, rightPress = false, downPress = false, leftPress = false;
 	faceRight = true;
+	invulnerable = false;
+	invulnTimer = 0.0f;
 }
 
 // getter/setter functions
@@ -33,11 +35,20 @@ void Hero::syncMoveKeys(bool* up, bool* right, bool* down, bool* left) {
 	leftPress = left;
 }
 
+void Hero::takeDamage(int dmg) {
+	if (!invulnerable) {
+		health -= dmg;
+		invulnerable = true;
+		invulnTimer = HERO::INVULN_TIME;
+	}
+}
+
 /**
  * Updates the hero
  * @param delta Difference in time between update calls
  */
 void Hero::update(float delta){
+	std::cout << health << std::endl;
 	Creature::update(delta);
     sprite->update(delta);
 	// set the position of the sprite to match that of the hero
@@ -101,6 +112,13 @@ void Hero::update(float delta){
 	else {
 		// move the player according to key presses
 		move(delta);
+	}
+	if (invulnerable) {
+		invulnTimer -= delta;
+		if (invulnTimer <= 0.0f) {
+			invulnerable = false;
+			invulnTimer = 0.0f;
+		}
 	}
 }
 
@@ -188,6 +206,9 @@ void Hero::key2Attack() {
 	setNextAnimation(faceRight ? IDLE_RIGHT : IDLE_LEFT);
 	playAnimation(animState);
 	resetAnimationFrame();
+	// make the player invulnerable while dashing
+	invulnerable = true;
+	invulnTimer = HERO::ATTACK_2_TIME;
 }
 
 /**
@@ -268,4 +289,7 @@ void Hero::combo1Attack() {
 			}
 		}
 	}
+	// make the player invulnerable
+	invulnerable = true;
+	invulnTimer = HERO::COMBO_1_TIME;
 }

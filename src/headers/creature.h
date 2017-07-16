@@ -19,7 +19,8 @@ public:
 	Creature(int, int, int, int);
 	Creature(int, int, int, int, int, int);
 
-	void takeDamage(int);
+	virtual void takeDamage(int);
+
 	int getHealth() const;
 	Shape * getCollisionBox() const;
 	static void setCollisionMap(std::vector<int>);

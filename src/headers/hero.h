@@ -26,6 +26,8 @@ public:
 	int getY() const;
 	void syncMoveKeys(bool*, bool*, bool*, bool*);
 
+	void takeDamage(int);
+
     virtual void update(float);
     virtual void render(SDL_Surface*, SDL_Rect);
 
@@ -45,6 +47,9 @@ protected:
 	int dashDirection;
 	bool dashing, attacking;
 	float dashTimer, attackTimer;
+
+	bool invulnerable;
+	float invulnTimer;
 
 	std::vector<AnimatedSprite*> effects;
 

@@ -14,6 +14,7 @@ namespace HERO {
 	int const COLLISION_HEIGHT = 61;
 	int const COLLISION_SPRITE_MARGIN_X = 4;
 	int const COLLISION_SPRITE_MARGIN_Y = 3;
+	float const INVULN_TIME = 0.5f;
 
 	float const ATTACK_1_TIME = 0.3f;
 	int const ATTACK_1_WIDTH = 100;
@@ -29,4 +30,9 @@ namespace HERO {
 	int const COMBO1_MARGIN_X = 64;
 	int const COMBO1_MARGIN_Y = 64;
 	int const COMBO1_DAMAGE = 5;
+}
+
+namespace CHARGE_ENEMY {
+	int const CHARGESPEED = 450;
+	float const CHARGE_TIME = 1.5f;
 }

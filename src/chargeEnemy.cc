@@ -45,12 +45,16 @@ void ChargeEnemy::update(float delta) {
 	}
 	// otherwise, update the creature accordingly
 	else {
-		Creature::move(direction, CHARGESPEED * delta);
+		Creature::move(direction, CHARGE_ENEMY::CHARGESPEED * delta);
 		// update the timer
 		chargeTimer += delta;
-		if (chargeTimer >= CHARGEBAR) {
+		if (chargeTimer >= CHARGE_ENEMY::CHARGE_TIME) {
 			chargeTimer = 0.0f;
 			charging = false;
+		}
+		// only damage the player if the enemy is charging
+		if (isColliding(*collisionBox, *hero->getCollisionBox())) {
+			hero->takeDamage(3);
 		}
 	}
 }
@@ -60,6 +64,11 @@ void ChargeEnemy::render(SDL_Surface * display, SDL_Rect camera) {
 }
 
 void ChargeEnemy::init(int inpX, int inpY) {
+	// set default variables
+	charging = false;
+	direction = 0;
+	chargeTimer = 0.0f;
+	// set the enemy sprite
 	sprite = new AnimatedSprite("assets/ChargeEnemy.png", 64, 64, 1, false);
 	sprite->setAnimationData({ 1 });
 	// set the default collision rectangle
