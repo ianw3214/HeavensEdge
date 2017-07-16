@@ -36,3 +36,6 @@ namespace CHARGE_ENEMY {
 	int const CHARGESPEED = 450;
 	float const CHARGE_TIME = 1.5f;
 }
+
+// temporary settings
+bool const MUTE = true;

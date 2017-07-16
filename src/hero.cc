@@ -48,7 +48,6 @@ void Hero::takeDamage(int dmg) {
  * @param delta Difference in time between update calls
  */
 void Hero::update(float delta){
-	std::cout << health << std::endl;
 	Creature::update(delta);
     sprite->update(delta);
 	// set the position of the sprite to match that of the hero
@@ -184,6 +183,9 @@ void Hero::key1Attack() {
 	setNextAnimation(faceRight ? IDLE_RIGHT : IDLE_LEFT);
 	playAnimation(animState);
 	resetAnimationFrame();
+	// play a sound
+	Mix_Chunk * temp = Mix_LoadWAV("assets/sounds/atk.wav");
+	Mix_PlayChannel(-1, temp, 0);
 }
 
 /**
