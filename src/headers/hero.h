@@ -39,21 +39,8 @@ public:
 	void setNextAnimation(int);
 	void resetAnimationFrame();
 
-protected:
-	int animState;
-	bool faceRight;
-	bool *upPress, *rightPress, *downPress, *leftPress;
-
-	int dashDirection;
-	bool dashing, attacking;
-	float dashTimer, attackTimer;
-
-	bool invulnerable;
-	float invulnTimer;
-
-	std::vector<AnimatedSprite*> effects;
-
 private:
+	//declare the enum first so helper functions can take it as a parameter in header
 	enum ANIM_STATE {
 		IDLE_RIGHT = 0,
 		IDLE_LEFT = 1,
@@ -67,6 +54,27 @@ private:
 		COMBO1_LEFT = 9
 	};
 
+protected:
+	int animState;
+	bool faceRight;
+	bool *upPress, *rightPress, *downPress, *leftPress;
+
+	int dashDirection;
+	bool dashing, attacking;
+	float dashTimer, attackTimer;
+
+	bool invulnerable;
+	float invulnTimer;
+
+	std::vector<AnimatedSprite*> effects;
+	
+	// helper methods
+	void updateEffects(float delta);
+	void handleDashing(float delta);
+	void damageEnemiesInRect(Rectangle, int);
+	void setAnimations(ANIM_STATE, ANIM_STATE);
+
+private:
 	void move(float);
 
 	// handle all combo attacks in each specific class, so it is private

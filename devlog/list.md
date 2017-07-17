@@ -15,4 +15,5 @@
 [005 - Rants, Structural redesign, Memory management, Enemies/attacks and other fun stuff](DV005.md)  
 [006 - Basic Menu, Collision class, and Attack effects](DV006.md)  
 [007 - Basic AI, Static Variables, Constants, Dashing, and Pulling my hair out](DV007.md)  
-[008 - Current](DV008.md)
+[008 - Combos, Level Editor, Surface optimization, FPS cap, Line collisions and a new enemy](DV008.md)
+[009 - Current](DV009.md)

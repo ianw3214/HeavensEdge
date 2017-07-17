@@ -1,5 +1,6 @@
 #include "collision.h"
 
+// takes two generic shapes as input and determines which specific collision function to use
 bool isColliding(Shape& shape1, Shape& shape2) {
 	if (shape1.type == RECT && shape2.type == RECT) {
 		Rectangle& shape1rect = static_cast<Rectangle&>(shape1);
@@ -20,6 +21,7 @@ bool isColliding(Shape& shape1, Shape& shape2) {
 	return false;
 }
 
+// calculates if two rect objects are colliding
 bool collisionRectRect(const Rectangle& rect1, const Rectangle& rect2) {
 	if (rect1.x < rect2.x + rect2.w && rect1.x + rect1.w > rect2.x &&
 		rect1.y < rect2.y + rect2.h && rect1.h + rect1.y > rect2.y) {
@@ -29,6 +31,7 @@ bool collisionRectRect(const Rectangle& rect1, const Rectangle& rect2) {
 	return false;
 }
 
+// calculates if two line objects are colliding
 bool collisionLineLine(const Line& line1, const Line& line2) {
 	float denominator = ((line1.x2 - line1.x) * (line2.y2 - line2.y) - (line1.y2 - line1.y) * (line2.x2 - line2.x));
 	float numerator1 = ((line1.y - line2.y) * (line2.x2 - line2.x) - (line1.x - line2.x) * (line2.y2 - line2.y));
@@ -43,6 +46,7 @@ bool collisionLineLine(const Line& line1, const Line& line2) {
 	return (r >= 0 && r <= 1) && (s >= 0 && s <= 1);
 }
 
+// calculates if a line object and a rect object is colliding
 bool collisionLineRect(const Line& line, const Rectangle& rect) {
 	// separate the rectangles into 4 lines and check for collisions
 	Line top(rect.x, rect.y, rect.x + rect.w, rect.y);
