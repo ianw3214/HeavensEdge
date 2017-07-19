@@ -97,6 +97,9 @@ void Player::handleKeyPress(SDL_Keycode key){
 		case SDLK_c: {
 			key2Attack();
 		} break;
+		case SDLK_z: {
+			hero->handleDialogue();
+		} break;
     }
 }
 

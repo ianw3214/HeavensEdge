@@ -26,6 +26,7 @@ protected:
 	  - 1: General
 	  - 2: Player
 	  - 3: Enemy 
+	  - 4: NPC
 	*/
 	int type;
 	/* Boolean flag to show if the entity should be removed. */

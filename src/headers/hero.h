@@ -8,6 +8,7 @@
 
 #include "creature.h"
 #include "collision.h"
+#include "npc.h"
 
 #include "constants.h"
 
@@ -33,6 +34,8 @@ public:
 
 	virtual void key1Attack();
 	virtual void key2Attack();
+
+	virtual void handleDialogue();
 
 	// methods to interact with animated sprite from outside
 	void playAnimation(int);
@@ -65,6 +68,10 @@ protected:
 
 	bool invulnerable;
 	float invulnTimer;
+
+	bool inDialogue;
+	int dialogueIndex;
+	std::vector<std::string> currentDialogue;
 
 	std::vector<AnimatedSprite*> effects;
 	

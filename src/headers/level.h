@@ -13,6 +13,7 @@
 #include "player.h"
 #include "enemy.h"
 #include "chargeEnemy.h"
+#include "npc.h"
 
 /**
  * Level game state

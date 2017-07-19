@@ -37,6 +37,9 @@ void Level::init() {
 	// set initial camera position to player position
 	camera.x = player->getCenterX() - camera.w / 2;
 	camera.y = player->getCenterY() - camera.h / 2;
+	// add an NPC on initialization
+	NPC * temp = new NPC(70, 70, {"Hello, I'm bob", "I hope you're well"});
+	entities.push_back(temp);
 }
 
 /**

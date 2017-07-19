@@ -22,6 +22,10 @@ Hero::Hero(int initX, int initY) : Creature (initX, initY, 5, 2, HERO::COLLISION
 	upPress = false, rightPress = false, downPress = false, leftPress = false, faceRight = true;
 	// initialize invulnerable variables
 	invulnerable = false, invulnTimer = 0.0f;
+	// initialize dialogue variables
+	inDialogue = false;
+	dialogueIndex = 0;
+	currentDialogue = {};
 }
 
 // getter/setter functions
@@ -88,8 +92,8 @@ void Hero::update(float delta){
  * @param display SDL_Surface associated with the game window
  * @param camera  SDL_Rect representing the game camera
  */
-void Hero::render(SDL_Surface * display, SDL_Rect camera){
-    sprite->render(display, camera);
+void Hero::render(SDL_Surface * display, SDL_Rect camera) {
+	sprite->render(display, camera);
 	// call the render on any function associated with the player
 	for (unsigned int i = 0; i < effects.size(); i++) {
 		effects.at(i)->render(display, camera);
@@ -113,7 +117,7 @@ void Hero::key1Attack() {
 	damageEnemiesInRect(attackCollision, HERO::ATTACK_1_DAMAGE);
 	// create a new effect for the attack
 	AnimatedSprite* effect = new AnimatedSprite("assets/attack.png", 100, 64, 10, true);
-	effect->setAnimationData({ 10 , 10});
+	effect->setAnimationData({ 10 , 10 });
 	effect->playAnimation(faceRight ? 0 : 1);
 	effect->setPos(getX() - (faceRight ? 0 : 36), getY());
 	// push the new effect to the effects vector
@@ -148,6 +152,45 @@ void Hero::key2Attack() {
 	// make the player invulnerable while dashing
 	invulnerable = true;
 	invulnTimer = HERO::ATTACK_2_TIME;
+}
+
+void Hero::handleDialogue() {
+	if (inDialogue) {
+		if (currentDialogue.size() <= dialogueIndex) {
+			inDialogue = false;
+			dialogueIndex = 0;
+			currentDialogue = {};
+		}
+		else {
+			std::cout << currentDialogue.at(dialogueIndex) << std::endl;
+			dialogueIndex++;
+		}
+	}
+	else {
+		// TODO: only speak to nearby NPCs instead of any existing NPC
+		// TODO: look for the nearest NPC instead of the first one to show up in the vector
+		for (unsigned int i = 0; i < entityList->size(); i++) {
+			if (entityList->at(i)->getType() == 4) {
+				NPC * temp = dynamic_cast<NPC*>(entityList->at(i));
+				currentDialogue = temp->getDialogue();
+				break;
+			}
+		}
+		// if the vector is empty, simply reset and exit
+		if (currentDialogue.size() == 0) {
+			return;
+		}
+		// otherwise, play the first line of the dialogue
+		else if (currentDialogue.size() == 1) {
+			std::cout << currentDialogue.at(0) << std::endl;
+			currentDialogue = {};
+		}
+		else {
+			inDialogue = true;
+			std::cout << currentDialogue.at(0) << std::endl;
+			dialogueIndex++;
+		}
+	}
 }
 
 /**
