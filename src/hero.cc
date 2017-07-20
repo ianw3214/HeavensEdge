@@ -167,29 +167,7 @@ void Hero::handleDialogue() {
 		}
 	}
 	else {
-		// TODO: only speak to nearby NPCs instead of any existing NPC
-		// TODO: look for the nearest NPC instead of the first one to show up in the vector
-		for (unsigned int i = 0; i < entityList->size(); i++) {
-			if (entityList->at(i)->getType() == 4) {
-				NPC * temp = dynamic_cast<NPC*>(entityList->at(i));
-				currentDialogue = temp->getDialogue();
-				break;
-			}
-		}
-		// if the vector is empty, simply reset and exit
-		if (currentDialogue.size() == 0) {
-			return;
-		}
-		// otherwise, play the first line of the dialogue
-		else if (currentDialogue.size() == 1) {
-			std::cout << currentDialogue.at(0) << std::endl;
-			currentDialogue = {};
-		}
-		else {
-			inDialogue = true;
-			std::cout << currentDialogue.at(0) << std::endl;
-			dialogueIndex++;
-		}
+		findNPCforDialogue();
 	}
 }
 
@@ -342,4 +320,33 @@ void Hero::setAnimations(ANIM_STATE currentAnim, ANIM_STATE nextAnim) {
 	setNextAnimation(nextAnim);
 	playAnimation(animState);
 	resetAnimationFrame();
+}
+
+void Hero::findNPCforDialogue() {
+	// TODO: look for the nearest NPC instead of the first one to show up in the vector
+	for (unsigned int i = 0; i < entityList->size(); i++) {
+		if (entityList->at(i)->getType() == 4) {
+			NPC * temp = dynamic_cast<NPC*>(entityList->at(i));
+			// make a rectangle for setting up the range
+			Rectangle range(x - 64, y - 64, 192, 192);
+			if (isColliding(range, *(temp->getCollisionBox()))) {
+				currentDialogue = temp->getDialogue();
+				break;
+			}
+		}
+	}
+	// if the vector is empty, simply reset and exit
+	if (currentDialogue.size() == 0) {
+		return;
+	}
+	// otherwise, play the first line of the dialogue
+	else if (currentDialogue.size() == 1) {
+		std::cout << currentDialogue.at(0) << std::endl;
+		currentDialogue = {};
+	}
+	else {
+		inDialogue = true;
+		std::cout << currentDialogue.at(0) << std::endl;
+		dialogueIndex++;
+	}
 }

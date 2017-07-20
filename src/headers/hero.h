@@ -81,6 +81,8 @@ protected:
 	void damageEnemiesInRect(Rectangle, int);
 	void setAnimations(ANIM_STATE, ANIM_STATE);
 
+	void findNPCforDialogue();
+
 private:
 	void move(float);
 
