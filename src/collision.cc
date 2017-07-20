@@ -17,6 +17,11 @@ bool isColliding(Shape& shape1, Shape& shape2) {
 		Line& shapeLine = shape1.type == LINE ? static_cast<Line&>(shape1) : static_cast<Line&>(shape2);
 		return collisionLineRect(shapeLine, shapeRect);
 	}
+	if ((shape1.type == RECT && shape2.type == CIRCLE) || (shape1.type == CIRCLE && shape2.type == RECT)) {
+		Rectangle& shapeRect = shape1.type == RECT ? static_cast<Rectangle&>(shape1) : static_cast<Rectangle&>(shape2);
+		Circle& shapeCircle = shape1.type == CIRCLE ? static_cast<Circle&>(shape1) : static_cast<Circle&>(shape2);
+		return collisionCircleRect(shapeCircle, shapeRect);
+	}
 	// temporarily return false for any other case.
 	return false;
 }
@@ -58,4 +63,23 @@ bool collisionLineRect(const Line& line, const Rectangle& rect) {
 	Line bottom(rect.x, rect.y + rect.h, rect.x + rect.w, rect.y + rect.h);
 	if (collisionLineLine(line, bottom)) return true;
 	return false;
+}
+
+// calculate if a circle and a rect object is colliding
+bool collisionCircleRect(const Circle& circle, const Rectangle& rect) {
+	// find collision by finding shortest point and then comparing distance against radius
+	int closestX = clamp(circle.x, rect.x, rect.x + rect.w);
+	int closestY = clamp(circle.y, rect.y, rect.y + rect.h);
+	int distanceX = circle.x - closestX;
+	int distanceY = circle.y - closestY;
+	float distanceSquared = (distanceX * distanceX) + (distanceY * distanceY);
+	// if the distance is longer than the radius, the function will return false
+	return distanceSquared < (circle.r * circle.r);
+}
+
+// limits the @val parameter to the range [min..max]
+int clamp(int val, int min, int max) {
+	if (val > max) return max;
+	if (val < min) return min;
+	return val;
 }

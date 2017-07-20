@@ -327,8 +327,8 @@ void Hero::findNPCforDialogue() {
 	for (unsigned int i = 0; i < entityList->size(); i++) {
 		if (entityList->at(i)->getType() == 4) {
 			NPC * temp = dynamic_cast<NPC*>(entityList->at(i));
-			// make a rectangle for setting up the range
-			Rectangle range(x - 64, y - 64, 192, 192);
+			// make a circle for setting up the range
+			Circle range(x + 32, y + 32, 96);
 			if (isColliding(range, *(temp->getCollisionBox()))) {
 				currentDialogue = temp->getDialogue();
 				break;
