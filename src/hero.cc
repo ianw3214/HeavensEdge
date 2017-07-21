@@ -10,8 +10,8 @@
  */
 Hero::Hero(int initX, int initY) : Creature (initX, initY, 5, 2, HERO::COLLISION_SPRITE_MARGIN_X, HERO::COLLISION_SPRITE_MARGIN_Y) {
     // TODO: get default variables from input/global variable/something like that
-	sprite = new AnimatedSprite("assets/hero.png", 64, 64, 10, false);
-    sprite->setAnimationData({10, 10, 6, 6, 10, 10, 10, 10, 10, 10});
+	sprite = new AnimatedSprite("assets/hero.png", 64, 64, 20, false);
+    sprite->setAnimationData({20, 20, 6, 6, 10, 10, 10, 10, 10, 10});
 	// initialize dash variables
 	dashTimer = 0.0f, dashDirection = -1;
 	// initialize the collision shape
@@ -116,7 +116,7 @@ void Hero::key1Attack() {
 	// loop through all entities and deal damage if enemy type
 	damageEnemiesInRect(attackCollision, HERO::ATTACK_1_DAMAGE);
 	// create a new effect for the attack
-	AnimatedSprite* effect = new AnimatedSprite("assets/attack.png", 100, 64, 10, true);
+	AnimatedSprite* effect = new AnimatedSprite("assets/attack.png", HERO::ATTACK_1_WIDTH, HERO::ATTACK_1_HEIGHT, 10, true);
 	effect->setAnimationData({ 10 , 10 });
 	effect->playAnimation(faceRight ? 0 : 1);
 	effect->setPos(getX() - (faceRight ? 0 : 36), getY());
@@ -143,9 +143,7 @@ void Hero::key2Attack() {
 	dashing = true;
 	dashTimer = 0.2f;
 	if (*upPress) dashDirection = 0;
-	else if (*rightPress) dashDirection = 1;
 	else if (*downPress) dashDirection = 2;
-	else if (*leftPress) dashDirection = 3;
 	else dashDirection = faceRight ? 1 : 3;
 	// update animations
 	setAnimations(faceRight ? DASH_RIGHT : DASH_LEFT, faceRight ? IDLE_RIGHT : IDLE_LEFT);
@@ -211,14 +209,14 @@ void Hero::move(float delta) {
 	if (*upPress) {
 		Creature::move(0, moveDistance);
 	}
-	if (*rightPress) {
+	if (*rightPress && !*leftPress) {
 		Creature::move(1, moveDistance);
 		faceRight = true;
 	}
 	if (*downPress) {
 		Creature::move(2, moveDistance);
 	}
-	if (*leftPress) {
+	if (*leftPress && !*rightPress) {
 		Creature::move(3, moveDistance);
 		faceRight = false;
 	}

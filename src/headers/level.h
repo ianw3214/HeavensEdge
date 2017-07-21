@@ -15,6 +15,8 @@
 #include "chargeEnemy.h"
 #include "npc.h"
 
+#include "constants.h"
+
 /**
  * Level game state
  */

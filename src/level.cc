@@ -112,13 +112,19 @@ void Level::updateCamera() {
 	// update the camera position to match the player
 	// if the difference in position is greater than the speed, add the speed to position
 	// otherwise, set the position to be equal to target position
-	if (std::abs(static_cast<double>(targetX - camera.x)) > camMargin) {
-		if (targetX > camera.x) { camera.x += camSpeed; }
-		else { camera.x -= camSpeed; }
+	int xDiff = std::abs(static_cast<double>(targetX - camera.x));
+	if (xDiff > camMargin) {
+		int speed = camSpeed;
+		if (xDiff > WINDOW_WIDTH / 2) speed *= 3;
+		if (targetX > camera.x) { camera.x += speed; }
+		else { camera.x -= speed; }
 	}
-	if (std::abs(static_cast<double>(targetY - camera.y)) > camMargin) {
-		if (targetY > camera.y) { camera.y += camSpeed; }
-		else { camera.y -= camSpeed; }
+	int yDiff = std::abs(static_cast<double>(targetY - camera.y));
+	if (yDiff > camMargin) {
+		int speed = camSpeed;
+		if (yDiff > WINDOW_HEIGHT / 2) speed *= 3;
+		if (targetY > camera.y) { camera.y += speed; }
+		else { camera.y -= speed; }
 	}
 }
 

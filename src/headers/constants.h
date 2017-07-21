@@ -17,7 +17,7 @@ namespace HERO {
 	float const INVULN_TIME = 0.5f;
 
 	float const ATTACK_1_TIME = 0.3f;
-	int const ATTACK_1_WIDTH = 100;
+	int const ATTACK_1_WIDTH = 150;
 	int const ATTACK_1_HEIGHT = 64;
 	int const ATTACK_1_DAMAGE = 5;
 
