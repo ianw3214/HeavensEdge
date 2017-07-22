@@ -5,6 +5,7 @@
 #include <SDL_mixer.h>
 
 #include <vector>
+#include <cmath>
 
 #include "creature.h"
 #include "collision.h"

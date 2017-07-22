@@ -21,6 +21,8 @@ public:
 
 	virtual void takeDamage(int);
 
+	int getX() const;
+	int getY() const;
 	int getHealth() const;
 	Shape * getCollisionBox() const;
 	static void setCollisionMap(std::vector<int>);

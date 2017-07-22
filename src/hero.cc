@@ -321,18 +321,31 @@ void Hero::setAnimations(ANIM_STATE currentAnim, ANIM_STATE nextAnim) {
 }
 
 void Hero::findNPCforDialogue() {
-	// TODO: look for the nearest NPC instead of the first one to show up in the vector
+	// variables for keeping track of the current nearest NPC
+	float minDistance = -1.0;
+	NPC * minNPC = nullptr;
+	// loop through the entity list and look for the nearest NPC
 	for (unsigned int i = 0; i < entityList->size(); i++) {
 		if (entityList->at(i)->getType() == 4) {
-			NPC * temp = dynamic_cast<NPC*>(entityList->at(i));
+			NPC * thisNPC = dynamic_cast<NPC*>(entityList->at(i));
 			// make a circle for setting up the range
 			Circle range(x + 32, y + 32, 96);
-			if (isColliding(range, *(temp->getCollisionBox()))) {
-				currentDialogue = temp->getDialogue();
-				break;
+			if (isColliding(range, *(thisNPC->getCollisionBox()))) {
+				// get the distance and compare it to the current smallest distance
+				int xDistance = std::abs(thisNPC->getX() - x);
+				int yDistance = std::abs(thisNPC->getY() - y);
+				float distance = std::sqrt(xDistance * xDistance + yDistance * yDistance);
+				// if the distance is smaller or if it is the first distance, set it to the NPC
+				if (distance < minDistance || minDistance < 0.0f) {
+					minDistance = distance;
+					minNPC = thisNPC;
+				}
 			}
 		}
 	}
+	// set the dialogue to the NPC if one is found, otherwise quit the function
+	if (minNPC) currentDialogue = minNPC->getDialogue();
+	else return;
 	// if the vector is empty, simply reset and exit
 	if (currentDialogue.size() == 0) {
 		return;

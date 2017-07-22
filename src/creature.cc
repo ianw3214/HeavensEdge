@@ -39,6 +39,8 @@ Creature::Creature(int startX, int startY, int startHealth, int inpType, int cMa
 
 // getter/setter and some simple methods
 void Creature::takeDamage(int dmg) { health -= dmg; }
+int Creature::getX() const { return x; }
+int Creature::getY() const { return y; }
 int Creature::getHealth() const { return health; }
 Shape * Creature::getCollisionBox() const { return collisionBox; }
 void Creature::setCollisionMap(std::vector<int> inputMap) { collisionMap = inputMap; }
