@@ -32,6 +32,9 @@ Map::~Map(){
 std::vector<int> Map::getCollisionMap() const{
 	return collisionData;
 }
+std::vector<NPC*> Map::getNPCs() const {
+	return NPCs;
+}
 int Map::getWidth() { return mapWidth; }
 int Map::getHeight() { return mapHeight; }
 int Map::getTileSize() { return tileWidth; }
@@ -48,7 +51,13 @@ bool Map::loadFromFile(std::string file){
     fileStream.open(file);
     std::string line;
     int counter = 0;        // counter to keep track of which line we're reading
-    bool onMapData = false, onCollisionData = false;
+	/*	0 - MAP DATA
+		1 - COLLISION DATA
+		2 - NPC DATA
+		
+		** starts at -1 to show not on reading specific types of data yet
+	*/
+	int currentReadingType = -1;
 	while (getline(fileStream, line)) {
 		// TODO: change conditionals to not depend on order
 		if (counter == 0) {   // first line is the width of each tile
@@ -73,19 +82,25 @@ bool Map::loadFromFile(std::string file){
 		if (counter == 5) {		// the starting y position of the player
 			startY = std::stoi(line);
 		}
-		if (onCollisionData) {	// read the numbers into the collision data
+		if (currentReadingType == 2) {	// read the line into NPC data
+			lineToNPCData(line);
+		}
+		if (line == "+++") {	// stop reading into collision data when token is reached
+			currentReadingType = 2;
+		}
+		if (currentReadingType == 1) {	// read the numbers into the collision data
 			lineToCollisionData(line);
 		}
 		if (line == "***") {	// stop reading into map data when token is reached
-			onCollisionData = true;
+			currentReadingType = 1;
 		}
-		if (onMapData && !onCollisionData) {  // read the numbers into the map data
+		if (currentReadingType == 0) {  // read the numbers into the map data
 			lineToMapData(line);
 		}
 		if (line == "---") {  // stop reading into tile map when token is reached
-			onMapData = true;
+			currentReadingType = 0;
 		}
-		if (counter > 5 && !onMapData && !onCollisionData) {
+		if (counter > 5 && currentReadingType < 0) {
 			// reading tile info to tileMap
 			lineToTileMap(line);
 		}
@@ -216,5 +231,53 @@ void Map::lineToCollisionData(std::string line) {
 		}
 	}
 	collisionData.push_back(std::stoi(token, nullptr));
+	return;
+}
+
+/**
+* Helper function to load file data to NPC data
+* @param line The line to be parsed
+*/
+void Map::lineToNPCData(std::string line) {
+
+	std::string token = "";
+	int counter = 0;
+	// variables to hold the NPC data
+	NPC * thisNPC = nullptr;
+	int x, y;
+	std::vector<std::string> dialogue;
+	std::string path;
+
+	for (char const & c : line) {
+		if (c == '#') {
+			if (counter == 0) {
+				x = std::stoi(token, nullptr);
+				x *= 64;
+			}
+			if (counter == 1) {
+				y = std::stoi(token, nullptr);
+				y *= 64;
+			}
+			if (counter == 2) {
+				path = token;
+			}
+			if (counter >= 3) {
+				dialogue.push_back(token);
+			}
+			// reset the token and increment the counter
+			token = "";
+			counter++;
+		}
+		else {
+			token += c;
+		}
+	}
+
+	// if the counter >= 3, then we missed one last token
+	if (counter >= 3) dialogue.push_back(token);
+
+	thisNPC = new NPC(x, y, dialogue, path);
+	NPCs.push_back(thisNPC);
+
 	return;
 }

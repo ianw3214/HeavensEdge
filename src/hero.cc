@@ -119,7 +119,7 @@ void Hero::key1Attack() {
 	AnimatedSprite* effect = new AnimatedSprite("assets/attack.png", HERO::ATTACK_1_WIDTH, HERO::ATTACK_1_HEIGHT, 10, true);
 	effect->setAnimationData({ 10 , 10 });
 	effect->playAnimation(faceRight ? 0 : 1);
-	effect->setPos(getX() - (faceRight ? 0 : 36), getY());
+	effect->setPos(getX() - (faceRight ? 0 : 86), getY());
 	// push the new effect to the effects vector
 	effects.push_back(effect);
 	// set the attack timer

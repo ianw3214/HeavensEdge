@@ -37,11 +37,11 @@ void Level::init() {
 	// set initial camera position to player position
 	camera.x = player->getCenterX() - camera.w / 2;
 	camera.y = player->getCenterY() - camera.h / 2;
-	// add an NPC on initialization
-	NPC * temp = new NPC(70, 70, {"Hello, I'm bob", "I hope you're well"});
-	entities.push_back(temp);
-	temp = new NPC(170, 70, { "Hello, I'm not bob", "I hope you're not well" });
-	entities.push_back(temp);
+	// load NPCs from map
+	for (auto & e : map->getNPCs()) {
+		NPC * npc = dynamic_cast<NPC*>(e);
+		entities.push_back(npc);
+	}
 }
 
 /**

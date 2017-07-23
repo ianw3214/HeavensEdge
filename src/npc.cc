@@ -1,15 +1,19 @@
 #include "npc.h"
 
 NPC::NPC() : Creature(0, 0, 10, 4), dialogue({}) {
-	init();
+	init("assets/testNPC.png");
 }
 
 NPC::NPC(int x, int y) : Creature(x, y, 10, 4), dialogue({}) {
-	init();
+	init("assets/testNPC.png");
 }
 
 NPC::NPC(int x, int y, std::vector<std::string> d) : Creature(x, y, 10, 4) , dialogue(d) {
-	init();
+	init("assets/testNPC.png");
+}
+
+NPC::NPC(int x, int y, std::vector<std::string> d, std::string path) : Creature(x, y, 10, 4), dialogue(d) {
+	init(path);
 }
 
 // getter/setter methods
@@ -28,8 +32,8 @@ void NPC::render(SDL_Surface* display, SDL_Rect camera) {
 	sprite->render(display, camera);
 }
 
-void NPC::init() {
-	sprite = new AnimatedSprite("assets/testNPC.png", 64, 64, 1, false);
+void NPC::init(std::string path) {
+	sprite = new AnimatedSprite(path, 64, 64, 1, false);
 	sprite->setAnimationData({ 1 });
 	// set the default collision rectangle
 	collisionBox = new Rectangle(x, y, 64, 64);

@@ -17,6 +17,7 @@ public:
 	NPC();
 	NPC(int, int);
 	NPC(int, int, std::vector<std::string>);
+	NPC(int, int, std::vector<std::string>, std::string);
 	virtual ~NPC() {}
 
 	// getter/setter methods
@@ -27,7 +28,7 @@ public:
 
 private:
 
-	void init();
+	void init(std::string);
 	std::vector<std::string> dialogue;
 
 };
