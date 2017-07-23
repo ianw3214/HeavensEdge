@@ -10,7 +10,10 @@
 #include "constants.h"
 #include "tile.h"
 #include "entity.h"
+
 #include "npc.h"
+#include "enemy.h"
+#include "chargeEnemy.h"
 
 /**
  * Map class representing tile maps
@@ -28,6 +31,7 @@ public:
 	// getter/setter functions
 	std::vector<int> getCollisionMap() const;
 	std::vector<NPC*> getNPCs() const;
+	std::vector<Enemy*> getEnemies() const;
 	int getWidth();
 	int getHeight();
 	int getTileSize();
@@ -45,9 +49,11 @@ private:
     std::vector<int> mapData;
 	std::vector<int> collisionData;
 	std::vector<NPC*> NPCs;
+	std::vector<Enemy*> enemies;
 
     void lineToTileMap(std::string);
     void lineToMapData(std::string);
 	void lineToCollisionData(std::string);
 	void lineToNPCData(std::string);
+	void lineToEnemy(std::string);
 };

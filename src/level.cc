@@ -16,11 +16,12 @@ Level::Level(){
 // load a level and its data from a file
 Level::Level(std::string filePath) {
 	Creature::setEntityList(&entities);
-    map = new Map(filePath);
+	// load a new player
+	player = new Player();
+	entities.push_back(player);
+	// load the map and its collision data
+	map = new Map(filePath);
 	Creature::setCollisionData(map->getCollisionMap(), map->getWidth(), map->getTileSize());
-	// load the collision data to the player
-    player = new Player();
-    entities.push_back(player);
 }
 
 /**
@@ -41,6 +42,11 @@ void Level::init() {
 	for (auto & e : map->getNPCs()) {
 		NPC * npc = dynamic_cast<NPC*>(e);
 		entities.push_back(npc);
+	}
+	// load enemies from map
+	for (auto & e : map->getEnemies()) {
+		Enemy * enemy = dynamic_cast<Enemy*>(e);
+		entities.push_back(enemy);
 	}
 }
 

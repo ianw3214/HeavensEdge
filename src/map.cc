@@ -35,6 +35,9 @@ std::vector<int> Map::getCollisionMap() const{
 std::vector<NPC*> Map::getNPCs() const {
 	return NPCs;
 }
+std::vector<Enemy*> Map::getEnemies() const {
+	return enemies;
+}
 int Map::getWidth() { return mapWidth; }
 int Map::getHeight() { return mapHeight; }
 int Map::getTileSize() { return tileWidth; }
@@ -54,6 +57,7 @@ bool Map::loadFromFile(std::string file){
 	/*	0 - MAP DATA
 		1 - COLLISION DATA
 		2 - NPC DATA
+		3 - ENEMY DATA
 		
 		** starts at -1 to show not on reading specific types of data yet
 	*/
@@ -81,6 +85,12 @@ bool Map::loadFromFile(std::string file){
 		}
 		if (counter == 5) {		// the starting y position of the player
 			startY = std::stoi(line);
+		}
+		if (currentReadingType == 3) { // read the line to enemy data
+			lineToEnemy(line);
+		}
+		if (line == "%%%") {	// stop reading into NPC data when token is reached
+			currentReadingType = 3;
 		}
 		if (currentReadingType == 2) {	// read the line into NPC data
 			lineToNPCData(line);
@@ -280,4 +290,43 @@ void Map::lineToNPCData(std::string line) {
 	NPCs.push_back(thisNPC);
 
 	return;
+}
+
+/**
+* Helper function to load file data to enemy data
+* @param line The line to be parsed
+*/
+void Map::lineToEnemy(std::string line) {
+
+	std::string token = "";
+	int counter = 0;
+	// variables to hold the NPC data
+	Enemy * thisEnemy = nullptr;
+	int x, y;
+
+	for (char const & c : line) {
+		if (c == '#') {
+			if (counter == 0) {
+				x = std::stoi(token, nullptr);
+				x *= 64;
+			}
+			if (counter == 1) {
+				y = std::stoi(token, nullptr);
+				y *= 64;
+			}
+			// reset the token and increment the counter
+			token = "";
+			counter++;
+		}
+		else {
+			token += c;
+		}
+	}
+	// determine the type of enemy depending on the last token
+	int ID = std::stoi(token, nullptr);
+	if (ID == 0) enemies.push_back(new Enemy(x, y));
+	if (ID == 1) enemies.push_back(new ChargeEnemy(x, y));
+
+	return;
+
 }
