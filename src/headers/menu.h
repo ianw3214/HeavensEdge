@@ -6,6 +6,7 @@
 #include "state.h"
 #include "level.h"
 #include "sprite.h"
+#include "constants.h"
 
 struct menuItem{
 	menuItem * previous;

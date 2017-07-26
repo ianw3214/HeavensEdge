@@ -6,6 +6,7 @@
 
 #include "creature.h"
 #include "collision.h"
+#include "constants.h"
 
 #include <iostream>
 

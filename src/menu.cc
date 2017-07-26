@@ -14,7 +14,7 @@ Menu::Menu() {
 	item2->next = item3;
 	currentMenuItem->next = item2;
 	// initialize menu background
-	background = new Sprite("assets/menu_bg.png");
+	background = new Sprite(SPRITE_PATH::MENU_BACKGROUND);
 }
 
 /**
@@ -54,6 +54,10 @@ void Menu::handleKeyPress(SDL_Keycode key) {
 			currentMenuItem = currentMenuItem->previous;
 		}
 		std::cout << currentMenuItem->ID;
+	}
+	if (key == SDLK_ESCAPE) {
+		quit = true;
+		nextState = nullptr;
 	}
 }
 

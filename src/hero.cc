@@ -10,7 +10,7 @@
  */
 Hero::Hero(int initX, int initY) : Creature (initX, initY, 5, 2, HERO::COLLISION_SPRITE_MARGIN_X, HERO::COLLISION_SPRITE_MARGIN_Y) {
     // TODO: get default variables from input/global variable/something like that
-	sprite = new AnimatedSprite("assets/hero.png", 64, 64, 20, false);
+	sprite = new AnimatedSprite(SPRITE_PATH::HERO, 64, 64, 20, false);
     sprite->setAnimationData({20, 20, 6, 6, 10, 10, 10, 10, 10, 10});
 	// initialize dash variables
 	dashTimer = 0.0f, dashDirection = -1;
@@ -116,7 +116,7 @@ void Hero::key1Attack() {
 	// loop through all entities and deal damage if enemy type
 	damageEnemiesInRect(attackCollision, HERO::ATTACK_1_DAMAGE);
 	// create a new effect for the attack
-	AnimatedSprite* effect = new AnimatedSprite("assets/attack.png", HERO::ATTACK_1_WIDTH, HERO::ATTACK_1_HEIGHT, 10, true);
+	AnimatedSprite* effect = new AnimatedSprite(SPRITE_PATH::HERO_ATTACK1, HERO::ATTACK_1_WIDTH, HERO::ATTACK_1_HEIGHT, 10, true);
 	effect->setAnimationData({ 10 , 10 });
 	effect->playAnimation(faceRight ? 0 : 1);
 	effect->setPos(getX() - (faceRight ? 0 : 86), getY());
@@ -154,7 +154,7 @@ void Hero::key2Attack() {
 
 void Hero::handleDialogue() {
 	if (inDialogue) {
-		if (currentDialogue.size() <= dialogueIndex) {
+		if ( (unsigned int) currentDialogue.size() <= dialogueIndex) {
 			inDialogue = false;
 			dialogueIndex = 0;
 			currentDialogue = {};
@@ -334,7 +334,7 @@ void Hero::findNPCforDialogue() {
 				// get the distance and compare it to the current smallest distance
 				int xDistance = std::abs(thisNPC->getX() - x);
 				int yDistance = std::abs(thisNPC->getY() - y);
-				float distance = std::sqrt(xDistance * xDistance + yDistance * yDistance);
+				float distance = (float) std::sqrt(xDistance * xDistance + yDistance * yDistance);
 				// if the distance is smaller or if it is the first distance, set it to the NPC
 				if (distance < minDistance || minDistance < 0.0f) {
 					minDistance = distance;

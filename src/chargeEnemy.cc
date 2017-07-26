@@ -45,7 +45,7 @@ void ChargeEnemy::update(float delta) {
 	}
 	// otherwise, update the creature accordingly
 	else {
-		Creature::move(direction, CHARGE_ENEMY::CHARGESPEED * delta);
+		Creature::move(direction, static_cast<int>(CHARGE_ENEMY::CHARGESPEED * delta));
 		// update the timer
 		chargeTimer += delta;
 		if (chargeTimer >= CHARGE_ENEMY::CHARGE_TIME) {
@@ -69,7 +69,7 @@ void ChargeEnemy::init(int inpX, int inpY) {
 	direction = 0;
 	chargeTimer = 0.0f;
 	// set the enemy sprite
-	sprite = new AnimatedSprite("assets/ChargeEnemy.png", 64, 64, 1, false);
+	sprite = new AnimatedSprite(SPRITE_PATH::CHARGE_ENEMY, 64, 64, 1, false);
 	sprite->setAnimationData({ 1 });
 	// set the default collision rectangle
 	collisionBox = new Rectangle(x, y, 64, 64);
@@ -77,7 +77,7 @@ void ChargeEnemy::init(int inpX, int inpY) {
 	health = 10;
 	type = 3;
 	// look for the hero from the entity list
-	for (int i = 0; i < Creature::entityList->size(); i++) {
+	for (unsigned int i = 0; i < Creature::entityList->size(); i++) {
 		if (entityList->at(i)->getType() == 2) {
 			Player * temp = dynamic_cast<Player*>(entityList->at(i));
 			hero = dynamic_cast<Hero*>(temp->getHero());

@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 
 int const WINDOW_WIDTH = 1280;
 int const WINDOW_HEIGHT = 720;
@@ -35,6 +36,16 @@ namespace HERO {
 namespace CHARGE_ENEMY {
 	int const CHARGESPEED = 450;
 	float const CHARGE_TIME = 1.5f;
+}
+
+namespace SPRITE_PATH {
+	std::string const MENU_BACKGROUND = "assets/menu/menu_bg.png";
+
+	std::string const HERO = "assets/hero/hero.png";
+	std::string const HERO_ATTACK1 = "assets/hero/hero_attack1.png";
+
+	std::string const ENEMY = "assets/enemies/enemy.png";
+	std::string const CHARGE_ENEMY = "assets/enemies/ChargeEnemy.png";
 }
 
 // temporary settings

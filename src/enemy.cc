@@ -59,7 +59,7 @@ void Enemy::render(SDL_Surface * display, SDL_Rect camera) {
  *   - helper functions for the constructors
  */
 void Enemy::init() {
-	sprite = new AnimatedSprite("assets/enemy.png", 64, 64, 1, false);
+	sprite = new AnimatedSprite(SPRITE_PATH::ENEMY, 64, 64, 1, false);
 	sprite->setAnimationData({ 1 });
 	// set the default collision rectangle
 	collisionBox = new Rectangle(x, y, 64, 64);
