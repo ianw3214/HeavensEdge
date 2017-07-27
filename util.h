@@ -18,6 +18,10 @@ public:
 	static SDL_Texture * loadTexture(std::string, SDL_Renderer*);
 
 	static SDL_Texture * getTextureFromId(std::string);
+
+	static void setWindow(SDL_Window*);
+	static SDL_Window* getWindow();
 private:
 	static std::map<std::string, SDL_Texture*> textureMap;
+	static SDL_Window* gameWindow;
 };

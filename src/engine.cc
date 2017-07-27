@@ -54,6 +54,7 @@ bool Engine::init(){
     }
 	// load all the textures
 	UTIL::loadTextures(gRenderer);
+	UTIL::setWindow(gWindow);
 	// initialize variables
 	fps = 0, frames = 0;
 	fpsCounter = 0.0f;
