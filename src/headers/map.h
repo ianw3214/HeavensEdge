@@ -7,6 +7,7 @@
 #include <string>
 #include <map>
 
+#include "util.h"
 #include "constants.h"
 #include "tile.h"
 #include "entity.h"
@@ -22,8 +23,8 @@
  */
 class Map : public Entity{
 public:
-    Map(SDL_Renderer*);
-    Map(std::string, SDL_Renderer*);
+    Map();
+    Map(std::string);
     ~Map();
 
     bool loadFromFile(std::string);
@@ -56,6 +57,4 @@ private:
 	void lineToCollisionData(std::string);
 	void lineToNPCData(std::string);
 	void lineToEnemy(std::string);
-
-	SDL_Renderer* renderer;
 };

@@ -9,6 +9,8 @@ int const CAMERA_MARGIN = 30;
 
 int const FRAME_RATE_CAP = 120;
 
+std::string const TEXTURE_ID_PATH = "assets/IDs.txt";
+
 namespace HERO {
 	int const BASE_SPEED = 300;
 	int const COLLISION_WIDTH = 56;
@@ -38,14 +40,18 @@ namespace CHARGE_ENEMY {
 	float const CHARGE_TIME = 1.5f;
 }
 
-namespace SPRITE_PATH {
-	std::string const MENU_BACKGROUND = "assets/menu/menu_bg.png";
+namespace TILE_ID {
+	std::string const BASIC = "TILE001";
+}
 
-	std::string const HERO = "assets/hero/hero.png";
-	std::string const HERO_ATTACK1 = "assets/hero/hero_attack1.png";
+namespace SPRITE_ID {
+	std::string const MENU_BACKGROUND = "MENU001";
 
-	std::string const ENEMY = "assets/enemies/enemy.png";
-	std::string const CHARGE_ENEMY = "assets/enemies/ChargeEnemy.png";
+	std::string const HERO = "HERO001";
+	std::string const HERO_ATTACK1 = "ATTK001";
+
+	std::string const ENEMY = "ENMY001";
+	std::string const CHARGE_ENEMY = "ENMY002";
 }
 
 // temporary settings

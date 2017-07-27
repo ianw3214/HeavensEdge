@@ -5,9 +5,9 @@
 /**
  * Default tile constructor
  */
-Tile::Tile(std::string path, int w, int h, int xPos, int yPos, SDL_Renderer* renderer){
+Tile::Tile(std::string textureID, int w, int h, int xPos, int yPos){
     // load the sprite sheet to a texture
-	tileSheet = UTIL::loadTexture(path, renderer);
+	tileSheet = UTIL::getTextureFromId(textureID);
     // set up the blit Rect of the tile
     blitRect = {xPos*w, yPos*h, w, h};
 }

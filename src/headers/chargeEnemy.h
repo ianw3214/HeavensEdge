@@ -17,14 +17,14 @@ class ChargeEnemy : public Enemy {
 
 public:
 
-	ChargeEnemy(SDL_Renderer*);
-	ChargeEnemy(int, int, SDL_Renderer*);
+	ChargeEnemy();
+	ChargeEnemy(int, int);
 	virtual ~ChargeEnemy() {};
 
 	void update(float);
 	void render(SDL_Renderer*, SDL_Rect);
 private:
-	void init(int, int, SDL_Renderer*);
+	void init(int, int);
 
 	bool charging;
 	int direction;

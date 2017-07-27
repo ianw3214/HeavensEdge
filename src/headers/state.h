@@ -21,13 +21,9 @@ public:
     virtual void update(float);
     virtual void render(SDL_Renderer*);
 
-	static void setRenderer(SDL_Renderer*);
-
     bool shouldQuit();
     State* getNextState();
 protected:
     State * nextState;
     bool quit;
-
-	static SDL_Renderer * renderer;
 };

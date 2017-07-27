@@ -18,9 +18,9 @@ class Sprite : public Entity{
 
 public:
 
-    Sprite(std::string, SDL_Renderer*);
-    Sprite(std::string, int, int, SDL_Renderer*);
-    Sprite(std::string, int, int, int, int, SDL_Renderer*);
+    Sprite(std::string);
+    Sprite(std::string, int, int);
+    Sprite(std::string, int, int, int, int);
 	virtual ~Sprite() {};
 
     // getter/setter functions

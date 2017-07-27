@@ -5,9 +5,9 @@
 /**
  * Default player constructor
  */
-Player::Player(SDL_Renderer* renderer) : Entity(2) {
+Player::Player() : Entity(2) {
 	// set the player to a default hero at 0,0
-    hero = new Hero(0, 0, renderer);
+    hero = new Hero(0, 0);
 	init();
 }
 
@@ -15,7 +15,7 @@ Player::Player(SDL_Renderer* renderer) : Entity(2) {
  * Player constructor with a hero class passed in as the player hero
  * @param initHero The hero that the player is playing
  */
-Player::Player(Hero * initHero, SDL_Renderer* renderer) : Entity(2) {
+Player::Player(Hero * initHero) : Entity(2) {
     hero = initHero;
 	init();
 }

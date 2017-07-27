@@ -52,8 +52,8 @@ bool Engine::init(){
             return false;
         }
     }
-	// set static variables for other classes
-	State::setRenderer(gRenderer);
+	// load all the textures
+	UTIL::loadTextures(gRenderer);
 	// initialize variables
 	fps = 0, frames = 0;
 	fpsCounter = 0.0f;

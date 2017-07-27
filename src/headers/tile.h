@@ -12,7 +12,7 @@
  */
 class Tile{
 public:
-    Tile(std::string, int, int, int, int, SDL_Renderer* renderer);
+    Tile(std::string, int, int, int, int);
 
     virtual void update(float);
     virtual void render(SDL_Renderer*, int, int);

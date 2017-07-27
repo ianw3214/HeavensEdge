@@ -3,20 +3,20 @@
 #include <iostream>
 
 // Sprite constructor with just an image path
-Sprite::Sprite(std::string path, SDL_Renderer* renderer){
-	texture = UTIL::loadTexture(path, renderer);
+Sprite::Sprite(std::string textureID){
+	texture = UTIL::getTextureFromId(textureID);
     init(0, 0, 0, 0);
 }
 
 // Sprite constructor with position and image path
-Sprite::Sprite(std::string path, int x, int y, SDL_Renderer* renderer){
-	texture = UTIL::loadTexture(path, renderer);
+Sprite::Sprite(std::string textureID, int x, int y){
+	texture = UTIL::getTextureFromId(textureID);
     init(x, y, 0, 0);
 }
 
 // sprite constructor with position, image path, and collision info
-Sprite::Sprite(std::string path, int x, int y, int w, int h, SDL_Renderer* renderer){
-	texture = UTIL::loadTexture(path, renderer);
+Sprite::Sprite(std::string textureID, int x, int y, int w, int h){
+	texture = UTIL::getTextureFromId(textureID);
     init(x, y, w, h);
 }
 

@@ -15,8 +15,6 @@ public:
 	int getType() const;
 	bool getRemove() const;
 
-	static void setDisplay(SDL_Surface*);
-
 	virtual void handleEvents(SDL_Event) {};
 	virtual void update(float) = 0;
 	virtual void render(SDL_Renderer*, SDL_Rect) = 0;
@@ -33,6 +31,4 @@ protected:
 	bool REMOVE;
 
 	void init(int);
-
-	static SDL_Surface * screenDisplay;
 };

@@ -8,11 +8,9 @@
  *
  * Calls the Entity constructor with 20 base health
  */
-Hero::Hero(int initX, int initY, SDL_Renderer* inpRenderer) : Creature (initX, initY, 5, 2, HERO::COLLISION_SPRITE_MARGIN_X, HERO::COLLISION_SPRITE_MARGIN_Y) {
-	// set the renderer
-	renderer = inpRenderer;
+Hero::Hero(int initX, int initY) : Creature (initX, initY, 5, 2, HERO::COLLISION_SPRITE_MARGIN_X, HERO::COLLISION_SPRITE_MARGIN_Y) {
     // TODO: get default variables from input/global variable/something like that
-	sprite = new AnimatedSprite(SPRITE_PATH::HERO, 64, 64, 20, false, renderer);
+	sprite = new AnimatedSprite(SPRITE_ID::HERO, 64, 64, 20, false);
     sprite->setAnimationData({20, 20, 6, 6, 10, 10, 10, 10, 10, 10});
 	// initialize dash variables
 	dashTimer = 0.0f, dashDirection = -1;
@@ -118,7 +116,7 @@ void Hero::key1Attack() {
 	// loop through all entities and deal damage if enemy type
 	damageEnemiesInRect(attackCollision, HERO::ATTACK_1_DAMAGE);
 	// create a new effect for the attack
-	AnimatedSprite* effect = new AnimatedSprite(SPRITE_PATH::HERO_ATTACK1, HERO::ATTACK_1_WIDTH, HERO::ATTACK_1_HEIGHT, 10, true, renderer);
+	AnimatedSprite* effect = new AnimatedSprite(SPRITE_ID::HERO_ATTACK1, HERO::ATTACK_1_WIDTH, HERO::ATTACK_1_HEIGHT, 10, true);
 	effect->setAnimationData({ 10 , 10 });
 	effect->playAnimation(faceRight ? 0 : 1);
 	effect->setPos(getX() - (faceRight ? 0 : 86), getY());

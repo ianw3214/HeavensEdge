@@ -15,8 +15,8 @@
 class Player : public Entity{
 
 public:
-    Player(SDL_Renderer*);
-    Player(Hero*, SDL_Renderer*);
+    Player();
+    Player(Hero*);
     ~Player();
 
 	// getter/setter functions

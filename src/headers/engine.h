@@ -6,6 +6,7 @@
 
 #include "state.h"
 #include "constants.h"
+#include "util.h"
 
 #include <ctime>
 

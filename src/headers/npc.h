@@ -14,10 +14,10 @@ class NPC : public Creature{
 
 public:
 
-	NPC(SDL_Renderer*);
-	NPC(int, int, SDL_Renderer*);
-	NPC(int, int, std::vector<std::string>, SDL_Renderer*);
-	NPC(int, int, std::vector<std::string>, std::string, SDL_Renderer*);
+	NPC();
+	NPC(int, int);
+	NPC(int, int, std::vector<std::string>);
+	NPC(int, int, std::vector<std::string>, std::string);
 	virtual ~NPC() {}
 
 	// getter/setter methods
@@ -28,7 +28,7 @@ public:
 
 private:
 
-	void init(std::string, SDL_Renderer*);
+	void init(std::string);
 	std::vector<std::string> dialogue;
 
 };

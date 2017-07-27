@@ -17,7 +17,7 @@ class AnimatedSprite : public Sprite{
 public:
 
 	
-    AnimatedSprite(std::string, int, int, int, bool, SDL_Renderer*);
+    AnimatedSprite(std::string, int, int, int, bool);
 	virtual ~AnimatedSprite() {};
 
     void setAnimationData(std::vector<int>);

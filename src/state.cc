@@ -3,9 +3,6 @@
 #include <iostream>
 #include <vector>
 
-// declare static variables
-SDL_Renderer* State::renderer;
-
 /**
  * Default state constructor
  */
@@ -51,10 +48,6 @@ void State::update(float delta){
  */
 void State::render(SDL_Renderer * renderer){
 
-}
-
-void State::setRenderer(SDL_Renderer* r) {
-	renderer = r;
 }
 
 /**

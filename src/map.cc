@@ -6,8 +6,7 @@
 /**
  * Default map constructor that loads a default level file
  */
-Map::Map(SDL_Renderer* inpRenderer){
-	renderer = inpRenderer;
+Map::Map(){
     // load a default level if no level was specified
     loadFromFile("levels/test.txt");
 }
@@ -15,8 +14,7 @@ Map::Map(SDL_Renderer* inpRenderer){
 /**
  * Map constructor that loads a map from a file
  */
-Map::Map(std::string filePath , SDL_Renderer* inpRenderer){
-	renderer = inpRenderer;
+Map::Map(std::string filePath){
     loadFromFile(filePath);
 }
 
@@ -196,7 +194,7 @@ void Map::lineToTileMap(std::string line){
     // after looping, the token should still contain the last y position of the tile
     y = std::stoi(token, nullptr);
     // load all the data into the tilemap
-    Tile * newTile = new Tile(path, tileWidth, tileHeight, x, y, renderer);
+    Tile * newTile = new Tile(path, tileWidth, tileHeight, x, y);
     tileMap[index] = newTile;
     return;
 }
@@ -288,7 +286,7 @@ void Map::lineToNPCData(std::string line) {
 	// if the counter >= 3, then we missed one last token
 	if (counter >= 3) dialogue.push_back(token);
 
-	thisNPC = new NPC(x, y, dialogue, path, renderer);
+	thisNPC = new NPC(x, y, dialogue, path);
 	NPCs.push_back(thisNPC);
 
 	return;
@@ -326,8 +324,8 @@ void Map::lineToEnemy(std::string line) {
 	}
 	// determine the type of enemy depending on the last token
 	int ID = std::stoi(token, nullptr);
-	if (ID == 0) enemies.push_back(new Enemy(x, y, renderer));
-	if (ID == 1) enemies.push_back(new ChargeEnemy(x, y, renderer));
+	if (ID == 0) enemies.push_back(new Enemy(x, y));
+	if (ID == 1) enemies.push_back(new ChargeEnemy(x, y));
 
 	return;
 

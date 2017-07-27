@@ -5,7 +5,7 @@
 /**
  * Constructor of AnimatedSprite class
  */
-AnimatedSprite::AnimatedSprite(std::string path, int w, int h, int ssw, bool shouldPlayOnce=false, SDL_Renderer* renderer=nullptr) : Sprite(path, renderer){
+AnimatedSprite::AnimatedSprite(std::string textureID, int w, int h, int ssw, bool shouldPlayOnce=false) : Sprite(textureID){
     tileWidth = w;
     tileHeight = h;
     spriteSheetWidth = ssw;

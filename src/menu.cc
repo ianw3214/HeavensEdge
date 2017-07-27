@@ -14,7 +14,7 @@ Menu::Menu() {
 	item2->next = item3;
 	currentMenuItem->next = item2;
 	// initialize menu background
-	background = new Sprite(SPRITE_PATH::MENU_BACKGROUND, renderer);
+	background = new Sprite(SPRITE_ID::MENU_BACKGROUND);
 }
 
 /**
