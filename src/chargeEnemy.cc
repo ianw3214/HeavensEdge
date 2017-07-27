@@ -1,11 +1,11 @@
 #include "chargeEnemy.h"
 
-ChargeEnemy::ChargeEnemy() {
-	init(0, 0);
+ChargeEnemy::ChargeEnemy(SDL_Renderer* renderer) : Enemy(renderer) {
+	init(0, 0, renderer);
 }
 
-ChargeEnemy::ChargeEnemy(int startX, int startY){
-	init(startX, startY);
+ChargeEnemy::ChargeEnemy(int startX, int startY, SDL_Renderer* renderer) : Enemy(renderer) {
+	init(startX, startY, renderer);
 }
 
 void ChargeEnemy::update(float delta) {
@@ -59,17 +59,17 @@ void ChargeEnemy::update(float delta) {
 	}
 }
 
-void ChargeEnemy::render(SDL_Surface * display, SDL_Rect camera) {
-	sprite->render(display, camera);
+void ChargeEnemy::render(SDL_Renderer* renderer, SDL_Rect camera) {
+	sprite->render(renderer, camera);
 }
 
-void ChargeEnemy::init(int inpX, int inpY) {
+void ChargeEnemy::init(int inpX, int inpY, SDL_Renderer* renderer) {
 	// set default variables
 	charging = false;
 	direction = 0;
 	chargeTimer = 0.0f;
 	// set the enemy sprite
-	sprite = new AnimatedSprite(SPRITE_PATH::CHARGE_ENEMY, 64, 64, 1, false);
+	sprite = new AnimatedSprite(SPRITE_PATH::CHARGE_ENEMY, 64, 64, 1, false, renderer);
 	sprite->setAnimationData({ 1 });
 	// set the default collision rectangle
 	collisionBox = new Rectangle(x, y, 64, 64);

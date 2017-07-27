@@ -5,9 +5,9 @@
 /**
  * Default player constructor
  */
-Player::Player() : Entity(2) {
+Player::Player(SDL_Renderer* renderer) : Entity(2) {
 	// set the player to a default hero at 0,0
-    hero = new Hero(0, 0);
+    hero = new Hero(0, 0, renderer);
 	init();
 }
 
@@ -15,7 +15,7 @@ Player::Player() : Entity(2) {
  * Player constructor with a hero class passed in as the player hero
  * @param initHero The hero that the player is playing
  */
-Player::Player(Hero * initHero) : Entity(2) {
+Player::Player(Hero * initHero, SDL_Renderer* renderer) : Entity(2) {
     hero = initHero;
 	init();
 }
@@ -67,9 +67,9 @@ void Player::update(float delta){
  * @param display The SDL_Surface associated with the game window
  * @param camera  The SDL_Rect representing the level camera
  */
-void Player::render(SDL_Surface* display, SDL_Rect camera){
+void Player::render(SDL_Renderer* renderer, SDL_Rect camera){
 	// call the hero render function
-    hero->render(display, camera);
+    hero->render(renderer, camera);
 }
 
 /**

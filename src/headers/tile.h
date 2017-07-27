@@ -5,22 +5,20 @@
 
 #include <string>
 
+#include "util.h"
+
 /**
  * Tile class used to form tilemaps
  */
 class Tile{
 public:
-    Tile(std::string, int, int, int, int);
-
-	static void setDisplay(SDL_Surface*);
+    Tile(std::string, int, int, int, int, SDL_Renderer* renderer);
 
     virtual void update(float);
-    virtual void render(SDL_Surface*, int, int);
+    virtual void render(SDL_Renderer*, int, int);
 protected:
     int tileWidth, tileHeight;
 
-    SDL_Surface * spriteSheet;
+	SDL_Texture * tileSheet;
     SDL_Rect blitRect;
-
-	static SDL_Surface * screenSurface;
 };

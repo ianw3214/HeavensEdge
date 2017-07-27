@@ -6,10 +6,10 @@
 // default constructor for levels just for the sake of it
 Level::Level(){
 	Creature::setEntityList(&entities);
-	map = new Map("levels/test.txt");
+	map = new Map("levels/test.txt", renderer);
 	Creature::setCollisionData(map->getCollisionMap(), map->getWidth(), map->getTileSize());
 	// load the collision data to the player
-	player = new Player();
+	player = new Player(renderer);
 	entities.push_back(player);
 }
 
@@ -17,10 +17,10 @@ Level::Level(){
 Level::Level(std::string filePath) {
 	Creature::setEntityList(&entities);
 	// load a new player
-	player = new Player();
+	player = new Player(renderer);
 	entities.push_back(player);
 	// load the map and its collision data
-	map = new Map(filePath);
+	map = new Map(filePath, renderer);
 	Creature::setCollisionData(map->getCollisionMap(), map->getWidth(), map->getTileSize());
 }
 
@@ -103,10 +103,10 @@ void Level::update(float delta) {
  * Renders the level
  * @param display The SDL_Surface associated with the game window
  */
-void Level::render(SDL_Surface* display) {
-    map->render(display, camera);
+void Level::render(SDL_Renderer* renderer) {
+    map->render(renderer, camera);
     for(unsigned int i = 0; i < entities.size(); i++){
-        entities.at(i)->render(display, camera);
+        entities.at(i)->render(renderer, camera);
     }
 }
 
@@ -143,9 +143,9 @@ void Level::updateCamera() {
 void Level::handleKeyPress(SDL_Keycode key) {
 	// f key to spawn testing enemies
 	if (key == SDLK_f) {
-		Enemy * temp = new ChargeEnemy(100, 100);
+		Enemy * temp = new ChargeEnemy(100, 100, renderer);
 		entities.push_back(temp);
-		temp = new Enemy(200, 200);
+		temp = new Enemy(200, 200, renderer);
 		entities.push_back(temp);
 	}
 	// space key to pause the game

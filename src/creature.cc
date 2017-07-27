@@ -73,8 +73,8 @@ void Creature::update(float delta) {
 * @param display SDL_Surface associated with the game window
 * @param camera  SDL_Rect representing the game camera
 */
-void Creature::render(SDL_Surface* display, SDL_Rect camera) {
-	sprite->render(display, camera);
+void Creature::render(SDL_Renderer* renderer, SDL_Rect camera) {
+	sprite->render(renderer, camera);
 }
 
 /**

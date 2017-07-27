@@ -3,6 +3,9 @@
 #include <iostream>
 #include <vector>
 
+// declare static variables
+SDL_Renderer* State::renderer;
+
 /**
  * Default state constructor
  */
@@ -44,10 +47,14 @@ void State::update(float delta){
 
 /**
  * Default render function
- * @param display The SDL_Surface associated with the game window
+ * @param renderer The SDL renderer to draw the state
  */
-void State::render(SDL_Surface * display){
+void State::render(SDL_Renderer * renderer){
 
+}
+
+void State::setRenderer(SDL_Renderer* r) {
+	renderer = r;
 }
 
 /**

@@ -6,7 +6,8 @@
 /**
  * Default map constructor that loads a default level file
  */
-Map::Map(){
+Map::Map(SDL_Renderer* inpRenderer){
+	renderer = inpRenderer;
     // load a default level if no level was specified
     loadFromFile("levels/test.txt");
 }
@@ -14,7 +15,8 @@ Map::Map(){
 /**
  * Map constructor that loads a map from a file
  */
-Map::Map(std::string filePath){
+Map::Map(std::string filePath , SDL_Renderer* inpRenderer){
+	renderer = inpRenderer;
     loadFromFile(filePath);
 }
 
@@ -134,7 +136,7 @@ void Map::update(float delta) {
  * @param display SDL_Surface associated with the game window
  * @param camera  SDL_Rect representing the game camera
  */
-void Map::render(SDL_Surface * display, SDL_Rect camera) {
+void Map::render(SDL_Renderer* renderer, SDL_Rect camera) {
     // variables used to calculate whether a tile is on screen and should be rendered
     int startX = camera.x;
     int startY = camera.y;
@@ -151,7 +153,7 @@ void Map::render(SDL_Surface * display, SDL_Rect camera) {
         if(tileX >= startX-tileWidth && tileY >= startY-tileHeight && tileX <= endX && tileY <= endY){
             int key = mapData.at(i);
             if(!(tileMap.find(key) == tileMap.end())){
-                tileMap[key]->render(display, tileX - camera.x, tileY - camera.y);
+                tileMap[key]->render(renderer, tileX - camera.x, tileY - camera.y);
             }
         }
     }
@@ -194,7 +196,7 @@ void Map::lineToTileMap(std::string line){
     // after looping, the token should still contain the last y position of the tile
     y = std::stoi(token, nullptr);
     // load all the data into the tilemap
-    Tile * newTile = new Tile(path, tileWidth, tileHeight, x, y);
+    Tile * newTile = new Tile(path, tileWidth, tileHeight, x, y, renderer);
     tileMap[index] = newTile;
     return;
 }
@@ -286,7 +288,7 @@ void Map::lineToNPCData(std::string line) {
 	// if the counter >= 3, then we missed one last token
 	if (counter >= 3) dialogue.push_back(token);
 
-	thisNPC = new NPC(x, y, dialogue, path);
+	thisNPC = new NPC(x, y, dialogue, path, renderer);
 	NPCs.push_back(thisNPC);
 
 	return;
@@ -324,8 +326,8 @@ void Map::lineToEnemy(std::string line) {
 	}
 	// determine the type of enemy depending on the last token
 	int ID = std::stoi(token, nullptr);
-	if (ID == 0) enemies.push_back(new Enemy(x, y));
-	if (ID == 1) enemies.push_back(new ChargeEnemy(x, y));
+	if (ID == 0) enemies.push_back(new Enemy(x, y, renderer));
+	if (ID == 1) enemies.push_back(new ChargeEnemy(x, y, renderer));
 
 	return;
 

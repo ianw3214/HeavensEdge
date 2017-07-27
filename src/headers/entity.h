@@ -19,7 +19,7 @@ public:
 
 	virtual void handleEvents(SDL_Event) {};
 	virtual void update(float) = 0;
-	virtual void render(SDL_Surface*, SDL_Rect) = 0;
+	virtual void render(SDL_Renderer*, SDL_Rect) = 0;
 
 protected:
 	/* Integer representation of entity type:

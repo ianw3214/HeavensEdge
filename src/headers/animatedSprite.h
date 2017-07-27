@@ -17,7 +17,7 @@ class AnimatedSprite : public Sprite{
 public:
 
 	
-    AnimatedSprite(std::string, int, int, int, bool);
+    AnimatedSprite(std::string, int, int, int, bool, SDL_Renderer*);
 	virtual ~AnimatedSprite() {};
 
     void setAnimationData(std::vector<int>);
@@ -29,7 +29,7 @@ public:
 	void resetAnimationFrame();
 
     virtual void update(float);
-    virtual void render(SDL_Surface*, SDL_Rect);
+    virtual void render(SDL_Renderer*, SDL_Rect);
 
 protected:
     int tileWidth, tileHeight;

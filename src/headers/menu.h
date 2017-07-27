@@ -25,7 +25,7 @@ public:
 	~Menu() {};
 
 	void handleEvents(SDL_Event);
-	void render(SDL_Surface*);
+	void render(SDL_Renderer*);
 
 private:
 	menuItem * currentMenuItem;

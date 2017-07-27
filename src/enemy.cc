@@ -3,9 +3,9 @@
 /**
  * Default enemy constructor
  */
-Enemy::Enemy() : Creature(0, 0, 10, 3) , speed(200) {
+Enemy::Enemy(SDL_Renderer* renderer) : Creature(0, 0, 10, 3) , speed(200) {
 	// set default variables
-	init();
+	init(renderer);
 }
 
 /**
@@ -13,8 +13,8 @@ Enemy::Enemy() : Creature(0, 0, 10, 3) , speed(200) {
  * @param initX Integer corresponding to the initial x position
  * @param initY Integer corresponding to the initial y position
  */
-Enemy::Enemy(int initX, int initY) : Creature(initX, initY, 10, 3), speed(200) {
-	init();
+Enemy::Enemy(int initX, int initY, SDL_Renderer* renderer) : Creature(initX, initY, 10, 3), speed(200) {
+	init(renderer);
 }
 
 /**
@@ -50,16 +50,16 @@ void Enemy::update(float delta) {
 * @param display SDL_Surface associated with the game window
 * @param camera  SDL_Rect representing the game camera
 */
-void Enemy::render(SDL_Surface * display, SDL_Rect camera) {
-	sprite->render(display, camera);
+void Enemy::render(SDL_Renderer * renderer, SDL_Rect camera) {
+	sprite->render(renderer, camera);
 }
 
 /**
  * Initializes basic enemy attributes
  *   - helper functions for the constructors
  */
-void Enemy::init() {
-	sprite = new AnimatedSprite(SPRITE_PATH::ENEMY, 64, 64, 1, false);
+void Enemy::init(SDL_Renderer* renderer) {
+	sprite = new AnimatedSprite(SPRITE_PATH::ENEMY, 64, 64, 1, false, renderer);
 	sprite->setAnimationData({ 1 });
 	// set the default collision rectangle
 	collisionBox = new Rectangle(x, y, 64, 64);

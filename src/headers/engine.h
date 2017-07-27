@@ -6,8 +6,6 @@
 
 #include "state.h"
 #include "constants.h"
-#include "tile.h"
-#include "entity.h"
 
 #include <ctime>
 
@@ -26,10 +24,6 @@ public:
 	void setState(State*);
     void cleanUp();
 
-	// getter for game window / surface
-	SDL_Window* getWindow();
-	SDL_Surface* getSurface();
-
     void handleEvents();
     void update();
     void render();
@@ -45,7 +39,7 @@ private:
     float deltaTime;
 
     SDL_Window * gWindow;
-    SDL_Surface * display;
+	SDL_Renderer * gRenderer;
 
 	int fps, frames;
 	float fpsCounter;

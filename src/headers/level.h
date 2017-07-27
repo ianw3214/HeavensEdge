@@ -31,7 +31,7 @@ public:
 
     void handleEvents(SDL_Event);
     void update(float);
-    void render(SDL_Surface*);
+    void render(SDL_Renderer*);
 private:
     Map* map;
     std::vector<Entity*> entities;

@@ -3,20 +3,20 @@
 #include <iostream>
 
 // Sprite constructor with just an image path
-Sprite::Sprite(std::string path){
-    loadImage(path);
+Sprite::Sprite(std::string path, SDL_Renderer* renderer){
+	texture = UTIL::loadTexture(path, renderer);
     init(0, 0, 0, 0);
 }
 
 // Sprite constructor with position and image path
-Sprite::Sprite(std::string path, int x, int y){
-    loadImage(path);
+Sprite::Sprite(std::string path, int x, int y, SDL_Renderer* renderer){
+	texture = UTIL::loadTexture(path, renderer);
     init(x, y, 0, 0);
 }
 
 // sprite constructor with position, image path, and collision info
-Sprite::Sprite(std::string path, int x, int y, int w, int h){
-    loadImage(path);
+Sprite::Sprite(std::string path, int x, int y, int w, int h, SDL_Renderer* renderer){
+	texture = UTIL::loadTexture(path, renderer);
     init(x, y, w, h);
 }
 
@@ -24,7 +24,9 @@ Sprite::Sprite(std::string path, int x, int y, int w, int h){
 int Sprite::getX() const{ return x; }
 int Sprite::getY() const{ return y; }
 void Sprite::setPos(int newX, int newY){ x=newX, y=newY; }
-void Sprite::changeSpriteSheet(std::string path){ loadImage(path); }
+void Sprite::changeSpriteSheet(std::string path, SDL_Renderer* renderer) { 
+	texture = UTIL::loadTexture(path, renderer); 
+}
 
 /**
  * Updates sprite
@@ -38,9 +40,9 @@ void Sprite::update(float delta){
 * Renders sprite according to a default camera position
 * @param display SDL_Surface associated with the game window
 */
-void Sprite::render(SDL_Surface * display) {
-	if (SDL_BlitSurface(img, nullptr, display, nullptr) < 0) {
-		std::cout << "Image unable to blit, error: " << SDL_GetError() << std::endl;
+void Sprite::render(SDL_Renderer* renderer) {
+	if (SDL_RenderCopy(renderer, texture, nullptr, nullptr) < 0) {
+		std::cout << "Sprite unable to render, error: " << SDL_GetError() << std::endl;
 	}
 }
 
@@ -49,10 +51,10 @@ void Sprite::render(SDL_Surface * display) {
  * @param display SDL_Surface associated with the game window
  * @param camera  SDL_Rect representing the game camera
  */
-void Sprite::render(SDL_Surface * display, SDL_Rect camera){
-    SDL_Rect targetRect = {x - camera.x, y - camera.y, 0, 0};
-    if(SDL_BlitSurface(img, nullptr, display, &targetRect) < 0){
-        std::cout << "Image unable to blit, error: " << SDL_GetError() << std::endl;
+void Sprite::render(SDL_Renderer* renderer, SDL_Rect camera){
+    SDL_Rect targetRect = {x - camera.x, y - camera.y, w, h};
+    if(SDL_RenderCopy(renderer, texture, nullptr, &targetRect) < 0){
+        std::cout << "Sprite unable to render, error: " << SDL_GetError() << std::endl;
 	}
 }
 
@@ -69,16 +71,4 @@ void Sprite::init(int _x, int _y, int _w, int _h){
     y = _y;
 	w = _w;
 	h = _h;
-}
-
-/**
- * load the sprite sheet from specified path to the sprite
- * @param path Path to desired sprite image
- */
-void Sprite::loadImage(std::string path){
-	// load the image to a temporary surface first to optimize later
-    img = IMG_Load(path.c_str());
-    if(!img){
-        std::cout << "Image loading failed: " << path << ", error: " << IMG_GetError() << std::endl;
-	}
 }

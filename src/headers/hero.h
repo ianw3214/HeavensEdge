@@ -19,7 +19,7 @@
 class Hero : public Creature{
 
 public:
-    Hero(int, int);
+    Hero(int, int, SDL_Renderer*);
 	virtual ~Hero() {};
 
 	// getter/setter functions
@@ -31,7 +31,7 @@ public:
 	void takeDamage(int);
 
     virtual void update(float);
-    virtual void render(SDL_Surface*, SDL_Rect);
+    virtual void render(SDL_Renderer*, SDL_Rect);
 
 	virtual void key1Attack();
 	virtual void key2Attack();
@@ -89,4 +89,6 @@ private:
 
 	// handle all combo attacks in each specific class, so it is private
 	void combo1Attack();
+
+	SDL_Renderer * renderer;
 };

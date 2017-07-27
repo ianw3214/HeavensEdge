@@ -8,9 +8,11 @@
  *
  * Calls the Entity constructor with 20 base health
  */
-Hero::Hero(int initX, int initY) : Creature (initX, initY, 5, 2, HERO::COLLISION_SPRITE_MARGIN_X, HERO::COLLISION_SPRITE_MARGIN_Y) {
+Hero::Hero(int initX, int initY, SDL_Renderer* inpRenderer) : Creature (initX, initY, 5, 2, HERO::COLLISION_SPRITE_MARGIN_X, HERO::COLLISION_SPRITE_MARGIN_Y) {
+	// set the renderer
+	renderer = inpRenderer;
     // TODO: get default variables from input/global variable/something like that
-	sprite = new AnimatedSprite(SPRITE_PATH::HERO, 64, 64, 20, false);
+	sprite = new AnimatedSprite(SPRITE_PATH::HERO, 64, 64, 20, false, renderer);
     sprite->setAnimationData({20, 20, 6, 6, 10, 10, 10, 10, 10, 10});
 	// initialize dash variables
 	dashTimer = 0.0f, dashDirection = -1;
@@ -92,11 +94,11 @@ void Hero::update(float delta){
  * @param display SDL_Surface associated with the game window
  * @param camera  SDL_Rect representing the game camera
  */
-void Hero::render(SDL_Surface * display, SDL_Rect camera) {
-	sprite->render(display, camera);
+void Hero::render(SDL_Renderer* renderer, SDL_Rect camera) {
+	sprite->render(renderer, camera);
 	// call the render on any function associated with the player
 	for (unsigned int i = 0; i < effects.size(); i++) {
-		effects.at(i)->render(display, camera);
+		effects.at(i)->render(renderer, camera);
 	}
 }
 
@@ -116,7 +118,7 @@ void Hero::key1Attack() {
 	// loop through all entities and deal damage if enemy type
 	damageEnemiesInRect(attackCollision, HERO::ATTACK_1_DAMAGE);
 	// create a new effect for the attack
-	AnimatedSprite* effect = new AnimatedSprite(SPRITE_PATH::HERO_ATTACK1, HERO::ATTACK_1_WIDTH, HERO::ATTACK_1_HEIGHT, 10, true);
+	AnimatedSprite* effect = new AnimatedSprite(SPRITE_PATH::HERO_ATTACK1, HERO::ATTACK_1_WIDTH, HERO::ATTACK_1_HEIGHT, 10, true, renderer);
 	effect->setAnimationData({ 10 , 10 });
 	effect->playAnimation(faceRight ? 0 : 1);
 	effect->setPos(getX() - (faceRight ? 0 : 86), getY());

@@ -5,7 +5,7 @@
 /**
  * Constructor of AnimatedSprite class
  */
-AnimatedSprite::AnimatedSprite(std::string path, int w, int h, int ssw, bool shouldPlayOnce=false) : Sprite(path){
+AnimatedSprite::AnimatedSprite(std::string path, int w, int h, int ssw, bool shouldPlayOnce=false, SDL_Renderer* renderer=nullptr) : Sprite(path, renderer){
     tileWidth = w;
     tileHeight = h;
     spriteSheetWidth = ssw;
@@ -78,11 +78,11 @@ void AnimatedSprite::update(float delta){
  * @param display SDL_Surface associated with the game window
  * @param camera  SDL_Rect representing the game camera
  */
-void AnimatedSprite::render(SDL_Surface* display, SDL_Rect camera){
-    SDL_Rect targetRect = {x-camera.x, y-camera.y, 0, 0};
-    if(SDL_BlitSurface(img, &blitRect, display, &targetRect) < 0){
-        std::cout << "Image unable to blit, error: " << SDL_GetError() << std::endl;
-    }
+void AnimatedSprite::render(SDL_Renderer* renderer, SDL_Rect camera){
+    SDL_Rect targetRect = {x-camera.x, y-camera.y, w, h};
+	if (SDL_RenderCopy(renderer, texture, nullptr, &targetRect) < 0) {
+		std::cout << "Sprite unable to render, error: " << SDL_GetError() << std::endl;
+	}
 }
 
 /**

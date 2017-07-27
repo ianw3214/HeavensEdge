@@ -15,8 +15,8 @@
 class Player : public Entity{
 
 public:
-    Player();
-    Player(Hero*);
+    Player(SDL_Renderer*);
+    Player(Hero*, SDL_Renderer*);
     ~Player();
 
 	// getter/setter functions
@@ -28,7 +28,7 @@ public:
 
     void handleEvents(SDL_Event);
     void update(float);
-    void render(SDL_Surface*, SDL_Rect);
+    void render(SDL_Renderer*, SDL_Rect);
 private:
 
     Hero * hero;

@@ -17,14 +17,14 @@ class Enemy : public Creature {
 
 public:
 
-	Enemy();
-	Enemy(int, int);
+	Enemy(SDL_Renderer*);
+	Enemy(int, int, SDL_Renderer*);
 	virtual ~Enemy() {};
 
 	void update(float);
-	void render(SDL_Surface*, SDL_Rect);
+	void render(SDL_Renderer*, SDL_Rect);
 private:
-	void init();
+	void init(SDL_Renderer*);
 
 	// movement related variables/functions
 	void move(float);

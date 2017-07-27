@@ -22,8 +22,8 @@
  */
 class Map : public Entity{
 public:
-    Map();
-    Map(std::string);
+    Map(SDL_Renderer*);
+    Map(std::string, SDL_Renderer*);
     ~Map();
 
     bool loadFromFile(std::string);
@@ -39,7 +39,7 @@ public:
 	int getStartingY();
 
     void update(float delta);
-    void render(SDL_Surface*, SDL_Rect);
+    void render(SDL_Renderer*, SDL_Rect);
 private:
     int mapWidth, mapHeight;
     int tileWidth, tileHeight;
@@ -56,4 +56,6 @@ private:
 	void lineToCollisionData(std::string);
 	void lineToNPCData(std::string);
 	void lineToEnemy(std::string);
+
+	SDL_Renderer* renderer;
 };

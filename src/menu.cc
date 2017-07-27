@@ -14,7 +14,7 @@ Menu::Menu() {
 	item2->next = item3;
 	currentMenuItem->next = item2;
 	// initialize menu background
-	background = new Sprite(SPRITE_PATH::MENU_BACKGROUND);
+	background = new Sprite(SPRITE_PATH::MENU_BACKGROUND, renderer);
 }
 
 /**
@@ -31,8 +31,8 @@ void Menu::handleEvents(SDL_Event event) {
  * Renders the menu to the screen
  * @param display The surface of the game window 
  */
-void Menu::render(SDL_Surface* display) {
-	background->render(display);
+void Menu::render(SDL_Renderer* renderer) {
+	background->render(renderer);
 }
 
 /**

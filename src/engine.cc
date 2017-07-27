@@ -31,8 +31,15 @@ bool Engine::init(){
             std::cout << "Window initialization failed: " << SDL_GetError() << std::endl;
             return false;
         }
-        // set display surface to the one associated with game window
-        display = SDL_GetWindowSurface(gWindow);
+        // initialize a renderer based on the window
+		gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
+		if (gRenderer == NULL) {
+			std::cout << "Renderer could not be created! SDL Error: " << SDL_GetError() << std::endl;
+			return false;
+		}
+		else {
+			SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, 255);
+		}
         // initialize image loading library
         int success = IMG_Init(IMG_INIT_PNG);
         if((success & IMG_INIT_PNG) != IMG_INIT_PNG){
@@ -45,10 +52,8 @@ bool Engine::init(){
             return false;
         }
     }
-	// give the tile class the display for optimizing
-	Tile::setDisplay(display);
-	Entity::setDisplay(display);
-	SDL_SetSurfaceBlendMode(display, SDL_BLENDMODE_BLEND);
+	// set static variables for other classes
+	State::setRenderer(gRenderer);
 	// initialize variables
 	fps = 0, frames = 0;
 	fpsCounter = 0.0f;
@@ -81,14 +86,6 @@ void Engine::cleanUp(){
 
 	// Quit SDL subsystems
 	SDL_Quit();
-}
-
-SDL_Window* Engine::getWindow() {
-	return gWindow;
-}
-
-SDL_Surface* Engine::getSurface() {
-	return display;
 }
 
 /**
@@ -156,9 +153,11 @@ void Engine::update(){
  */
 void Engine::render(){
     // Fill the window black before updating the WINDOW
-	SDL_FillRect(display, nullptr, SDL_MapRGB(display->format, 0, 0, 0));
-    this->currentState->render(display);
-    SDL_UpdateWindowSurface(gWindow);
+	SDL_RenderClear(gRenderer);
+	// render the current state
+    this->currentState->render(gRenderer);
+	// update the screen
+	SDL_RenderPresent(gRenderer);
 }
 
 /**

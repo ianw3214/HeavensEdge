@@ -6,6 +6,7 @@
 #include <string>
 
 #include "entity.h"
+#include "util.h"
 
 /**
  * Base sprite class
@@ -17,27 +18,26 @@ class Sprite : public Entity{
 
 public:
 
-    Sprite(std::string);
-    Sprite(std::string, int, int);
-    Sprite(std::string, int, int, int, int);
+    Sprite(std::string, SDL_Renderer*);
+    Sprite(std::string, int, int, SDL_Renderer*);
+    Sprite(std::string, int, int, int, int, SDL_Renderer*);
 	virtual ~Sprite() {};
 
     // getter/setter functions
     virtual int getX() const;
     virtual int getY() const;
     virtual void setPos(int, int);
-    virtual void changeSpriteSheet(std::string);
+    virtual void changeSpriteSheet(std::string, SDL_Renderer*);
 
     void update(float);
-	void render(SDL_Surface*);
-    void render(SDL_Surface*, SDL_Rect);
+	void render(SDL_Renderer*);
+    void render(SDL_Renderer*, SDL_Rect);
 protected:
-    SDL_Surface* img;
+	SDL_Texture * texture;
 
     int x, y;
 	int w, h;
 
 private:
     void init(int x, int y, int w, int h);
-    void loadImage(std::string);
 };
