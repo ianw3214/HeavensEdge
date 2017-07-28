@@ -5,9 +5,11 @@
 /**
  * Constructor of AnimatedSprite class
  */
-AnimatedSprite::AnimatedSprite(std::string textureID, int w, int h, int ssw, bool shouldPlayOnce=false) : Sprite(textureID){
-    tileWidth = w;
-    tileHeight = h;
+AnimatedSprite::AnimatedSprite(std::string textureID, int _w, int _h, int ssw, bool shouldPlayOnce=false) : Sprite(textureID){
+    tileWidth = _w;
+    tileHeight = _h;
+	w = _w;
+	h = _h;
     spriteSheetWidth = ssw;
     currentFrame = 0;
     deltaTime = 0.0f;
@@ -80,7 +82,7 @@ void AnimatedSprite::update(float delta){
  */
 void AnimatedSprite::render(SDL_Renderer* renderer, SDL_Rect camera){
     SDL_Rect targetRect = {x-camera.x, y-camera.y, w, h};
-	if (SDL_RenderCopy(renderer, texture, nullptr, &targetRect) < 0) {
+	if (SDL_RenderCopy(renderer, texture, &blitRect, &targetRect) < 0) {
 		std::cout << "Sprite unable to render, error: " << SDL_GetError() << std::endl;
 	}
 }

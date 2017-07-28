@@ -10,7 +10,7 @@
  */
 Hero::Hero(int initX, int initY) : Creature (initX, initY, 5, 2, HERO::COLLISION_SPRITE_MARGIN_X, HERO::COLLISION_SPRITE_MARGIN_Y) {
     // TODO: get default variables from input/global variable/something like that
-	sprite = new AnimatedSprite(SPRITE_ID::HERO, 64, 64, 20, false);
+	sprite = new AnimatedSprite(SPRITE_ID::HERO, HERO::SPRITE_WIDTH, HERO::SPRITE_HEIGHT, HERO::SPRITESHEET_WIDTH, false);
     sprite->setAnimationData({20, 20, 6, 6, 10, 10, 10, 10, 10, 10});
 	// initialize dash variables
 	dashTimer = 0.0f, dashDirection = -1;

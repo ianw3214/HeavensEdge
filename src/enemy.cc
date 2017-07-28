@@ -3,7 +3,7 @@
 /**
  * Default enemy constructor
  */
-Enemy::Enemy() : Creature(0, 0, 10, 3) , speed(200) {
+Enemy::Enemy() : Creature(0, 0, 10, 3) {
 	// set default variables
 	init();
 }
@@ -13,7 +13,7 @@ Enemy::Enemy() : Creature(0, 0, 10, 3) , speed(200) {
  * @param initX Integer corresponding to the initial x position
  * @param initY Integer corresponding to the initial y position
  */
-Enemy::Enemy(int initX, int initY) : Creature(initX, initY, 10, 3), speed(200) {
+Enemy::Enemy(int initX, int initY) : Creature(initX, initY, 10, 3) {
 	init();
 }
 
@@ -36,7 +36,7 @@ void Enemy::update(float delta) {
 		move(delta);
 		int key = rand() % 200;
 		if (key == 5) {
-			idleTimer = 1.5f;
+			idleTimer = ENEMY::IDLE_TIME;
 			currentDir = rand() % 4;
 		}
 	}
@@ -59,15 +59,18 @@ void Enemy::render(SDL_Renderer * renderer, SDL_Rect camera) {
  *   - helper functions for the constructors
  */
 void Enemy::init() {
-	sprite = new AnimatedSprite(SPRITE_ID::ENEMY, 64, 64, 1, false);
+	sprite = new AnimatedSprite(SPRITE_ID::ENEMY, ENEMY::SPRITE_WIDTH, ENEMY::SPRITE_HEIGHT, ENEMY::SPRITESHEET_WIDTH, false);
 	sprite->setAnimationData({ 1 });
 	// set the default collision rectangle
-	collisionBox = new Rectangle(x, y, 64, 64);
+	collisionBox = new Rectangle(x, y, ENEMY::COLLISION_WIDTH, ENEMY::COLLISION_HEIGHT);
 	// set the initial movement flags
 	currentDir = rand() % 4;
 	idleTimer = 0.0f;
+	// set collision margins
+	collisionMarginX = ENEMY::COLLISION_SPRITE_MARGIN_X;
+	collisionMarginY = ENEMY::COLLISION_SPRITE_MARGIN_Y;
 }
 
 void Enemy::move(float delta) {
-	Creature::move(currentDir, static_cast<int>(speed * delta));
+	Creature::move(currentDir, static_cast<int>(ENEMY::SPEED * delta));
 }

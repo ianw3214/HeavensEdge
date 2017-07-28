@@ -12,11 +12,16 @@ int const FRAME_RATE_CAP = 120;
 std::string const TEXTURE_ID_PATH = "assets/IDs.txt";
 
 namespace HERO {
-	int const BASE_SPEED = 300;
+	int const SPRITE_WIDTH = 64;
+	int const SPRITE_HEIGHT = 64;
+	int const SPRITESHEET_WIDTH = 20;
+
 	int const COLLISION_WIDTH = 56;
 	int const COLLISION_HEIGHT = 61;
 	int const COLLISION_SPRITE_MARGIN_X = 4;
 	int const COLLISION_SPRITE_MARGIN_Y = 3;
+
+	int const BASE_SPEED = 300;
 	float const INVULN_TIME = 0.5f;
 
 	float const ATTACK_1_TIME = 0.3f;
@@ -35,7 +40,30 @@ namespace HERO {
 	int const COMBO1_DAMAGE = 5;
 }
 
+namespace ENEMY {
+	int const SPRITE_WIDTH = 64;
+	int const SPRITE_HEIGHT = 64;
+	int const SPRITESHEET_WIDTH = 1;
+
+	int const COLLISION_WIDTH = 64;
+	int const COLLISION_HEIGHT = 64;
+	int const COLLISION_SPRITE_MARGIN_X = 0;
+	int const COLLISION_SPRITE_MARGIN_Y = 0;
+
+	int const SPEED = 200;
+	float const IDLE_TIME = 1.5f;
+}
+
 namespace CHARGE_ENEMY {
+	int const SPRITE_WIDTH = 64;
+	int const SPRITE_HEIGHT = 64;
+	int const SPRITESHEET_WIDTH = 1;
+
+	int const COLLISION_WIDTH = 64;
+	int const COLLISION_HEIGHT = 64;
+	int const COLLISION_SPRITE_MARGIN_X = 0;
+	int const COLLISION_SPRITE_MARGIN_Y = 0;
+
 	int const CHARGESPEED = 450;
 	float const CHARGE_TIME = 1.5f;
 }

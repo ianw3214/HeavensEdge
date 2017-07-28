@@ -13,8 +13,8 @@ int main(int argc, char* argv[]){
 	// create a game engine and initialize it, quit if an error occured
     Engine game(WINDOW_WIDTH, WINDOW_HEIGHT);
 	if (!game.init()) { return 1; }
-	Menu* test = new Menu();
-	// Level* test = new Level("levels/test.txt");
+	// Menu* test = new Menu();
+	Level* test = new Level("levels/test.txt");
 	game.setState(test);
     while(game.isRunning()){
 		game.update();

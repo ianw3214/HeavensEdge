@@ -69,10 +69,13 @@ void ChargeEnemy::init(int inpX, int inpY) {
 	direction = 0;
 	chargeTimer = 0.0f;
 	// set the enemy sprite
-	sprite = new AnimatedSprite(SPRITE_ID::CHARGE_ENEMY, 64, 64, 1, false);
+	sprite = new AnimatedSprite(SPRITE_ID::CHARGE_ENEMY, CHARGE_ENEMY::SPRITE_WIDTH, CHARGE_ENEMY::SPRITE_HEIGHT, CHARGE_ENEMY::SPRITESHEET_WIDTH, false);
 	sprite->setAnimationData({ 1 });
 	// set the default collision rectangle
-	collisionBox = new Rectangle(x, y, 64, 64);
+	collisionBox = new Rectangle(x, y, CHARGE_ENEMY::COLLISION_WIDTH, CHARGE_ENEMY::COLLISION_HEIGHT);
+	collisionMarginX = CHARGE_ENEMY::COLLISION_SPRITE_MARGIN_X;
+	collisionMarginY = CHARGE_ENEMY::COLLISION_SPRITE_MARGIN_Y;
+	// set other variables
 	x = inpX, y = inpY;
 	health = 10;
 	type = 3;
