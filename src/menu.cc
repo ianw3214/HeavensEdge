@@ -72,6 +72,7 @@ void Menu::select() {
 	if (currentMenuItem->ID == 2) {
 		// TODO: add options code here
 		SDL_SetWindowSize(UTIL::getWindow(), 720, 480);
+		UTIL::setWindowSize(720, 480);
 	}
 	if (currentMenuItem->ID == 3) {
 		nextState = nullptr;

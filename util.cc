@@ -3,6 +3,7 @@
 // define static variables
 std::map<std::string, SDL_Texture*> UTIL::textureMap;
 SDL_Window* UTIL::gameWindow;
+int UTIL::screenWidth, UTIL::screenHeight;
 
 // initialization function to be called in engine
 void UTIL::loadTextures(SDL_Renderer* renderer) {
@@ -56,3 +57,10 @@ void UTIL::setWindow(SDL_Window* inpWindow) {
 SDL_Window* UTIL::getWindow() {
 	return gameWindow;
 }
+
+void UTIL::setWindowSize(int w, int h) {
+	screenWidth = w;
+	screenHeight = h;
+}
+int UTIL::getWindowWidth() { return screenWidth; }
+int UTIL::getWindowHeight() { return screenHeight; }

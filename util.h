@@ -21,7 +21,12 @@ public:
 
 	static void setWindow(SDL_Window*);
 	static SDL_Window* getWindow();
+
+	static void setWindowSize(int, int);
+	static int getWindowWidth();
+	static int getWindowHeight();
 private:
 	static std::map<std::string, SDL_Texture*> textureMap;
 	static SDL_Window* gameWindow;
+	static int screenWidth, screenHeight;
 };

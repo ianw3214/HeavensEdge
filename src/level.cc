@@ -29,8 +29,8 @@ Level::Level(std::string filePath) {
  */
 void Level::init() {
     // TODO: initialize camera from NOT hard coded code
-    camera.w = 1280;
-    camera.h = 720;
+    camera.w = UTIL::getWindowWidth();
+    camera.h = UTIL::getWindowHeight();
 	camSpeed = CAMERA_SPEED;
 	camMargin = CAMERA_MARGIN;
 	pause = false;
@@ -83,7 +83,7 @@ void Level::update(float delta) {
 	if (!pause) {
 		// update the map first
 		map->update(delta);
-		updateCamera();
+		updateCamera(delta);
 		// update each entity in the level
 		for (unsigned int i = 0; i < entities.size(); i++) {
 			entities.at(i)->update(delta);
@@ -113,7 +113,7 @@ void Level::render(SDL_Renderer* renderer) {
 /**
  * Moves the camera depending on player position
  */
-void Level::updateCamera() {
+void Level::updateCamera(float delta) {
 	// get target camera position
 	int targetX = player->getCenterX() - camera.w / 2;
 	int targetY = player->getCenterY() - camera.h / 2;
@@ -122,14 +122,14 @@ void Level::updateCamera() {
 	// otherwise, set the position to be equal to target position
 	int xDiff = static_cast<int>(std::abs(static_cast<double>(targetX - camera.x)));
 	if (xDiff > camMargin) {
-		int speed = camSpeed;
+		int speed = camSpeed * delta;
 		if (xDiff > WINDOW_WIDTH / 2) speed *= 3;
 		if (targetX > camera.x) { camera.x += speed; }
 		else { camera.x -= speed; }
 	}
 	int yDiff = static_cast<int>(std::abs(static_cast<double>(targetY - camera.y)));
 	if (yDiff > camMargin) {
-		int speed = camSpeed;
+		int speed = camSpeed * delta;
 		if (yDiff > WINDOW_HEIGHT / 2) speed *= 3;
 		if (targetY > camera.y) { camera.y += speed; }
 		else { camera.y -= speed; }

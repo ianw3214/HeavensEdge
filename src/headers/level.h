@@ -41,7 +41,7 @@ private:
 	int camMargin;
 
     SDL_Rect camera;
-	void updateCamera();
+	void updateCamera(float);
 	void handleKeyPress(SDL_Keycode);
 
 	bool pause;

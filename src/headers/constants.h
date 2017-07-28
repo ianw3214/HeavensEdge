@@ -4,7 +4,7 @@
 int const WINDOW_WIDTH = 1280;
 int const WINDOW_HEIGHT = 720;
 
-int const CAMERA_SPEED = 2;
+int const CAMERA_SPEED = 250;
 int const CAMERA_MARGIN = 30;
 
 int const FRAME_RATE_CAP = 120;
