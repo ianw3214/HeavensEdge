@@ -41,7 +41,8 @@ void Sprite::update(float delta){
 * @param display SDL_Surface associated with the game window
 */
 void Sprite::render(SDL_Renderer* renderer) {
-	if (SDL_RenderCopy(renderer, texture, nullptr, nullptr) < 0) {
+	SDL_Rect targetRect = { x, y, w, h };
+	if (SDL_RenderCopy(renderer, texture, nullptr, &targetRect) < 0) {
 		std::cout << "Sprite unable to render, error: " << SDL_GetError() << std::endl;
 	}
 }

@@ -4,6 +4,7 @@ levels/
 Debug/
 build/*.obj
 build/*.dll
+build/other/
 .vs/
 *.aps
 HeavensEdge.rc

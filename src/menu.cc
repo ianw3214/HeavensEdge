@@ -14,7 +14,9 @@ Menu::Menu() {
 	item2->next = item3;
 	currentMenuItem->next = item2;
 	// initialize menu background
-	background = new Sprite(SPRITE_ID::MENU_BACKGROUND);
+	background = new Sprite(SPRITE_ID::MENU_BACKGROUND, 0, 0, 1280, 720);
+	// initialize title
+	title = new Sprite(SPRITE_ID::MENU_TITLE, 140, 260, 1000, 200);
 }
 
 /**
@@ -33,6 +35,7 @@ void Menu::handleEvents(SDL_Event event) {
  */
 void Menu::render(SDL_Renderer* renderer) {
 	background->render(renderer);
+	title->render(renderer);
 }
 
 /**

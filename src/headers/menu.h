@@ -30,6 +30,7 @@ public:
 private:
 	menuItem * currentMenuItem;
 	Sprite * background;
+	Sprite * title;
 
 	void handleKeyPress(SDL_Keycode);
 	void select();
