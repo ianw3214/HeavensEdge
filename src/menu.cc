@@ -16,7 +16,13 @@ Menu::Menu() {
 	// initialize menu background
 	background = new Sprite(SPRITE_ID::MENU_BACKGROUND, 0, 0, 1280, 720);
 	// initialize title
-	title = new Sprite(SPRITE_ID::MENU_TITLE, 140, 260, 1000, 200);
+	title = new Sprite(SPRITE_ID::MENU_TITLE, 140, 160, 1000, 200);
+	// initialize text sprites
+	option1 = new Sprite(SPRITE_ID::MENU_PLAY, 440, 360, 400, 80);
+	option2 = new Sprite(SPRITE_ID::MENU_SETTINGS, 440, 440, 400, 80);
+	option3 = new Sprite(SPRITE_ID::MENU_QUIT, 440, 520, 400, 80);
+	// initialize selection sprite
+	selectSprite = new Sprite(SPRITE_ID::MENU_SELECT, 440, 360, 400, 80);
 }
 
 /**
@@ -36,6 +42,10 @@ void Menu::handleEvents(SDL_Event event) {
 void Menu::render(SDL_Renderer* renderer) {
 	background->render(renderer);
 	title->render(renderer);
+	selectSprite->render(renderer);
+	option1->render(renderer);
+	option2->render(renderer);
+	option3->render(renderer);
 }
 
 /**
@@ -43,7 +53,7 @@ void Menu::render(SDL_Renderer* renderer) {
 * @param key The key that was pressed
 */
 void Menu::handleKeyPress(SDL_Keycode key) {
-	if (key == SDLK_SPACE) {
+	if (key == SDLK_SPACE || key == SDLK_RETURN) {
 		select();
 	}
 	if (key == SDLK_DOWN) {
@@ -62,6 +72,7 @@ void Menu::handleKeyPress(SDL_Keycode key) {
 		quit = true;
 		nextState = nullptr;
 	}
+	selectSprite->setPos(440, 360 + (currentMenuItem->ID - 1) * 80);
 }
 
 /**
@@ -74,8 +85,8 @@ void Menu::select() {
 	}
 	if (currentMenuItem->ID == 2) {
 		// TODO: add options code here
-		SDL_SetWindowSize(UTIL::getWindow(), 720, 480);
-		UTIL::setWindowSize(720, 480);
+		SDL_SetWindowSize(UTIL::getWindow(), 2000, 500);
+		UTIL::setWindowSize(2000, 500);
 	}
 	if (currentMenuItem->ID == 3) {
 		nextState = nullptr;

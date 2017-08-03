@@ -28,7 +28,7 @@ public:
 	void editTileAt(int, int, int);
 	void editCollision(int, int, bool);
 
-	void saveToFile();
+	void saveToFile(int, int);
 private:
 	std::vector<int> tileMap;
 	std::vector<int> collisionMap;

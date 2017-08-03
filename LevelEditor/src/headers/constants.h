@@ -10,16 +10,13 @@ std::string const CURSOR_FILE_PATH = "assets/cursor.png";
 std::string const CURSOR_PRESS_FILE_PATH = "assets/cursor_press.png";
 std::string const COLLISION_TILE_FILE_PATH = "assets/collision.png";
 std::string const OVERLAY_FILE_PATH = "assets/overlay.png";
+std::string const PLAYER_FILE_PATH = "assets/player.png";
 
 int const TILE_WIDTH = 64;
 int const TILE_HEIGHT = 64;
 
 int const BASE_MAP_WIDTH = 20;
 int const BASE_MAP_HEIGHT = 20;
-
-// change these to be customizable in the editor
-int const PLAYER_START_X = 1;
-int const PLAYER_START_Y = 1;
 
 int const SCREEN_WIDTH = 1280;
 int const SCREEN_HEIGHT = 720;

@@ -75,6 +75,10 @@ namespace TILE_ID {
 namespace SPRITE_ID {
 	std::string const MENU_BACKGROUND = "MENU001";
 	std::string const MENU_TITLE = "MENU002";
+	std::string const MENU_PLAY = "MENU003";
+	std::string const MENU_SETTINGS = "MENU004";
+	std::string const MENU_QUIT = "MENU005";
+	std::string const MENU_SELECT = "MENU006";
 
 	std::string const HERO = "HERO001";
 	std::string const HERO_ATTACK1 = "ATTK001";

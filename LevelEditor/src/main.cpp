@@ -16,6 +16,12 @@ struct tileNode {
 	int xPos;
 };
 
+enum mode {
+	mode_normal,
+	mode_collision,
+	mode_player
+};
+
 // global variables
 SDL_Window * gWindow;
 SDL_Surface * display;
@@ -24,13 +30,15 @@ int xCursor, yCursor;
 int cursorState;
 Uint32 currentTime, lastTime;
 float deltaTime;
-bool collisionMode;
 bool collisionAdd;
+mode editorMode;
 
 Map *map;
 int xOffset, yOffset;
 int xMouseStartPos, yMouseStartPos;
 int xOffsetStart, yOffsetStart;
+
+int player_x, player_y;
 
 bool SPACE, LMB;
 
@@ -41,6 +49,7 @@ SDL_Surface * rectOutline;
 SDL_Surface * cursor;
 SDL_Surface * cursorPress;
 SDL_Surface * overlay;
+SDL_Surface * player;
 
 // function declarations
 bool init();
@@ -56,6 +65,7 @@ void addTileLinkedListPos(int);
 
 void setMouseOutline();
 
+void renderPlayerStart();
 void renderRectOutline(int, int);
 void renderCursorSymbol();
 
@@ -111,8 +121,9 @@ bool init() {
 	xOffsetStart = 0, yOffsetStart = 0;
 	currentTime = lastTime = SDL_GetTicks();
 	deltaTime = 0.0f;
-	collisionMode = false;
 	collisionAdd = true;
+	editorMode = mode_normal;
+	player_x = 0, player_y = 0;
 	// initialize asset surfaces
 	rectOutline = IMG_Load(RECT_OUTLINE_FILE_PATH.c_str());
 	if (!rectOutline) std::cout << "failed to load: outline1.png; ERROR: " << IMG_GetError() << std::endl;
@@ -122,6 +133,8 @@ bool init() {
 	if (!cursorPress) std::cout << "failed to load: cursor_press.png; ERROR: " << IMG_GetError() << std::endl;
 	overlay = IMG_Load(OVERLAY_FILE_PATH.c_str());
 	if (!overlay) std::cout << "failed to load: overlay.png; ERROR: " << IMG_GetError() << std::endl;
+	player = IMG_Load(PLAYER_FILE_PATH.c_str());
+	if (!player) std::cout << "failed to load: player.png; ERROR: " << IMG_GetError() << std::endl;
 	return true;
 }
 
@@ -156,10 +169,16 @@ void handleEvents() {
 				}
 			}
 			if (e.key.keysym.sym == SDLK_s) {
-				map->saveToFile();
+				map->saveToFile(player_x, player_y);
 			}
 			if (e.key.keysym.sym == SDLK_c) {
-				collisionMode = !collisionMode;
+				if (editorMode != mode_collision) editorMode = mode_collision;
+				else editorMode = mode_normal;
+			}
+			if (e.key.keysym.sym == SDLK_p) {
+				if (editorMode != mode_player) editorMode = mode_player;
+				else editorMode = mode_normal;
+				
 			}
 			if (e.key.keysym.sym == SDLK_v) {
 				collisionAdd = !collisionAdd;
@@ -178,6 +197,13 @@ void handleEvents() {
 					// set the starting mouse position to move map
 					SDL_GetMouseState(&xMouseStartPos, &yMouseStartPos);
 					xOffsetStart = xOffset, yOffsetStart = yOffset;
+				}
+				// if the editor is in player editing mode then set the player spawn point
+				else if (editorMode == mode_player) {
+					int x, y;
+					SDL_GetMouseState(&x, &y);
+					player_x = static_cast<int>((x - xOffset) / 64);
+					player_y = static_cast<int>((y - yOffset) / 64);
 				}
 			}
 		}
@@ -221,8 +247,8 @@ void update() {
 		SDL_GetMouseState(&x, &y);
 		int target_x = x - xOffset;
 		int target_y = y - yOffset;
-		if (collisionMode) map->editCollision(target_x, target_y, collisionAdd);
-		else map->editTileAt(target_x, target_y, currentTile->index);
+		if (editorMode == mode_collision) map->editCollision(target_x, target_y, collisionAdd);
+		else if (editorMode == mode_normal) map->editTileAt(target_x, target_y, currentTile->index);
 	}
 	// update the cursor position
 	SDL_GetMouseState(&xCursor, &yCursor);
@@ -235,7 +261,7 @@ void render() {
 	SDL_FillRect(display, nullptr, SDL_MapRGB(display->format, 0, 0, 0));
 	// render the map
 	map->render(display, xOffset, yOffset);
-	if (collisionMode) {
+	if (editorMode == mode_collision) {
 		// render an overlay of white to distinguish between collision and tile mode
 		if (SDL_BlitSurface(overlay, nullptr, display, nullptr) < 0) {
 			std::cout << "COULDN'T RENDER OVERLAY" << SDL_GetError() << std::endl;
@@ -245,6 +271,8 @@ void render() {
 	}
 	// render the tiles
 	renderTileLinkedList();
+	// render the player start
+	renderPlayerStart();
 	// render a rectangle outline where the mouse is
 	setMouseOutline();
 	// render the cursor symbol where the cursor is
@@ -322,6 +350,13 @@ void setMouseOutline() {
 	yFinalPos -= yFinalPos > y ? 64 : 0;
 	// finally, render the outline
 	renderRectOutline(xFinalPos, yFinalPos);
+}
+
+void renderPlayerStart() {
+	SDL_Rect targetRect = { player_x * 64 + xOffset, player_y * 64 + yOffset, 0, 0 };
+	if (SDL_BlitSurface(player, nullptr, display, &targetRect) < 0) {
+		std::cout << "Image unable to blit, error: " << SDL_GetError() << std::endl;
+	}
 }
 
 void renderRectOutline(int x, int y) {

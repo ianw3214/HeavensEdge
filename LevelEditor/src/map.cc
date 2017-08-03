@@ -68,7 +68,7 @@ void Map::editCollision(int x, int y, bool add) {
 	return;
 }
 
-void Map::saveToFile() {
+void Map::saveToFile(int playerX, int playerY) {
 	std::ofstream target;
 	target.open(OUTPUT_FILE_PATH);
 	std::cout << "FLAG" << std::endl;
@@ -76,8 +76,8 @@ void Map::saveToFile() {
 	target << TILE_HEIGHT << "\n";
 	target << BASE_MAP_WIDTH << "\n";
 	target << BASE_MAP_HEIGHT << "\n";
-	target << PLAYER_START_X << "\n";
-	target << PLAYER_START_Y << "\n";
+	target << playerX << "\n";
+	target << playerY << "\n";
 	// add all of the tile indices
 	// first calculate the width and height of the input image used to calculate the position of each index
 	SDL_Surface* tileSheet = IMG_Load(TILE_SHEET_FILE_PATH.c_str());
