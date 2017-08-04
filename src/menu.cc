@@ -16,13 +16,13 @@ Menu::Menu() {
 	// initialize menu background
 	background = new Sprite(SPRITE_ID::MENU_BACKGROUND, 0, 0);
 	// initialize title
-	title = new Sprite(SPRITE_ID::MENU_TITLE, 140, 160, 1000, 200);
+	title = new Sprite(SPRITE_ID::MENU_TITLE, 140, 160, TITLE_WIDTH, TITLE_HEIGHT);
 	// initialize text sprites
-	option1 = new Sprite(SPRITE_ID::MENU_PLAY, 440, 360, 400, 80);
-	option2 = new Sprite(SPRITE_ID::MENU_SETTINGS, 440, 440, 400, 80);
-	option3 = new Sprite(SPRITE_ID::MENU_QUIT, 440, 520, 400, 80);
+	option1 = new Sprite(SPRITE_ID::MENU_PLAY, 440, 360, OPTION_WIDTH, OPTION_HEIGHT);
+	option2 = new Sprite(SPRITE_ID::MENU_SETTINGS, 440, 440, OPTION_WIDTH, OPTION_HEIGHT);
+	option3 = new Sprite(SPRITE_ID::MENU_QUIT, 440, 520, OPTION_WIDTH, OPTION_HEIGHT);
 	// initialize selection sprite
-	selectSprite = new Sprite(SPRITE_ID::MENU_SELECT, 440, 360, 400, 80);
+	selectSprite = new Sprite(SPRITE_ID::MENU_SELECT, 440, 360, OPTION_WIDTH, OPTION_HEIGHT);
 	// initialize other variables
 	currentRatioIndex = 0;
 }
@@ -74,7 +74,7 @@ void Menu::handleKeyPress(SDL_Keycode key) {
 		quit = true;
 		nextState = nullptr;
 	}
-	selectSprite->setPos(440, 360 + (currentMenuItem->ID - 1) * 80);
+	selectSprite->setPos(selectSprite->getX(), 360 + (currentMenuItem->ID - 1) * 80);
 }
 
 /**
@@ -93,9 +93,14 @@ void Menu::select() {
 		}
 		int width = ratios.at(currentRatioIndex).first;
 		int height = ratios.at(currentRatioIndex).second;
-		// TODO: add options code here
 		SDL_SetWindowSize(UTIL::getWindow(), width, height);
 		UTIL::setWindowSize(width, height);
+		// set the sprites to be center
+		title->setPos((width - TITLE_WIDTH) / 2, title->getY());
+		option1->setPos((width - OPTION_WIDTH) / 2, option1->getY());
+		option2->setPos((width - OPTION_WIDTH) / 2, option2->getY());
+		option3->setPos((width - OPTION_WIDTH) / 2, option3->getY());
+		selectSprite->setPos((width - OPTION_WIDTH) / 2, selectSprite->getY());
 	}
 	if (currentMenuItem->ID == 3) {
 		nextState = nullptr;

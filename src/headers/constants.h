@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 
+// basic constants
 int const WINDOW_WIDTH = 1280;
 int const WINDOW_HEIGHT = 720;
 
@@ -12,12 +13,19 @@ int const FRAME_RATE_CAP = 120;
 
 std::string const TEXTURE_ID_PATH = "assets/IDs.txt";
 
+// menu constants
 std::vector<std::pair<int, int>> const ratios = {
 	std::make_pair(1280, 720),
 	std::make_pair(720, 480),
 	std::make_pair(1920, 1080)
 };
 
+int const TITLE_WIDTH = 1000;
+int const TITLE_HEIGHT = 200;
+int const OPTION_WIDTH = 400;
+int const OPTION_HEIGHT = 80;
+
+// hero constants
 namespace HERO {
 	int const SPRITE_WIDTH = 64;
 	int const SPRITE_HEIGHT = 64;
@@ -47,6 +55,7 @@ namespace HERO {
 	int const COMBO1_DAMAGE = 5;
 }
 
+// enemy constants
 namespace ENEMY {
 	int const SPRITE_WIDTH = 64;
 	int const SPRITE_HEIGHT = 64;
@@ -75,6 +84,7 @@ namespace CHARGE_ENEMY {
 	float const CHARGE_TIME = 1.5f;
 }
 
+// id constants
 namespace TILE_ID {
 	std::string const BASIC = "TILE001";
 }
