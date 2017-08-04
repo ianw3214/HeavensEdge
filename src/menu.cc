@@ -14,7 +14,7 @@ Menu::Menu() {
 	item2->next = item3;
 	currentMenuItem->next = item2;
 	// initialize menu background
-	background = new Sprite(SPRITE_ID::MENU_BACKGROUND, 0, 0, 1280, 720);
+	background = new Sprite(SPRITE_ID::MENU_BACKGROUND, 0, 0);
 	// initialize title
 	title = new Sprite(SPRITE_ID::MENU_TITLE, 140, 160, 1000, 200);
 	// initialize text sprites
@@ -23,6 +23,8 @@ Menu::Menu() {
 	option3 = new Sprite(SPRITE_ID::MENU_QUIT, 440, 520, 400, 80);
 	// initialize selection sprite
 	selectSprite = new Sprite(SPRITE_ID::MENU_SELECT, 440, 360, 400, 80);
+	// initialize other variables
+	currentRatioIndex = 0;
 }
 
 /**
@@ -84,9 +86,16 @@ void Menu::select() {
 		quit = true;
 	}
 	if (currentMenuItem->ID == 2) {
+		// switch to the next ratio
+		currentRatioIndex++;
+		if (currentRatioIndex >= ratios.size()) {
+			currentRatioIndex = 0;
+		}
+		int width = ratios.at(currentRatioIndex).first;
+		int height = ratios.at(currentRatioIndex).second;
 		// TODO: add options code here
-		SDL_SetWindowSize(UTIL::getWindow(), 2000, 500);
-		UTIL::setWindowSize(2000, 500);
+		SDL_SetWindowSize(UTIL::getWindow(), width, height);
+		UTIL::setWindowSize(width, height);
 	}
 	if (currentMenuItem->ID == 3) {
 		nextState = nullptr;

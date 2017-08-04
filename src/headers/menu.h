@@ -34,6 +34,8 @@ private:
 	Sprite * option1, *option2, *option3;
 	Sprite * selectSprite;
 
+	int currentRatioIndex;
+
 	void handleKeyPress(SDL_Keycode);
 	void select();
 

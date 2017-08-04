@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <vector>
 
 int const WINDOW_WIDTH = 1280;
 int const WINDOW_HEIGHT = 720;
@@ -10,6 +11,12 @@ int const CAMERA_MARGIN = 30;
 int const FRAME_RATE_CAP = 120;
 
 std::string const TEXTURE_ID_PATH = "assets/IDs.txt";
+
+std::vector<std::pair<int, int>> const ratios = {
+	std::make_pair(1280, 720),
+	std::make_pair(720, 480),
+	std::make_pair(1920, 1080)
+};
 
 namespace HERO {
 	int const SPRITE_WIDTH = 64;
