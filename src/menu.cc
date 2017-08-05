@@ -23,7 +23,12 @@ Menu::Menu() {
 	option3 = new Sprite(SPRITE_ID::MENU_QUIT, 440, 520, OPTION_WIDTH, OPTION_HEIGHT);
 	// initialize selection sprite
 	selectSprite = new Sprite(SPRITE_ID::MENU_SELECT, 440, 360, OPTION_WIDTH, OPTION_HEIGHT);
+	// initialize option overlay sprite
+	optionOverlay = new Sprite(SPRITE_ID::OPTION_OVERLAY, 0, 0, 0, 0);
 	// initialize other variables
+	optionOverlayTweening = false, onOptions = false;
+	tweenStartTime = 0;
+	overlayVerticalPosition = 0;
 	currentRatioIndex = 0;
 }
 
@@ -34,6 +39,30 @@ Menu::Menu() {
 void Menu::handleEvents(SDL_Event event) {
 	if (event.type == SDL_KEYDOWN) {
 		handleKeyPress(event.key.keysym.sym);
+	}
+}
+
+void Menu::update(float delta) {
+	// update the tween if the sprite is still tweening
+	if (optionOverlayTweening) {
+		// get the difference in time from the start of the tween to now
+		float timeStamp = static_cast<float>(SDL_GetTicks() - tweenStartTime);
+		// if the time is over the desired tween time, set the sprite to position 0 and turn flag off
+		if (timeStamp >= TWEEN_TIME) {
+			overlayVerticalPosition = 0;
+			optionOverlayTweening = false;
+		}
+		// otherwise, update the tween based on the time
+		else if (timeStamp != 0) {
+			// get the desired function input between 0.5 and 2
+			float functionInput = (timeStamp / TWEEN_TIME) * 1.5 + 0.5;
+			// plug the input into the function to get a number between 0 and 1
+			float functionOutput = ((1 / functionInput) - 0.5) / 1.5;
+			// use the resulting number to calculate the position of the option overlay
+			overlayVerticalPosition = functionOutput * UTIL::getWindowHeight();
+		}
+		// set the position of the sprite
+		optionOverlay->setPos(0, overlayVerticalPosition);
 	}
 }
 
@@ -48,6 +77,7 @@ void Menu::render(SDL_Renderer* renderer) {
 	option1->render(renderer);
 	option2->render(renderer);
 	option3->render(renderer);
+	if (onOptions) optionOverlay->render(renderer);
 }
 
 /**
@@ -86,6 +116,7 @@ void Menu::select() {
 		quit = true;
 	}
 	if (currentMenuItem->ID == 2) {
+		/*
 		// switch to the next ratio
 		currentRatioIndex++;
 		if (currentRatioIndex >= ratios.size()) {
@@ -101,6 +132,13 @@ void Menu::select() {
 		option2->setPos((width - OPTION_WIDTH) / 2, option2->getY());
 		option3->setPos((width - OPTION_WIDTH) / 2, option3->getY());
 		selectSprite->setPos((width - OPTION_WIDTH) / 2, selectSprite->getY());
+		*/
+		// start the tween
+		optionOverlayTweening = true;
+		onOptions = true;
+		overlayVerticalPosition = UTIL::getWindowHeight();
+		tweenStartTime = SDL_GetTicks();
+		optionOverlay = new Sprite(SPRITE_ID::OPTION_OVERLAY, 0, overlayVerticalPosition, UTIL::getWindowWidth(), UTIL::getWindowHeight());
 	}
 	if (currentMenuItem->ID == 3) {
 		nextState = nullptr;

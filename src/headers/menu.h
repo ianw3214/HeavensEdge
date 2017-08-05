@@ -25,6 +25,7 @@ public:
 	~Menu() {};
 
 	void handleEvents(SDL_Event);
+	void update(float);
 	void render(SDL_Renderer*);
 
 private:
@@ -33,7 +34,11 @@ private:
 	Sprite * title;
 	Sprite * option1, *option2, *option3;
 	Sprite * selectSprite;
+	Sprite * optionOverlay;
 
+	bool optionOverlayTweening, onOptions;
+	Uint32 tweenStartTime;
+	int overlayVerticalPosition;
 	int currentRatioIndex;
 
 	void handleKeyPress(SDL_Keycode);
