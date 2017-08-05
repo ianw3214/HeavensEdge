@@ -8,10 +8,10 @@
  *
  * Calls the Entity constructor with 20 base health
  */
-Hero::Hero(int initX, int initY) : Creature (initX, initY, 5, 2, HERO::COLLISION_SPRITE_MARGIN_X, HERO::COLLISION_SPRITE_MARGIN_Y) {
-    // TODO: get default variables from input/global variable/something like that
+Hero::Hero(int initX, int initY) : Creature(initX, initY, 5, 2, HERO::COLLISION_SPRITE_MARGIN_X, HERO::COLLISION_SPRITE_MARGIN_Y) {
+	// TODO: get default variables from input/global variable/something like that
 	sprite = new AnimatedSprite(SPRITE_ID::HERO, HERO::SPRITE_WIDTH, HERO::SPRITE_HEIGHT, HERO::SPRITESHEET_WIDTH, false);
-    sprite->setAnimationData({20, 20, 6, 6, 10, 10, 10, 10, 10, 10});
+	sprite->setAnimationData({ 20, 20, 6, 6, 10, 10, 10, 10, 10, 10 });
 	// initialize dash variables
 	dashTimer = 0.0f, dashDirection = -1;
 	// initialize the collision shape
@@ -57,9 +57,9 @@ void Hero::takeDamage(int dmg) {
  * Updates the hero
  * @param delta Difference in time between update calls
  */
-void Hero::update(float delta){
+void Hero::update(float delta) {
 	Creature::update(delta);
-    sprite->update(delta);
+	sprite->update(delta);
 	// set the position of the sprite to match that of the hero
 	sprite->setPos(x, y);
 	// update the collision shape as well
@@ -74,7 +74,7 @@ void Hero::update(float delta){
 	else if (attacking) {
 		// update the attack timer
 		attackTimer -= delta;
-		if (attackTimer <= 0.0f) attacking = false,	attackTimer = 0.0f;
+		if (attackTimer <= 0.0f) attacking = false, attackTimer = 0.0f;
 	}
 	else {
 		// move the player according to key presses
@@ -93,8 +93,12 @@ void Hero::update(float delta){
  * @param camera  SDL_Rect representing the game camera
  */
 void Hero::render(SDL_Renderer* renderer, SDL_Rect camera) {
+	// call the render function on any effects below with the player
+	for (unsigned int i = 0; i < effects_below.size(); i++) {
+		effects_below.at(i)->render(renderer, camera);
+	}
 	sprite->render(renderer, camera);
-	// call the render on any function associated with the player
+	// call the render function on any effects associated with the player
 	for (unsigned int i = 0; i < effects.size(); i++) {
 		effects.at(i)->render(renderer, camera);
 	}
@@ -247,6 +251,11 @@ void Hero::combo1Attack() {
 	// make the player invulnerable
 	invulnerable = true;
 	invulnTimer = HERO::COMBO_1_TIME;
+	// add an effect animation below the player
+	AnimatedSprite* effect = new AnimatedSprite(SPRITE_ID::HERO_COMBO1, HERO::COMBO1_WIDTH, HERO::COMBO1_HEIGHT, 8, true);
+	effect->setAnimationData({ 8 });
+	effect->setPos(getX() - HERO::COMBO1_MARGIN, getY() - HERO::COMBO1_MARGIN);
+	effects_below.push_back(effect);
 }
 
 // HELPER FUNCTIONS ========================================================================
@@ -258,6 +267,14 @@ void Hero::updateEffects(float delta) {
 		if (effects.at(i)->getRemove()) {
 			AnimatedSprite* effect = effects.at(i);
 			effects.erase(effects.begin() + i);
+			delete effect;
+		}
+	}
+	for (int i = effects_below.size() - 1; i >= 0; i--) {
+		effects_below.at(i)->update(delta);
+		if (effects_below.at(i)->getRemove()) {
+			AnimatedSprite* effect = effects_below.at(i);
+			effects_below.erase(effects_below.begin() + i);
 			delete effect;
 		}
 	}

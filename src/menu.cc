@@ -23,8 +23,9 @@ Menu::Menu() {
 	option3 = new Sprite(SPRITE_ID::MENU_QUIT, 440, 520, OPTION_WIDTH, OPTION_HEIGHT);
 	// initialize selection sprite
 	selectSprite = new Sprite(SPRITE_ID::MENU_SELECT, 440, 360, OPTION_WIDTH, OPTION_HEIGHT);
-	// initialize option overlay sprite
+	// initialize option overlay sprites
 	optionOverlay = new Sprite(SPRITE_ID::OPTION_OVERLAY, 0, 0, 0, 0);
+	settingsTitle = new Sprite(SPRITE_ID::SETTINGS_TITLE, 0, 0, MENU_SETTINGS::TITLE_WIDTH, MENU_SETTINGS::TITLE_HEIGHT);
 	// initialize other variables
 	optionOverlayTweening = false, onOptions = false;
 	tweenUp = true;
@@ -43,6 +44,10 @@ void Menu::handleEvents(SDL_Event event) {
 	}
 }
 
+/**
+* Updates the menu state
+* @param delta The difference in time between each update
+*/
 void Menu::update(float delta) {
 	// update the tween if the sprite is still tweening
 	if (optionOverlayTweening) {
@@ -68,6 +73,8 @@ void Menu::update(float delta) {
 		// set the position of the sprite
 		optionOverlay->setPos(0, overlayVerticalPosition);
 	}
+	// update the position of the title sprite of the settings overlay
+	settingsTitle->setPos(MENU_SETTINGS::TITLE_MARGIN_LEFT, overlayVerticalPosition + MENU_SETTINGS::TITLE_MARGIN_TOP);
 }
 
 /**
@@ -81,7 +88,11 @@ void Menu::render(SDL_Renderer* renderer) {
 	option1->render(renderer);
 	option2->render(renderer);
 	option3->render(renderer);
-	if (onOptions || optionOverlayTweening) optionOverlay->render(renderer);
+	// render the settings menu if player is on options menu
+	if (onOptions || optionOverlayTweening) {
+		optionOverlay->render(renderer);
+		settingsTitle->render(renderer);
+	}
 }
 
 /**

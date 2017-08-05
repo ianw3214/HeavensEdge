@@ -75,6 +75,7 @@ protected:
 	std::vector<std::string> currentDialogue;
 
 	std::vector<AnimatedSprite*> effects;
+	std::vector<AnimatedSprite*> effects_below;
 	
 	// helper methods
 	void updateEffects(float delta);

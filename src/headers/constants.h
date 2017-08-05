@@ -25,6 +25,13 @@ int const TITLE_HEIGHT = 200;
 int const OPTION_WIDTH = 400;
 int const OPTION_HEIGHT = 80;
 
+namespace MENU_SETTINGS {
+	int const TITLE_WIDTH = 360;
+	int const TITLE_HEIGHT = 80;
+	int const TITLE_MARGIN_TOP = 40;
+	int const TITLE_MARGIN_LEFT = 40;
+}
+
 int const TWEEN_TIME = 300;
 
 // hero constants
@@ -55,6 +62,7 @@ namespace HERO {
 	int const COMBO1_MARGIN_X = 64;
 	int const COMBO1_MARGIN_Y = 64;
 	int const COMBO1_DAMAGE = 5;
+	int const COMBO1_MARGIN = 64;
 }
 
 // enemy constants
@@ -99,9 +107,11 @@ namespace SPRITE_ID {
 	std::string const MENU_QUIT = "MENU005";
 	std::string const MENU_SELECT = "MENU006";
 	std::string const OPTION_OVERLAY = "MENU007";
+	std::string const SETTINGS_TITLE = "MENU008";
 
 	std::string const HERO = "HERO001";
 	std::string const HERO_ATTACK1 = "ATTK001";
+	std::string const HERO_COMBO1 = "COMB001";
 
 	std::string const ENEMY = "ENMY001";
 	std::string const CHARGE_ENEMY = "ENMY002";
