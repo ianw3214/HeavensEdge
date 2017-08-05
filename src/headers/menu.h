@@ -37,11 +37,14 @@ private:
 	Sprite * optionOverlay;
 
 	bool optionOverlayTweening, onOptions;
+	bool tweenUp;
 	Uint32 tweenStartTime;
 	int overlayVerticalPosition;
 	int currentRatioIndex;
 
 	void handleKeyPress(SDL_Keycode);
 	void select();
+
+	void startTween(bool);
 
 };
