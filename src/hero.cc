@@ -12,6 +12,7 @@ Hero::Hero(int initX, int initY) : Creature(initX, initY, 5, 2, HERO::COLLISION_
 	// TODO: get default variables from input/global variable/something like that
 	sprite = new AnimatedSprite(SPRITE_ID::HERO, HERO::SPRITE_WIDTH, HERO::SPRITE_HEIGHT, HERO::SPRITESHEET_WIDTH, false);
 	sprite->setAnimationData({ 20, 20, 6, 6, 10, 10, 10, 10, 10, 10 });
+	shadow = new Sprite(SPRITE_ID::SHADOW, 0, 0, 48, 16);
 	// initialize dash variables
 	dashTimer = 0.0f, dashDirection = -1;
 	// initialize the collision shape
@@ -85,6 +86,8 @@ void Hero::update(float delta) {
 		invulnTimer -= delta;
 		if (invulnTimer <= 0.0f) invulnerable = false, invulnTimer = 0.0f;
 	}
+	// update shadow coordinates
+	shadow->setPos(getX() + 8, getY() + 64 - 12);
 }
 
 /**
@@ -93,6 +96,8 @@ void Hero::update(float delta) {
  * @param camera  SDL_Rect representing the game camera
  */
 void Hero::render(SDL_Renderer* renderer, SDL_Rect camera) {
+	// render the shadow
+	shadow->render(renderer, camera);
 	// call the render function on any effects below with the player
 	for (unsigned int i = 0; i < effects_below.size(); i++) {
 		effects_below.at(i)->render(renderer, camera);

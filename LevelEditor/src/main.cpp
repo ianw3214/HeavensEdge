@@ -50,6 +50,8 @@ SDL_Surface * cursor;
 SDL_Surface * cursorPress;
 SDL_Surface * overlay;
 SDL_Surface * player;
+SDL_Surface * tileOverlay;
+SDL_Surface * reference;
 
 // function declarations
 bool init();
@@ -135,6 +137,10 @@ bool init() {
 	if (!overlay) std::cout << "failed to load: overlay.png; ERROR: " << IMG_GetError() << std::endl;
 	player = IMG_Load(PLAYER_FILE_PATH.c_str());
 	if (!player) std::cout << "failed to load: player.png; ERROR: " << IMG_GetError() << std::endl;
+	tileOverlay = IMG_Load(TILE_OVERLAY_FILE_PATH.c_str());
+	if (!tileOverlay) std::cout << "failed to load: tile_overlay.png; ERROR: " << IMG_GetError() << std::endl;
+	reference = IMG_Load(REFERENCE_FILE_PATH.c_str());
+	if (!reference) std::cout << "failed to load: reference.png; ERROR: " << IMG_GetError() << std::endl;
 	return true;
 }
 
@@ -264,15 +270,19 @@ void render() {
 	if (editorMode == mode_collision) {
 		// render an overlay of white to distinguish between collision and tile mode
 		if (SDL_BlitSurface(overlay, nullptr, display, nullptr) < 0) {
-			std::cout << "COULDN'T RENDER OVERLAY" << SDL_GetError() << std::endl;
+			std::cout << "COULDN'T RENDER OVERLAY; ERROR: " << SDL_GetError() << std::endl;
 		}
 		// render the collision tiles of the map
 		map->renderCollisionTiles(display, xOffset, yOffset);
 	}
-	// render the tiles
-	renderTileLinkedList();
+	// render the tiles if normal mode is on
+	if (editorMode == mode_normal) renderTileLinkedList();
 	// render the player start
 	renderPlayerStart();
+	// render the reference
+	if (SDL_BlitSurface(reference, nullptr, display, nullptr) < 0) {
+		std::cout << "COULDN'T RENDER REFERENCE; ERROR: " << SDL_GetError() << std::endl;
+	}
 	// render a rectangle outline where the mouse is
 	setMouseOutline();
 	// render the cursor symbol where the cursor is
@@ -300,6 +310,12 @@ void setTileLinkedList() {
 }
 
 void renderTileLinkedList() {
+	// render the tile overlay first
+	SDL_Rect targetRect = { 0, 620, 0, 0 };
+	if (SDL_BlitSurface(tileOverlay, nullptr, display, &targetRect) < 0) {
+		std::cout << "Image unable to blit, error: " << SDL_GetError() << std::endl;
+	}
+	// then render all the other tiles
 	currentTile->tile->render(display, currentTile->xPos, 650);
 	tileNode *next = currentTile->next;
 	while (next != nullptr) {

@@ -11,6 +11,8 @@ std::string const CURSOR_PRESS_FILE_PATH = "assets/cursor_press.png";
 std::string const COLLISION_TILE_FILE_PATH = "assets/collision.png";
 std::string const OVERLAY_FILE_PATH = "assets/overlay.png";
 std::string const PLAYER_FILE_PATH = "assets/player.png";
+std::string const TILE_OVERLAY_FILE_PATH = "assets/tile_overlay.png";
+std::string const REFERENCE_FILE_PATH = "assets/reference.png";
 
 int const TILE_WIDTH = 64;
 int const TILE_HEIGHT = 64;

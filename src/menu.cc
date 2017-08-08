@@ -61,12 +61,11 @@ void Menu::update(float delta) {
 		// otherwise, update the tween based on the time
 		else if (timeStamp != 0) {
 			// get the desired function input between 0.5 and 2
-			float functionInput = static_cast<float>(timeStamp / TWEEN_TIME) * 1.5f + 0.5f;
+			float functionInput = 0.0f;
+			if (tweenUp) functionInput = static_cast<float>(timeStamp / TWEEN_TIME) * 1.5f + 0.5f;
+			else functionInput = (1.0f - static_cast<float>(timeStamp / TWEEN_TIME)) * 1.5f + 0.5f;
 			// plug the input into the function to get a number between 0 and 1
-			// invert the answer if the tween is downwards
-			float functionOutput = 0.0f;
-			if (tweenUp) functionOutput = ((1.0f / functionInput) - 0.5f) / 1.5f;
-			else functionOutput = 1.0f - ((1.0f / functionInput) - 0.5f) / 1.5f;
+			float functionOutput = ((1.0f / functionInput) - 0.5f) / 1.5f;
 			// use the resulting number to calculate the position of the option overlay
 			overlayVerticalPosition = static_cast<int>(functionOutput * UTIL::getWindowHeight());
 		}
@@ -79,7 +78,7 @@ void Menu::update(float delta) {
 
 /**
  * Renders the menu to the screen
- * @param display The surface of the game window 
+ * @param display The surface of the game window
  */
 void Menu::render(SDL_Renderer* renderer) {
 	background->render(renderer);

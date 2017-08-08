@@ -135,8 +135,13 @@ void Creature::init(int inputX, int inputY, int inputHealth, int inpType, int cM
 * Checks the hero the see if it collides with a collidable tile
 */
 bool Creature::checkCollision(int xpos, int ypos) {
-	// TODO: check if player goes out of the map
-	std::vector<int> checkIndices;			// vector to hold indices of collision map to check
+	// first check if the player goes out of the map
+	if (xpos < 0 || ypos < 0) return true;
+	// TODO: make more elegent way of checking if creature is off the map
+	int mapHeight = static_cast<int>(collisionMap.size() / levelWidth);
+	if (xpos > levelWidth * 64 - 64 || ypos > levelWidth * 64 - 64) return true;
+	// vector to hold indices of collision map to check
+	std::vector<int> checkIndices;
 	// get the players left and up most tile box
 	int tileX = static_cast<int>(xpos / tileSize);
 	int tileY = static_cast<int>(ypos / tileSize);
@@ -149,7 +154,10 @@ bool Creature::checkCollision(int xpos, int ypos) {
 	// if we aren't at the bottom, add the bottom 2 tiles
 	if ((tileY + 1) * levelWidth < collisionMap.size()) {
 		checkIndices.push_back(targetIndex + levelWidth);
-		checkIndices.push_back(targetIndex + levelWidth + 1);
+		// TODO: come up with more elegent way to make this check
+		if (targetIndex + levelWidth + 1 < collisionMap.size()) {
+			checkIndices.push_back(targetIndex + levelWidth + 1);
+		}
 	}
 	for (unsigned int i = 0; i < checkIndices.size(); i++) {
 		int collisionIndex = checkIndices.at(i);

@@ -76,6 +76,7 @@ protected:
 
 	std::vector<AnimatedSprite*> effects;
 	std::vector<AnimatedSprite*> effects_below;
+	Sprite * shadow;
 	
 	// helper methods
 	void updateEffects(float delta);

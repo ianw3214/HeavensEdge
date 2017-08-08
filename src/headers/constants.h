@@ -32,7 +32,7 @@ namespace MENU_SETTINGS {
 	int const TITLE_MARGIN_LEFT = 40;
 }
 
-int const TWEEN_TIME = 300;
+int const TWEEN_TIME = 350;
 
 // hero constants
 namespace HERO {
@@ -110,6 +110,7 @@ namespace SPRITE_ID {
 	std::string const SETTINGS_TITLE = "MENU008";
 
 	std::string const HERO = "HERO001";
+	std::string const SHADOW = "HERO002";
 	std::string const HERO_ATTACK1 = "ATTK001";
 	std::string const HERO_COMBO1 = "COMB001";
 
