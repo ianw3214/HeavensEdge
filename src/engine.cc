@@ -61,8 +61,6 @@ bool Engine::init(){
 	fpsCounter = 0.0f;
 	timePerFrame = static_cast<int>(1000 / FRAME_RATE_CAP);
 	this->running = true;
-	// temporarily load settings from constants.h
-	if(MUTE) Mix_Volume(-1, 0);
     return true;
 }
 

@@ -20,6 +20,14 @@ std::vector<std::pair<int, int>> const ratios = {
 	std::make_pair(1920, 1080)
 };
 
+std::vector<int> const volumes = {
+	0,
+	16,
+	32,
+	64,
+	128
+};
+
 int const TITLE_WIDTH = 1000;
 int const TITLE_HEIGHT = 200;
 int const OPTION_WIDTH = 400;
@@ -107,7 +115,6 @@ namespace SPRITE_ID {
 	std::string const MENU_QUIT = "MENU005";
 	std::string const MENU_SELECT = "MENU006";
 	std::string const OPTION_OVERLAY = "MENU007";
-	std::string const SETTINGS_TITLE = "MENU008";
 
 	std::string const HERO = "HERO001";
 	std::string const SHADOW = "HERO002";
@@ -117,6 +124,3 @@ namespace SPRITE_ID {
 	std::string const ENEMY = "ENMY001";
 	std::string const CHARGE_ENEMY = "ENMY002";
 }
-
-// temporary settings
-bool const MUTE = true;

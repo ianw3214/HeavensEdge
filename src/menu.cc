@@ -7,31 +7,39 @@
  *   - Initializes menu items
  */
 Menu::Menu() {
-	// initialize a test menu
-	currentMenuItem = new menuItem(nullptr, nullptr, 1);
-	menuItem * item2 = new menuItem(currentMenuItem, nullptr, 2);
-	menuItem * item3 = new menuItem(item2, nullptr, 3);
-	item2->next = item3;
-	currentMenuItem->next = item2;
-	// initialize menu background
-	background = new Sprite(SPRITE_ID::MENU_BACKGROUND, 0, 0);
-	// initialize title
-	title = new Sprite(SPRITE_ID::MENU_TITLE, 140, 160, TITLE_WIDTH, TITLE_HEIGHT);
-	// initialize text sprites
-	option1 = new Sprite(SPRITE_ID::MENU_PLAY, 440, 360, OPTION_WIDTH, OPTION_HEIGHT);
-	option2 = new Sprite(SPRITE_ID::MENU_SETTINGS, 440, 440, OPTION_WIDTH, OPTION_HEIGHT);
-	option3 = new Sprite(SPRITE_ID::MENU_QUIT, 440, 520, OPTION_WIDTH, OPTION_HEIGHT);
-	// initialize selection sprite
-	selectSprite = new Sprite(SPRITE_ID::MENU_SELECT, 440, 360, OPTION_WIDTH, OPTION_HEIGHT);
-	// initialize option overlay sprites
-	optionOverlay = new Sprite(SPRITE_ID::OPTION_OVERLAY, 0, 0, 0, 0);
-	settingsTitle = new Sprite(SPRITE_ID::SETTINGS_TITLE, 0, 0, MENU_SETTINGS::TITLE_WIDTH, MENU_SETTINGS::TITLE_HEIGHT);
+	// initialize menu items
+	initMenuItems();
+	// intialize sprites
+	initSprites();
+	// initialize settings variables
+	currentRatioIndex = 0;
+	fullscreen = false;
+	currentVolumeIndex = volumes.size() - 1;
+	mute = false;
 	// initialize other variables
 	optionOverlayTweening = false, onOptions = false;
 	tweenUp = true;
 	tweenStartTime = 0;
 	overlayVerticalPosition = 0;
-	currentRatioIndex = 0;
+}
+
+Menu::~Menu() {
+	// delete the menu items starting from the first
+	while (currentMenuItem->previous != nullptr)
+		currentMenuItem = currentMenuItem->previous;
+	while (currentMenuItem->next != nullptr) {
+		menuItem * temp = currentMenuItem;
+		currentMenuItem = currentMenuItem->next;
+		delete temp;
+	}
+	// delete the option menu items starting from the first
+	while (currentOptionMenuItem->previous != nullptr)
+		currentOptionMenuItem = currentOptionMenuItem->previous;
+	while (currentOptionMenuItem->next != nullptr) {
+		menuItem * temp = currentOptionMenuItem;
+		currentOptionMenuItem = currentOptionMenuItem->next;
+		delete temp;
+	}
 }
 
 /**
@@ -72,8 +80,6 @@ void Menu::update(float delta) {
 		// set the position of the sprite
 		optionOverlay->setPos(0, overlayVerticalPosition);
 	}
-	// update the position of the title sprite of the settings overlay
-	settingsTitle->setPos(MENU_SETTINGS::TITLE_MARGIN_LEFT, overlayVerticalPosition + MENU_SETTINGS::TITLE_MARGIN_TOP);
 }
 
 /**
@@ -90,7 +96,6 @@ void Menu::render(SDL_Renderer* renderer) {
 	// render the settings menu if player is on options menu
 	if (onOptions || optionOverlayTweening) {
 		optionOverlay->render(renderer);
-		settingsTitle->render(renderer);
 	}
 }
 
@@ -100,16 +105,12 @@ void Menu::render(SDL_Renderer* renderer) {
 */
 void Menu::handleKeyPress(SDL_Keycode key) {
 	if (key == SDLK_SPACE || key == SDLK_RETURN) {
-		if (onOptions) {
-			// do something
-		}
-		else {
-			select();
-		}
+		select();
 	}
 	if (key == SDLK_DOWN) {
 		if (onOptions) {
-			// do something
+			if (currentOptionMenuItem->next != nullptr)
+				currentOptionMenuItem = currentOptionMenuItem->next;
 		}
 		else if (currentMenuItem->next != nullptr) {
 			currentMenuItem = currentMenuItem->next;
@@ -117,7 +118,8 @@ void Menu::handleKeyPress(SDL_Keycode key) {
 	}
 	if (key == SDLK_UP) {
 		if (onOptions) {
-			// do something
+			if (currentOptionMenuItem->previous != nullptr)
+				currentOptionMenuItem = currentOptionMenuItem->previous;
 		}
 		else if (currentMenuItem->previous != nullptr) {
 			currentMenuItem = currentMenuItem->previous;
@@ -129,9 +131,16 @@ void Menu::handleKeyPress(SDL_Keycode key) {
 			onOptions = false;
 		}
 		else {
-			// go to the last menu item to focus on the quit button
-			while (currentMenuItem->next != nullptr) {
-				currentMenuItem = currentMenuItem->next;
+			// if already on last menu item, just quit the game
+			if (currentMenuItem->ID == 3) {
+				nextState = nullptr;
+				quit = true;
+			}
+			else {
+				// go to the last menu item to focus on the quit button
+				while (currentMenuItem->next != nullptr) {
+					currentMenuItem = currentMenuItem->next;
+				}
 			}
 		}
 	}
@@ -142,12 +151,36 @@ void Menu::handleKeyPress(SDL_Keycode key) {
  * Handles logic when the player presses the select button
  */
 void Menu::select() {
-	if (currentMenuItem->ID == 1) {
-		nextState = new Level("levels/test.txt");
-		quit = true;
+	// handle the select functionality based on what menu the player is currently on
+	if (onOptions) {
+		optionSelect();
 	}
-	if (currentMenuItem->ID == 2) {
-		/*
+	else {
+		// play the game
+		if (currentMenuItem->ID == 1) {
+			nextState = new Level("levels/test.txt");
+			quit = true;
+		}
+		// open settings menu
+		if (currentMenuItem->ID == 2) {
+			// start the tween
+			startTween(true);
+			onOptions = true;
+		}
+		// quit the game
+		if (currentMenuItem->ID == 3) {
+			nextState = nullptr;
+			quit = true;
+		}
+	}
+}
+
+/**
+ * Handles the select functionality while on the settings menu
+ */
+void Menu::optionSelect() {
+	// change game window size
+	if (currentOptionMenuItem->ID == 1) {
 		// switch to the next ratio
 		currentRatioIndex++;
 		if (currentRatioIndex >= ratios.size()) {
@@ -163,21 +196,89 @@ void Menu::select() {
 		option2->setPos((width - OPTION_WIDTH) / 2, option2->getY());
 		option3->setPos((width - OPTION_WIDTH) / 2, option3->getY());
 		selectSprite->setPos((width - OPTION_WIDTH) / 2, selectSprite->getY());
-		*/
-		// start the tween
-		startTween(true);
-		onOptions = true;
 	}
-	if (currentMenuItem->ID == 3) {
-		nextState = nullptr;
-		quit = true;
+	// set game to fullscreen
+	if (currentOptionMenuItem->ID == 2) {
+		if (!fullscreen) {
+			SDL_SetWindowFullscreen(UTIL::getWindow(), SDL_WINDOW_FULLSCREEN);
+			fullscreen = true;
+		}
+		else {
+			SDL_SetWindowFullscreen(UTIL::getWindow(), 0);
+			fullscreen = false;
+		}
+	}
+	// change game volume
+	if (currentOptionMenuItem->ID == 3) {
+		if (--currentVolumeIndex < 0) {
+			currentVolumeIndex = volumes.size() - 1;
+		}
+		if (!mute) Mix_Volume(-1, volumes[currentVolumeIndex]);
+	}
+	// mute the game
+	if (currentOptionMenuItem->ID == 4) {
+		mute = !mute;
+		if (mute) Mix_Volume(-1, 0);
+		else Mix_Volume(-1, volumes[currentVolumeIndex]);
+	}
+	// quit the game
+	if (currentOptionMenuItem->ID == 5) {
+		startTween(false);
+		onOptions = false;
+		// go back to the first menu item 
+		while (currentOptionMenuItem->previous != nullptr)
+			currentOptionMenuItem = currentOptionMenuItem->previous;
 	}
 }
 
+/**
+ * Sets up variables to calculate position during tweens for settings overlay
+ * @param up Flag to indicate whether to tween up or tween down
+ */
 void Menu::startTween(bool up) {
 	optionOverlayTweening = true;
 	tweenUp = up;
 	overlayVerticalPosition = up ? UTIL::getWindowHeight() : 0;
 	tweenStartTime = SDL_GetTicks();
 	optionOverlay = new Sprite(SPRITE_ID::OPTION_OVERLAY, 0, overlayVerticalPosition, UTIL::getWindowWidth(), UTIL::getWindowHeight());
+}
+
+/**
+ * Initializes the linked list of menu items and settings menu items
+ */
+void Menu::initMenuItems() {
+	// initialize the menu items
+	currentMenuItem = new menuItem(nullptr, nullptr, 1);
+	menuItem * item2 = new menuItem(currentMenuItem, nullptr, 2);
+	menuItem * item3 = new menuItem(item2, nullptr, 3);
+	item2->next = item3;
+	currentMenuItem->next = item2;
+	// initialize settings menu items
+	currentOptionMenuItem = new menuItem(nullptr, nullptr, 1);
+	menuItem * optionItem2 = new menuItem(currentOptionMenuItem, nullptr, 2);
+	menuItem * optionItem3 = new menuItem(optionItem2, nullptr, 3);
+	menuItem * optionItem4 = new menuItem(optionItem3, nullptr, 4);
+	menuItem * optionItem5 = new menuItem(optionItem4, nullptr, 5);
+	currentOptionMenuItem->next = optionItem2;
+	optionItem2->next = optionItem3;
+	optionItem3->next = optionItem4;
+	optionItem4->next = optionItem5;
+}
+
+/**
+ * Initializes the sprites used in the menu
+ */
+void Menu::initSprites() {
+	// initialize menu background
+	background = new Sprite(SPRITE_ID::MENU_BACKGROUND, 0, 0);
+	// initialize title
+	title = new Sprite(SPRITE_ID::MENU_TITLE, 140, 160, TITLE_WIDTH, TITLE_HEIGHT);
+	// initialize text sprites
+	option1 = new Sprite(SPRITE_ID::MENU_PLAY, 440, 360, OPTION_WIDTH, OPTION_HEIGHT);
+	option2 = new Sprite(SPRITE_ID::MENU_SETTINGS, 440, 440, OPTION_WIDTH, OPTION_HEIGHT);
+	option3 = new Sprite(SPRITE_ID::MENU_QUIT, 440, 520, OPTION_WIDTH, OPTION_HEIGHT);
+	// initialize selection sprite
+	selectSprite = new Sprite(SPRITE_ID::MENU_SELECT, 440, 360, OPTION_WIDTH, OPTION_HEIGHT);
+	// initialize option overlay sprites
+	optionOverlay = new Sprite(SPRITE_ID::OPTION_OVERLAY, 0, 0, 0, 0);
 }

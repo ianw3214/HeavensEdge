@@ -22,7 +22,7 @@ class Menu : public State{
 
 public:
 	Menu();
-	~Menu() {};
+	~Menu();
 
 	void handleEvents(SDL_Event);
 	void update(float);
@@ -30,22 +30,30 @@ public:
 
 private:
 	menuItem * currentMenuItem;
+	menuItem * currentOptionMenuItem;
+
 	Sprite * background;
 	Sprite * title;
 	Sprite * option1, *option2, *option3;
 	Sprite * selectSprite;
 	Sprite * optionOverlay;
-	Sprite * settingsTitle;
+
+	int currentRatioIndex;
+	bool fullscreen;
+	int currentVolumeIndex;
+	bool mute;
 
 	bool optionOverlayTweening, onOptions;
 	bool tweenUp;
 	Uint32 tweenStartTime;
 	int overlayVerticalPosition;
-	int currentRatioIndex;
 
 	void handleKeyPress(SDL_Keycode);
 	void select();
+	void optionSelect();
 
 	void startTween(bool);
+	void initMenuItems();
+	void initSprites();
 
 };
