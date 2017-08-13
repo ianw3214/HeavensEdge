@@ -6,11 +6,12 @@
 // default constructor for levels just for the sake of it
 Level::Level(){
 	Creature::setEntityList(&entities);
-	map = new Map("levels/test.txt");
-	Creature::setCollisionData(map->getCollisionMap(), map->getWidth(), map->getTileSize());
-	// load the collision data to the player
+	// load a new player
 	player = new Player();
 	entities.push_back(player);
+	// load the map and its collision data
+	map = new Map("levels/test.txt");
+	Creature::setCollisionData(map->getCollisionMap(), map->getWidth(), map->getTileSize());
 }
 
 // load a level and its data from a file
@@ -28,12 +29,12 @@ Level::Level(std::string filePath) {
  * Initialization function of level
  */
 void Level::init() {
-    // TODO: initialize camera from NOT hard coded code
     camera.w = UTIL::getWindowWidth();
     camera.h = UTIL::getWindowHeight();
 	camSpeed = CAMERA_SPEED;
 	camMargin = CAMERA_MARGIN;
 	pause = false;
+	gameOver = false;
 	player->setPos(map->getStartingX()*map->getTileSize(), map->getStartingY()*map->getTileSize());
 	// set initial camera position to player position
 	camera.x = player->getCenterX() - camera.w / 2;
@@ -48,6 +49,14 @@ void Level::init() {
 		Enemy * enemy = dynamic_cast<Enemy*>(e);
 		entities.push_back(enemy);
 	}
+	// intiialize sprites
+	deathMenuBackground = new Sprite(SPRITE_ID::DEATH_MENU);
+	// initialize death menu items
+	currentDeathMenuItem = new menuItem(nullptr, nullptr, 1);
+	menuItem * item2 = new menuItem(currentDeathMenuItem, nullptr, 2);
+	menuItem * item3 = new menuItem(item2, nullptr, 3);
+	currentDeathMenuItem->next = item2;
+	item2->next = item3;
 }
 
 /**
@@ -97,6 +106,8 @@ void Level::update(float delta) {
 			}
 		}
 	}
+	// test to see if the game is over
+	if (player->getHealth() <= 0) gameOver = true;
 }
 
 /**
@@ -108,6 +119,10 @@ void Level::render(SDL_Renderer* renderer) {
     for(unsigned int i = 0; i < entities.size(); i++){
         entities.at(i)->render(renderer, camera);
     }
+	// render the death menu if the game is over
+	if (gameOver) {
+		deathMenuBackground->render(renderer);
+	}
 }
 
 /**
@@ -150,10 +165,37 @@ void Level::handleKeyPress(SDL_Keycode key) {
 	}
 	// space key to pause the game
 	if (key == SDLK_SPACE) {
-		pause = !pause;
+		if (!gameOver) pause = !pause;
+		else select();
 	}
 	// escape key to quit the game
 	if (key == SDLK_ESCAPE) {
+		nextState = nullptr;
+		quit = true;
+	}
+	if (key == SDLK_UP) {
+		if (currentDeathMenuItem->previous != nullptr && gameOver)
+			currentDeathMenuItem = currentDeathMenuItem->previous;
+	}
+	if (key == SDLK_DOWN) {
+		if (currentDeathMenuItem->next != nullptr && gameOver)
+			currentDeathMenuItem = currentDeathMenuItem->next;
+	}
+}
+
+void Level::select() {
+	// play the level again
+	if (currentDeathMenuItem->ID == 1) {
+		nextState = new Level();
+		quit = true;
+	}
+	// go back to the main menu
+	else if (currentDeathMenuItem->ID == 2) {
+		nextState = new Menu();
+		quit = true;
+	}
+	// quit the game
+	else if (currentDeathMenuItem->ID == 3) {
 		nextState = nullptr;
 		quit = true;
 	}

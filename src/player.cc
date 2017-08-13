@@ -39,6 +39,7 @@ void Player::setPos(int newX, int newY) {
 // TODO: change getCenterPos functions to get sprite widths from hero
 int Player::getCenterX() const { return hero->getX()+32; }
 int Player::getCenterY() const { return hero->getY()+32; }
+int Player::getHealth() const { return hero->getHealth(); }
 Hero * Player::getHero() const { return hero; }
 
 /**

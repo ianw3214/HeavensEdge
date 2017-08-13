@@ -68,23 +68,26 @@ void Hero::update(float delta) {
 	collisionBox->y = y + collisionMarginY;
 	// update the effects
 	updateEffects(delta);
-	// update movement if the hero is dashing
-	if (dashing) {
-		handleDashing(delta);
-	}
-	else if (attacking) {
-		// update the attack timer
-		attackTimer -= delta;
-		if (attackTimer <= 0.0f) attacking = false, attackTimer = 0.0f;
-	}
-	else {
-		// move the player according to key presses
-		move(delta);
-	}
-	// update the invulnerability timer if the player is invulnerable
-	if (invulnerable) {
-		invulnTimer -= delta;
-		if (invulnTimer <= 0.0f) invulnerable = false, invulnTimer = 0.0f;
+	// only run the next few lines if the hero is alive
+	if (health > 0) {
+		// update movement if the hero is dashing
+		if (dashing) {
+			handleDashing(delta);
+		}
+		else if (attacking) {
+			// update the attack timer
+			attackTimer -= delta;
+			if (attackTimer <= 0.0f) attacking = false, attackTimer = 0.0f;
+		}
+		else {
+			// move the player according to key presses
+			move(delta);
+		}
+		// update the invulnerability timer if the player is invulnerable
+		if (invulnerable) {
+			invulnTimer -= delta;
+			if (invulnTimer <= 0.0f) invulnerable = false, invulnTimer = 0.0f;
+		}
 	}
 	// update shadow coordinates
 	shadow->setPos(getX() + 8, getY() + 64 - 12);

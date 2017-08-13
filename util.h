@@ -11,6 +11,13 @@
 
 #include "constants.h"
 
+struct menuItem {
+	menuItem * previous;
+	menuItem * next;
+	int ID;
+	menuItem(menuItem* a, menuItem* b, int c) : previous(a), next(b), ID(c) {};
+};
+
 class UTIL {
 public:
 	// initialization functions to be called in the engine

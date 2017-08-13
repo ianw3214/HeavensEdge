@@ -7,7 +7,9 @@
 #include <string>
 #include <vector>
 
+#include "sprite.h"
 #include "state.h"
+#include "menu.h"
 #include "entity.h"
 #include "map.h"
 #include "player.h"
@@ -16,6 +18,7 @@
 #include "npc.h"
 
 #include "constants.h"
+#include "util.h"
 
 /**
  * Level game state
@@ -37,6 +40,9 @@ private:
     std::vector<Entity*> entities;
     Player* player;
 
+	Sprite * deathMenuBackground;
+	menuItem * currentDeathMenuItem;
+
 	int camSpeed;
 	int camMargin;
 
@@ -45,4 +51,7 @@ private:
 	void handleKeyPress(SDL_Keycode);
 
 	bool pause;
+	bool gameOver;
+
+	void select();
 };

@@ -123,4 +123,6 @@ namespace SPRITE_ID {
 
 	std::string const ENEMY = "ENMY001";
 	std::string const CHARGE_ENEMY = "ENMY002";
+
+	std::string const DEATH_MENU = "DEAD001";
 }
