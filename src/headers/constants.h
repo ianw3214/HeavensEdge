@@ -77,7 +77,7 @@ namespace HERO {
 namespace ENEMY {
 	int const SPRITE_WIDTH = 64;
 	int const SPRITE_HEIGHT = 64;
-	int const SPRITESHEET_WIDTH = 1;
+	int const SPRITESHEET_WIDTH = 2;
 
 	int const COLLISION_WIDTH = 64;
 	int const COLLISION_HEIGHT = 64;

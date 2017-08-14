@@ -24,6 +24,19 @@ public:
 	void update(float);
 	void render(SDL_Renderer*, SDL_Rect);
 private:
+	// enumeration to represent the different animation states of the sprite
+	enum ANIM_STATE {
+		IDLE_DOWN = 0,
+		IDLE_RIGHT = 1,
+		IDLE_UP = 2,
+		IDLE_LEFT = 3,
+		RUN_DOWN = 4,
+		RUN_RIGHT = 5,
+		RUN_UP = 6,
+		RUN_LEFT = 7
+	};
+	int animState;
+
 	void init();
 
 	// movement related variables/functions

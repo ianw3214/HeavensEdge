@@ -31,6 +31,15 @@ void Enemy::update(float delta) {
 	if (idleTimer > 0.0f) {
 		idleTimer -= delta;
 		if (idleTimer < 0.0f) idleTimer = 0.0f;
+		// update the animation state
+		if (currentDir == 0)
+			animState = 2;
+		if (currentDir == 1)
+			animState = 1;
+		if (currentDir == 2)
+			animState = 0;
+		if (currentDir == 3)
+			animState = 3;
 	}
 	else {
 		move(delta);
@@ -39,10 +48,20 @@ void Enemy::update(float delta) {
 			idleTimer = ENEMY::IDLE_TIME;
 			currentDir = rand() % 4;
 		}
+		// update the animation state
+		if (currentDir == 0)
+			animState = 6;
+		if (currentDir == 1)
+			animState = 5;
+		if (currentDir == 2)
+			animState = 4;
+		if (currentDir == 3)
+			animState = 7;
 	}
 	// update the collision rectangle as well
 	collisionBox->x = x + collisionMarginX;
 	collisionBox->y = y + collisionMarginY;
+	sprite->playAnimation(animState);
 }
 
 /**
@@ -60,7 +79,7 @@ void Enemy::render(SDL_Renderer * renderer, SDL_Rect camera) {
  */
 void Enemy::init() {
 	sprite = new AnimatedSprite(SPRITE_ID::ENEMY, ENEMY::SPRITE_WIDTH, ENEMY::SPRITE_HEIGHT, ENEMY::SPRITESHEET_WIDTH, false);
-	sprite->setAnimationData({ 1 });
+	sprite->setAnimationData({ 1, 1, 1, 1, 2, 2, 2, 2 });
 	// set the default collision rectangle
 	collisionBox = new Rectangle(x, y, ENEMY::COLLISION_WIDTH, ENEMY::COLLISION_HEIGHT);
 	// set the initial movement flags
@@ -69,6 +88,8 @@ void Enemy::init() {
 	// set collision margins
 	collisionMarginX = ENEMY::COLLISION_SPRITE_MARGIN_X;
 	collisionMarginY = ENEMY::COLLISION_SPRITE_MARGIN_Y;
+	// by default, look down
+	animState = 0;
 }
 
 void Enemy::move(float delta) {
