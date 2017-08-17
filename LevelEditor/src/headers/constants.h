@@ -5,6 +5,8 @@
 std::string const OUTPUT_FILE_PATH = "levels/test.txt";
 
 std::string const TILE_SHEET_FILE_PATH = "assets/tiles.png";
+std::string const TILE_SHEET_ID = "TILE001";
+
 std::string const RECT_OUTLINE_FILE_PATH = "assets/outline1.png";
 std::string const CURSOR_FILE_PATH = "assets/cursor.png";
 std::string const CURSOR_PRESS_FILE_PATH = "assets/cursor_press.png";
@@ -17,8 +19,8 @@ std::string const REFERENCE_FILE_PATH = "assets/reference.png";
 int const TILE_WIDTH = 64;
 int const TILE_HEIGHT = 64;
 
-int const BASE_MAP_WIDTH = 20;
-int const BASE_MAP_HEIGHT = 20;
+int const BASE_MAP_WIDTH = 12;
+int const BASE_MAP_HEIGHT = 10;
 
 int const SCREEN_WIDTH = 1280;
 int const SCREEN_HEIGHT = 720;

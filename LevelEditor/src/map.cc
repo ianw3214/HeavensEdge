@@ -71,7 +71,6 @@ void Map::editCollision(int x, int y, bool add) {
 void Map::saveToFile(int playerX, int playerY) {
 	std::ofstream target;
 	target.open(OUTPUT_FILE_PATH);
-	std::cout << "FLAG" << std::endl;
 	target << TILE_WIDTH << "\n";
 	target << TILE_HEIGHT << "\n";
 	target << BASE_MAP_WIDTH << "\n";
@@ -85,7 +84,7 @@ void Map::saveToFile(int playerX, int playerY) {
 	for ( auto const &i : indexMap) {
 		int x = i.first % width;
 		int y = static_cast<int>(i.first / width);
-		target << i.first << "#" << TILE_SHEET_FILE_PATH << "#" << x << "#" << y << "\n";
+		target << i.first << "#" << TILE_SHEET_ID << "#" << x << "#" << y << "\n";
 	}
 	target << "---\n";	
 	for (int i = 0; i < BASE_MAP_HEIGHT; i++) {
@@ -104,6 +103,7 @@ void Map::saveToFile(int playerX, int playerY) {
 		}
 	}
 	target.close();
+	std::cout << "MAP SAVED TO: " << OUTPUT_FILE_PATH << std::endl;
 }
 
 void Map::init() {

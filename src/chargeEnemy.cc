@@ -29,18 +29,22 @@ void ChargeEnemy::update(float delta) {
 		if (isColliding(up, *(hero->getCollisionBox()))) {
 			charging = true;
 			direction = 0;
+			animState = CHARGE_UP;
 		}
 		else if (isColliding(right, *(hero->getCollisionBox()))) {
 			charging = true;
 			direction = 1;
+			animState = CHARGE_RIGHT;
 		}
 		else if (isColliding(down, *(hero->getCollisionBox()))) {
 			charging = true;
 			direction = 2;
+			animState = CHARGE_DOWN;
 		}
 		else if (isColliding(left, *(hero->getCollisionBox()))) {
 			charging = true;
 			direction = 3;
+			animState = CHARGE_LEFT;
 		}
 	}
 	// otherwise, update the creature accordingly
@@ -49,14 +53,20 @@ void ChargeEnemy::update(float delta) {
 		// update the timer
 		chargeTimer += delta;
 		if (chargeTimer >= CHARGE_ENEMY::CHARGE_TIME) {
+			// if the timer is 0, change to the idle animation
 			chargeTimer = 0.0f;
 			charging = false;
+			if (animState == CHARGE_RIGHT) animState = IDLE_RIGHT;
+			if (animState == CHARGE_LEFT) animState = IDLE_LEFT;
+			if (animState == CHARGE_UP) animState = IDLE_UP;
+			if (animState == CHARGE_DOWN) animState = IDLE_DOWN;
 		}
 		// only damage the player if the enemy is charging
 		if (isColliding(*collisionBox, *hero->getCollisionBox())) {
 			hero->takeDamage(3);
 		}
 	}
+	sprite->playAnimation(animState);
 }
 
 void ChargeEnemy::render(SDL_Renderer* renderer, SDL_Rect camera) {
@@ -65,12 +75,13 @@ void ChargeEnemy::render(SDL_Renderer* renderer, SDL_Rect camera) {
 
 void ChargeEnemy::init(int inpX, int inpY) {
 	// set default variables
+	animState = 0;
 	charging = false;
 	direction = 0;
 	chargeTimer = 0.0f;
 	// set the enemy sprite
 	sprite = new AnimatedSprite(SPRITE_ID::CHARGE_ENEMY, CHARGE_ENEMY::SPRITE_WIDTH, CHARGE_ENEMY::SPRITE_HEIGHT, CHARGE_ENEMY::SPRITESHEET_WIDTH, false);
-	sprite->setAnimationData({ 1 });
+	sprite->setAnimationData({ 1, 1, 1, 1, 1, 1, 1, 1 });
 	// set the default collision rectangle
 	collisionBox = new Rectangle(x, y, CHARGE_ENEMY::COLLISION_WIDTH, CHARGE_ENEMY::COLLISION_HEIGHT);
 	collisionMarginX = CHARGE_ENEMY::COLLISION_SPRITE_MARGIN_X;
