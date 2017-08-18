@@ -48,7 +48,7 @@ void ChargeEnemy::update(float delta) {
 		}
 	}
 	// otherwise, update the creature accordingly
-	else {
+	else {	
 		Creature::move(direction, static_cast<int>(CHARGE_ENEMY::CHARGESPEED * delta));
 		// update the timer
 		chargeTimer += delta;
@@ -81,7 +81,7 @@ void ChargeEnemy::init(int inpX, int inpY) {
 	chargeTimer = 0.0f;
 	// set the enemy sprite
 	sprite = new AnimatedSprite(SPRITE_ID::CHARGE_ENEMY, CHARGE_ENEMY::SPRITE_WIDTH, CHARGE_ENEMY::SPRITE_HEIGHT, CHARGE_ENEMY::SPRITESHEET_WIDTH, false);
-	sprite->setAnimationData({ 1, 1, 1, 1, 1, 1, 1, 1 });
+	sprite->setAnimationData({ 2, 2, 2, 2, 2, 2, 2, 2 });
 	// set the default collision rectangle
 	collisionBox = new Rectangle(x, y, CHARGE_ENEMY::COLLISION_WIDTH, CHARGE_ENEMY::COLLISION_HEIGHT);
 	collisionMarginX = CHARGE_ENEMY::COLLISION_SPRITE_MARGIN_X;

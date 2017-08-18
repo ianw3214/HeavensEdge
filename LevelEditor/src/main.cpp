@@ -75,8 +75,6 @@ int main(int argc, char* argv[]) {
 
 	init();
 
-	map = new Map();
-
 	setTileLinkedList();
 
 	while (running) {
@@ -114,6 +112,8 @@ bool init() {
 	}
 	// set SDL settings
 	SDL_ShowCursor(SDL_DISABLE);
+	// initialize objects
+	map = new Map();
 	// initialize variables
 	running = true;
 	cursorState = 0;
@@ -126,6 +126,16 @@ bool init() {
 	collisionAdd = true;
 	editorMode = mode_normal;
 	player_x = 0, player_y = 0;
+	// initialize editor setting variables
+	if (LOAD_FILE_PATH.size() > 0) {
+		map->loadFromFile(LOAD_FILE_PATH);
+		player_x = map->getPlayerX();
+		player_y = map->getPlayerY();
+	}
+	else {
+		map->setSettings(TILE_WIDTH, TILE_HEIGHT, BASE_MAP_WIDTH, BASE_MAP_HEIGHT, player_x, player_y);
+		map->setEmptyMap();
+	}
 	// initialize asset surfaces
 	rectOutline = IMG_Load(RECT_OUTLINE_FILE_PATH.c_str());
 	if (!rectOutline) std::cout << "failed to load: outline1.png; ERROR: " << IMG_GetError() << std::endl;
@@ -175,7 +185,7 @@ void handleEvents() {
 				}
 			}
 			if (e.key.keysym.sym == SDLK_s) {
-				map->saveToFile(player_x, player_y);
+				map->saveToFile();
 			}
 			if (e.key.keysym.sym == SDLK_c) {
 				if (editorMode != mode_collision) editorMode = mode_collision;
@@ -210,6 +220,7 @@ void handleEvents() {
 					SDL_GetMouseState(&x, &y);
 					player_x = static_cast<int>((x - xOffset) / 64);
 					player_y = static_cast<int>((y - yOffset) / 64);
+					map->setPlayerCoords(player_x, player_y);
 				}
 			}
 		}

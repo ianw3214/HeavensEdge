@@ -19,6 +19,11 @@ public:
 
 	// getter/setters
 	std::map<int, Tile*> getIndexMap();
+	void setSettings(int, int, int, int, int, int);
+	void setPlayerCoords(int, int);
+	void setEmptyMap();
+	int getPlayerX();
+	int getPlayerY();
 
 	void update();
 	void render(SDL_Surface*, int, int);
@@ -28,7 +33,8 @@ public:
 	void editTileAt(int, int, int);
 	void editCollision(int, int, bool);
 
-	void saveToFile(int, int);
+	void loadFromFile(std::string);
+	void saveToFile();
 private:
 	std::vector<int> tileMap;
 	std::vector<int> collisionMap;
@@ -39,5 +45,11 @@ private:
 	void init();
 	void initTileIndexMap();
 
+	int tileWidth, tileHeight;
+	int mapWidth, mapHeight;
+	int startX, startY;
 	SDL_Surface * collisionImage;
+
+	void lineToCollisionData(std::string);
+	void lineToMapData(std::string);
 };

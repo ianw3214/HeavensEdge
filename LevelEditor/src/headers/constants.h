@@ -2,6 +2,7 @@
 
 #include <string>
 
+std::string const LOAD_FILE_PATH = "levels/test.txt";
 std::string const OUTPUT_FILE_PATH = "levels/test.txt";
 
 std::string const TILE_SHEET_FILE_PATH = "assets/tiles.png";
