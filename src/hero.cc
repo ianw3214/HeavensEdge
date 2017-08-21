@@ -9,7 +9,6 @@
  * Calls the Entity constructor with 20 base health
  */
 Hero::Hero(int initX, int initY) : Creature(initX, initY, 5, 2, HERO::COLLISION_SPRITE_MARGIN_X, HERO::COLLISION_SPRITE_MARGIN_Y) {
-	// TODO: get default variables from input/global variable/something like that
 	sprite = new AnimatedSprite(SPRITE_ID::HERO, HERO::SPRITE_WIDTH, HERO::SPRITE_HEIGHT, HERO::SPRITESHEET_WIDTH, false);
 	sprite->setAnimationData({ 20, 20, 6, 6, 10, 10, 10, 10, 10, 10 });
 	shadow = new Sprite(SPRITE_ID::SHADOW, 0, 0, 48, 16);
@@ -260,7 +259,7 @@ void Hero::combo1Attack() {
 	invulnerable = true;
 	invulnTimer = HERO::COMBO_1_TIME;
 	// add an effect animation below the player
-	AnimatedSprite* effect = new AnimatedSprite(SPRITE_ID::HERO_COMBO1, HERO::COMBO1_WIDTH, HERO::COMBO1_HEIGHT, 8, true);
+	AnimatedSprite* effect = new AnimatedSprite(SPRITE_ID::HERO_COMBO1, HERO::COMBO1_WIDTH, HERO::COMBO1_HEIGHT, 10, true);
 	effect->setAnimationData({ 8 });
 	effect->setPos(getX() - HERO::COMBO1_MARGIN, getY() - HERO::COMBO1_MARGIN);
 	effects_below.push_back(effect);

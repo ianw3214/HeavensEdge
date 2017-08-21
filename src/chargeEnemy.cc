@@ -1,13 +1,25 @@
 #include "chargeEnemy.h"
 
+/**
+ * Default charge enemy constructor
+ */
 ChargeEnemy::ChargeEnemy() : Enemy() {
 	init(0, 0);
 }
 
+/**
+ * Constructor with starting position as variables
+ * @param startX The starting x position of the charge enemy
+ * @param startY The starting y position of the charge enemy
+ */
 ChargeEnemy::ChargeEnemy(int startX, int startY) : Enemy() {
 	init(startX, startY);
 }
 
+/**
+ * Updates the state of the charge enemy
+ * @param delta The difference in time between each update
+ */
 void ChargeEnemy::update(float delta) {
 	// update the position/animations of the sprite
 	sprite->update(delta);
@@ -69,10 +81,20 @@ void ChargeEnemy::update(float delta) {
 	sprite->playAnimation(animState);
 }
 
+/**
+ * Renders the charge enemy sprite to the screen
+ * @param renderer The renderer object to render the sprite
+ * @param camera The Rect representation of the game camera
+ */
 void ChargeEnemy::render(SDL_Renderer* renderer, SDL_Rect camera) {
 	sprite->render(renderer, camera);
 }
 
+/**
+ * Initializes default variables for the charge enemy
+ * @param inpX The starting x position of the charge enemy
+ * @param inpY The starting y positon of the charge enemy
+ */
 void ChargeEnemy::init(int inpX, int inpY) {
 	// set default variables
 	animState = 0;
@@ -81,7 +103,7 @@ void ChargeEnemy::init(int inpX, int inpY) {
 	chargeTimer = 0.0f;
 	// set the enemy sprite
 	sprite = new AnimatedSprite(SPRITE_ID::CHARGE_ENEMY, CHARGE_ENEMY::SPRITE_WIDTH, CHARGE_ENEMY::SPRITE_HEIGHT, CHARGE_ENEMY::SPRITESHEET_WIDTH, false);
-	sprite->setAnimationData({ 2, 2, 2, 2, 2, 2, 2, 2 });
+	sprite->setAnimationData({ 14, 14, 2, 14, 2, 2, 2, 2 });
 	// set the default collision rectangle
 	collisionBox = new Rectangle(x, y, CHARGE_ENEMY::COLLISION_WIDTH, CHARGE_ENEMY::COLLISION_HEIGHT);
 	collisionMarginX = CHARGE_ENEMY::COLLISION_SPRITE_MARGIN_X;

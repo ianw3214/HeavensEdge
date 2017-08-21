@@ -23,6 +23,9 @@ Menu::Menu() {
 	overlayVerticalPosition = 0;
 }
 
+/**
+ * The destructor for the menu class
+ */
 Menu::~Menu() {
 	// delete the menu items starting from the first
 	while (currentMenuItem->previous != nullptr)
@@ -84,7 +87,7 @@ void Menu::update(float delta) {
 
 /**
  * Renders the menu to the screen
- * @param display The surface of the game window
+ * @param renderer The renderer of the game window
  */
 void Menu::render(SDL_Renderer* renderer) {
 	background->render(renderer);

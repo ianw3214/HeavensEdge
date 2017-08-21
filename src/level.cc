@@ -3,7 +3,9 @@
 #include <iostream>
 #include <cmath>
 
-// default constructor for levels just for the sake of it
+/**
+ * Default constructor for a basic level
+ */
 Level::Level(){
 	Creature::setEntityList(&entities);
 	// load a new player
@@ -14,7 +16,9 @@ Level::Level(){
 	Creature::setCollisionData(map->getCollisionMap(), map->getWidth(), map->getTileSize());
 }
 
-// load a level and its data from a file
+/**
+ * Level constructor that loads the level from a file path
+ */
 Level::Level(std::string filePath) {
 	Creature::setEntityList(&entities);
 	// load a new player
@@ -112,7 +116,7 @@ void Level::update(float delta) {
 
 /**
  * Renders the level
- * @param display The SDL_Surface associated with the game window
+ * @param renderer The SDL_Renderer associated with the game window
  */
 void Level::render(SDL_Renderer* renderer) {
     map->render(renderer, camera);
@@ -183,6 +187,9 @@ void Level::handleKeyPress(SDL_Keycode key) {
 	}
 }
 
+/**
+ * Helper function to determine logic for when the player selects an option from the death screen
+ */
 void Level::select() {
 	// play the level again
 	if (currentDeathMenuItem->ID == 1) {

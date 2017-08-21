@@ -66,7 +66,7 @@ void Enemy::update(float delta) {
 
 /**
 * Renders the enemy according to camera position
-* @param display SDL_Surface associated with the game window
+* @param renderer SDL_Renderer associated with the game window
 * @param camera  SDL_Rect representing the game camera
 */
 void Enemy::render(SDL_Renderer * renderer, SDL_Rect camera) {
