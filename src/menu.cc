@@ -83,6 +83,9 @@ void Menu::update(float delta) {
 		// set the position of the sprite
 		optionOverlay->setPos(0, overlayVerticalPosition);
 	}
+	// update the position of the select cursor for options menu
+	int newY = OPTION_SELECT_HEIGHTS[currentOptionMenuItem->ID - 1] + overlayVerticalPosition;
+		optionSelectNode->setPos(optionSelectNode->getX(), newY);
 }
 
 /**
@@ -99,6 +102,7 @@ void Menu::render(SDL_Renderer* renderer) {
 	// render the settings menu if player is on options menu
 	if (onOptions || optionOverlayTweening) {
 		optionOverlay->render(renderer);
+		optionSelectNode->render(renderer);
 	}
 }
 
@@ -284,4 +288,5 @@ void Menu::initSprites() {
 	selectSprite = new Sprite(SPRITE_ID::MENU_SELECT, 440, 360, OPTION_WIDTH, OPTION_HEIGHT);
 	// initialize option overlay sprites
 	optionOverlay = new Sprite(SPRITE_ID::OPTION_OVERLAY, 0, 0, 0, 0);
+	optionSelectNode = new Sprite(SPRITE_ID::OPTION_SELECT, 20, 100, 64, 64);
 }

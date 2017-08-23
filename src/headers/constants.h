@@ -28,6 +28,14 @@ std::vector<int> const volumes = {
 	128
 };
 
+std::vector<int> const OPTION_SELECT_HEIGHTS = {
+	150,
+	235,
+	320,
+	410,
+	560
+};
+
 int const TITLE_WIDTH = 1000;
 int const TITLE_HEIGHT = 200;
 int const OPTION_WIDTH = 400;
@@ -115,6 +123,7 @@ namespace SPRITE_ID {
 	std::string const MENU_QUIT = "MENU005";
 	std::string const MENU_SELECT = "MENU006";
 	std::string const OPTION_OVERLAY = "MENU007";
+	std::string const OPTION_SELECT = "MENU008";
 
 	std::string const HERO = "HERO001";
 	std::string const SHADOW = "HERO002";
