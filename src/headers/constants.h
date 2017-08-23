@@ -126,3 +126,7 @@ namespace SPRITE_ID {
 
 	std::string const DEATH_MENU = "DEAD001";
 }
+
+namespace PARTICLE_ID{
+	std::string const LEAF = "PART001";
+}

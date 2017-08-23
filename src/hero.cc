@@ -235,6 +235,15 @@ void Hero::move(float delta) {
 	if (faceRight) animState = MOVE_RIGHT;
 	else animState = MOVE_LEFT;
 	sprite->playAnimation(animState);
+	// play a particle animation
+	// spawn particles at random
+	int key = rand() % 20;
+	if (key == 5) {
+		AnimatedSprite * temp = new AnimatedSprite(PARTICLE_ID::LEAF, 10, 10, 5, true);
+		temp->setAnimationData({ 5 });
+		temp->setPos(x + rand() % 64, y + 64);
+		effects_below.push_back(temp);
+	}
 }
 
 /**
