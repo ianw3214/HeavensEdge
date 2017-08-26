@@ -9,6 +9,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 
+#include "collision.h"
 #include "constants.h"
 
 struct menuItem {

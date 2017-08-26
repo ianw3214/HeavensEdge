@@ -44,8 +44,6 @@ int const OPTION_HEIGHT = 80;
 namespace MENU_SETTINGS {
 	int const TITLE_WIDTH = 360;
 	int const TITLE_HEIGHT = 80;
-	int const TITLE_MARGIN_TOP = 40;
-	int const TITLE_MARGIN_LEFT = 40;
 }
 
 int const TWEEN_TIME = 350;

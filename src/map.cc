@@ -38,6 +38,9 @@ std::vector<NPC*> Map::getNPCs() const {
 std::vector<Enemy*> Map::getEnemies() const {
 	return enemies;
 }
+std::map<Rectangle*, std::string> Map::getTransitionTiles() const {
+	return transitionTiles;
+}
 int Map::getWidth() { return mapWidth; }
 int Map::getHeight() { return mapHeight; }
 int Map::getTileSize() { return tileWidth; }
@@ -85,6 +88,12 @@ bool Map::loadFromFile(std::string file){
 		}
 		if (counter == 5) {		// the starting y position of the player
 			startY = std::stoi(line);
+		}
+		if (currentReadingType == 4) {
+			lineToChangeMapTile(line);
+		}
+		if (line == "!!!") {
+			currentReadingType = 4;
 		}
 		if (currentReadingType == 3) { // read the line to enemy data
 			lineToEnemy(line);
@@ -329,4 +338,32 @@ void Map::lineToEnemy(std::string line) {
 
 	return;
 
+}
+
+void Map::lineToChangeMapTile(std::string line) {
+
+	std::string token = "";
+	int counter = 0;
+	int x, y;
+
+	for (char const & c : line) {
+		if (c == '#') {
+			if (counter == 0) {
+				x = std::stoi(token, nullptr);
+			}
+			if (counter == 1) {
+				y = std::stoi(token, nullptr);
+			}
+			token = "";
+			counter++;
+		}
+		else {
+			token += c;
+		}
+	}
+
+	Rectangle * temp = new Rectangle(x * 64, y * 64, 64, 64);
+	transitionTiles[temp] = token;
+
+	return;
 }

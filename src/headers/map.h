@@ -33,6 +33,7 @@ public:
 	std::vector<int> getCollisionMap() const;
 	std::vector<NPC*> getNPCs() const;
 	std::vector<Enemy*> getEnemies() const;
+	std::map<Rectangle*, std::string> getTransitionTiles() const;
 	int getWidth();
 	int getHeight();
 	int getTileSize();
@@ -51,10 +52,12 @@ private:
 	std::vector<int> collisionData;
 	std::vector<NPC*> NPCs;
 	std::vector<Enemy*> enemies;
+	std::map<Rectangle*, std::string> transitionTiles;
 
     void lineToTileMap(std::string);
     void lineToMapData(std::string);
 	void lineToCollisionData(std::string);
 	void lineToNPCData(std::string);
 	void lineToEnemy(std::string);
+	void lineToChangeMapTile(std::string);
 };

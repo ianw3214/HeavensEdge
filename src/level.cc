@@ -14,6 +14,7 @@ Level::Level(){
 	// load the map and its collision data
 	map = new Map("levels/test.txt");
 	Creature::setCollisionData(map->getCollisionMap(), map->getWidth(), map->getTileSize());
+	transitionTiles = map->getTransitionTiles();
 }
 
 /**
@@ -27,6 +28,7 @@ Level::Level(std::string filePath) {
 	// load the map and its collision data
 	map = new Map(filePath);
 	Creature::setCollisionData(map->getCollisionMap(), map->getWidth(), map->getTileSize());
+	transitionTiles = map->getTransitionTiles();
 }
 
 /**
@@ -108,6 +110,14 @@ void Level::update(float delta) {
 				entities.erase(entities.begin() + i);
 				delete temp;
 			}
+		}
+	}
+	// test to see if the level should transition
+	for (auto const & i : transitionTiles) {
+		Shape * playerCollision = player->getHero()->getCollisionBox();
+		if (isColliding(*(i.first), *(playerCollision))) {
+			quit = true;
+			nextState = new Level(i.second);
 		}
 	}
 	// test to see if the game is over

@@ -39,6 +39,7 @@ private:
     Map* map;
     std::vector<Entity*> entities;
     Player* player;
+	std::map<Rectangle*, std::string> transitionTiles;
 
 	Sprite * deathMenuBackground;
 	menuItem * currentDeathMenuItem;
