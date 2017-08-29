@@ -38,9 +38,9 @@ bool collisionRectRect(const Rectangle& rect1, const Rectangle& rect2) {
 
 // calculates if two line objects are colliding
 bool collisionLineLine(const Line& line1, const Line& line2) {
-	float denominator = ((line1.x2 - line1.x) * (line2.y2 - line2.y) - (line1.y2 - line1.y) * (line2.x2 - line2.x));
-	float numerator1 = ((line1.y - line2.y) * (line2.x2 - line2.x) - (line1.x - line2.x) * (line2.y2 - line2.y));
-	float numerator2 = ((line1.y - line2.y) * (line1.x2 - line1.x) - (line1.x - line2.x) * (line1.y2 - line1.y));
+	float denominator = static_cast<float>(((line1.x2 - line1.x) * (line2.y2 - line2.y) - (line1.y2 - line1.y) * (line2.x2 - line2.x)));
+	float numerator1 = static_cast<float>(((line1.y - line2.y) * (line2.x2 - line2.x) - (line1.x - line2.x) * (line2.y2 - line2.y)));
+	float numerator2 = static_cast<float>(((line1.y - line2.y) * (line1.x2 - line1.x) - (line1.x - line2.x) * (line1.y2 - line1.y)));
 	
 	// temporarily return false if the lines are parallel
 	if (denominator == 0) return false;
@@ -72,7 +72,7 @@ bool collisionCircleRect(const Circle& circle, const Rectangle& rect) {
 	int closestY = clamp(circle.y, rect.y, rect.y + rect.h);
 	int distanceX = circle.x - closestX;
 	int distanceY = circle.y - closestY;
-	float distanceSquared = (distanceX * distanceX) + (distanceY * distanceY);
+	float distanceSquared = static_cast<float>((distanceX * distanceX) + (distanceY * distanceY));
 	// if the distance is longer than the radius, the function will return false
 	return distanceSquared < (circle.r * circle.r);
 }

@@ -8,6 +8,7 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 
 #include "collision.h"
 #include "constants.h"
@@ -33,8 +34,15 @@ public:
 	static void setWindowSize(int, int);
 	static int getWindowWidth();
 	static int getWindowHeight();
+
+	// font related methods
+	static void setFont(TTF_Font*);
+	static SDL_Texture * getText(const std::string&, SDL_Renderer*);
+	static void closeFont();
 private:
 	static std::map<std::string, SDL_Texture*> textureMap;
 	static SDL_Window* gameWindow;
 	static int screenWidth, screenHeight;
+
+	static TTF_Font * gFont;
 };

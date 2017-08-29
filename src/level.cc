@@ -137,6 +137,9 @@ void Level::render(SDL_Renderer* renderer) {
 	if (gameOver) {
 		deathMenuBackground->render(renderer);
 	}
+	SDL_Texture * temp = UTIL::getText("test", renderer);
+	SDL_Rect target = {10, 10, 60, 40};
+	SDL_RenderCopy(renderer, temp, nullptr, &target);
 }
 
 /**
@@ -151,14 +154,14 @@ void Level::updateCamera(float delta) {
 	// otherwise, set the position to be equal to target position
 	int xDiff = static_cast<int>(std::abs(static_cast<double>(targetX - camera.x)));
 	if (xDiff > camMargin) {
-		int speed = camSpeed * delta;
+		int speed = static_cast<int>(camSpeed * delta);
 		if (xDiff > WINDOW_WIDTH / 2) speed *= 3;
 		if (targetX > camera.x) { camera.x += speed; }
 		else { camera.x -= speed; }
 	}
 	int yDiff = static_cast<int>(std::abs(static_cast<double>(targetY - camera.y)));
 	if (yDiff > camMargin) {
-		int speed = camSpeed * delta;
+		int speed = static_cast<int>(camSpeed * delta);
 		if (yDiff > WINDOW_HEIGHT / 2) speed *= 3;
 		if (targetY > camera.y) { camera.y += speed; }
 		else { camera.y -= speed; }

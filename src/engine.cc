@@ -51,11 +51,24 @@ bool Engine::init(){
             std::cout << "Audio initialization failed: " << Mix_GetError() << std::endl;
             return false;
         }
+		// initialize text rendering library
+		if (TTF_Init() == -1) {
+			std::cout << "Text initialization failed: " << TTF_GetError() << std::endl;
+			return false;
+		}
     }
 	// load all the textures
 	UTIL::loadTextures(gRenderer);
 	UTIL::setWindow(gWindow);
 	UTIL::setWindowSize(windowWidth, windowHeight);
+	TTF_Font * font = TTF_OpenFont("assets/fonts/munro/Munro.ttf", 20);
+	if (font == NULL) {
+		std::cout << "Font loading failed: " << TTF_GetError() << std::endl;
+		return false;
+	}
+	else {
+		UTIL::setFont(font);
+	}
 	// initialize variables
 	fps = 0, frames = 0;
 	fpsCounter = 0.0f;
@@ -81,10 +94,17 @@ void Engine::cleanUp(){
 	SDL_DestroyWindow(gWindow);
 	gWindow = nullptr;
 
+	// quit SDL_image
+	IMG_Quit();
+
 	// quit SDL_mixer
 	Mix_CloseAudio();
 
-	// Quit SDL subsystems
+	// quit SDL_TTF
+	UTIL::closeFont();
+	TTF_Quit();
+
+	// Quit SDL 
 	SDL_Quit();
 }
 

@@ -4,6 +4,7 @@
 std::map<std::string, SDL_Texture*> UTIL::textureMap;
 SDL_Window* UTIL::gameWindow;
 int UTIL::screenWidth, UTIL::screenHeight;
+TTF_Font * UTIL::gFont;
 
 // initialization function to be called in engine
 void UTIL::loadTextures(SDL_Renderer* renderer) {
@@ -64,3 +65,26 @@ void UTIL::setWindowSize(int w, int h) {
 }
 int UTIL::getWindowWidth() { return screenWidth; }
 int UTIL::getWindowHeight() { return screenHeight; }
+
+void UTIL::setFont(TTF_Font* font) { gFont = font; }
+
+SDL_Texture * UTIL::getText(const std::string& input, SDL_Renderer* renderer) {
+	SDL_Color colour = { 255, 255, 255 };
+	SDL_Texture * returnTexture = nullptr;
+	SDL_Surface * textSurface = TTF_RenderText_Solid(gFont, input.c_str(), colour);
+	if (textSurface == NULL)
+		std::cout << "Unable to render text: " << input << ", ERROR: " << TTF_GetError() << std::endl;
+	else {
+		// create the texture
+		returnTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
+		if (returnTexture == NULL)
+			std::cout << "Unable to create texture from rendered text, ERROR: " << SDL_GetError() << std::endl;
+		SDL_FreeSurface(textSurface);
+	}
+	return returnTexture;
+}
+
+void UTIL::closeFont() {
+	TTF_CloseFont(gFont);
+	gFont = NULL;
+}
