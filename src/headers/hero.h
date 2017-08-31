@@ -37,6 +37,7 @@ public:
 	virtual void key2Attack();
 
 	virtual void handleDialogue();
+	virtual std::string getCurrentDialogue();
 
 	// methods to interact with animated sprite from outside
 	void playAnimation(int);

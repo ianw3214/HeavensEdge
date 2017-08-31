@@ -133,13 +133,20 @@ void Level::render(SDL_Renderer* renderer) {
     for(unsigned int i = 0; i < entities.size(); i++){
         entities.at(i)->render(renderer, camera);
     }
+	// render dialogue if there is any
+	std::string renderString = player->getHero()->getCurrentDialogue();
+	if (!renderString.empty()) {
+		Text * text = UTIL::getTextTexture(renderString);
+		if (!text) {
+			text = UTIL::loadText(renderer, renderString, true);
+		}
+		SDL_Rect target = { 100, 600, text->w, text->h };
+		SDL_RenderCopy(renderer, text->texture, nullptr, &target);
+	}
 	// render the death menu if the game is over
 	if (gameOver) {
 		deathMenuBackground->render(renderer);
 	}
-	SDL_Texture * temp = UTIL::getText("test", renderer);
-	SDL_Rect target = {10, 10, 60, 40};
-	SDL_RenderCopy(renderer, temp, nullptr, &target);
 }
 
 /**

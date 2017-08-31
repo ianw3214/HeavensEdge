@@ -4,7 +4,9 @@
 std::map<std::string, SDL_Texture*> UTIL::textureMap;
 SDL_Window* UTIL::gameWindow;
 int UTIL::screenWidth, UTIL::screenHeight;
+
 TTF_Font * UTIL::gFont;
+std::vector<Text*> UTIL::text;
 
 // initialization function to be called in engine
 void UTIL::loadTextures(SDL_Renderer* renderer) {
@@ -87,4 +89,34 @@ SDL_Texture * UTIL::getText(const std::string& input, SDL_Renderer* renderer) {
 void UTIL::closeFont() {
 	TTF_CloseFont(gFont);
 	gFont = NULL;
+}
+
+Text* UTIL::loadText(SDL_Renderer* renderer, const std::string inputText, bool cache) {
+	SDL_Texture * temp = getText(inputText, renderer);
+	if (temp == NULL) {
+		std::cout << "Unable to load text: " << inputText << std::endl;
+		return nullptr;
+	}
+	int width, height;
+	SDL_QueryTexture(temp, NULL, NULL, &width, &height);
+	Text * tempText = new Text(temp, inputText, width, height);
+	if (cache)
+		text.push_back(tempText);
+	return tempText;
+}
+
+void UTIL::loadText(SDL_Renderer* renderer, std::vector<std::string> inputText) {
+	for (std::string const & str : inputText) {
+		loadText(renderer, str, true);
+	}
+}
+
+Text * UTIL::getTextTexture(std::string str) {
+	for (Text* const e : text) {
+		if (e->text == str) {
+			return e;
+		}
+	}
+	// return a nullptr if the desired string was not found
+	return nullptr;
 }

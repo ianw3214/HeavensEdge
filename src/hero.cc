@@ -163,21 +163,32 @@ void Hero::key2Attack() {
 	invulnTimer = HERO::ATTACK_2_TIME;
 }
 
+/**
+ * Handles logic behind dialogue when the dialogue button is pressed
+ */
 void Hero::handleDialogue() {
+	// don't look for dialogue if the hero is in the middle of an action
+	if (dashing || attacking) return;
 	if (inDialogue) {
+		dialogueIndex++;
 		if ( (unsigned int) currentDialogue.size() <= dialogueIndex) {
 			inDialogue = false;
 			dialogueIndex = 0;
 			currentDialogue = {};
 		}
-		else {
-			std::cout << currentDialogue.at(dialogueIndex) << std::endl;
-			dialogueIndex++;
-		}
 	}
 	else {
 		findNPCforDialogue();
 	}
+}
+
+/**
+ * Returns the current dialogue string that the hero is on
+ *	- returns an empty string if there is no current dialogue
+ */
+std::string Hero::getCurrentDialogue() {
+	if (!inDialogue) return "";
+	return currentDialogue[dialogueIndex];
 }
 
 /**
@@ -383,14 +394,8 @@ void Hero::findNPCforDialogue() {
 	if (currentDialogue.size() == 0) {
 		return;
 	}
-	// otherwise, play the first line of the dialogue
-	else if (currentDialogue.size() == 1) {
-		std::cout << currentDialogue.at(0) << std::endl;
-		currentDialogue = {};
-	}
+	// otherwise, set the dialogue to true
 	else {
 		inDialogue = true;
-		std::cout << currentDialogue.at(0) << std::endl;
-		dialogueIndex++;
 	}
 }

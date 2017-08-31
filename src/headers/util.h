@@ -20,6 +20,16 @@ struct menuItem {
 	menuItem(menuItem* a, menuItem* b, int c) : previous(a), next(b), ID(c) {};
 };
 
+struct Text {
+	SDL_Texture * texture;
+	std::string text;
+	int w, h;
+	// constructors
+	Text() : texture(nullptr), text(nullptr), w(0), h(0) {}
+	Text(SDL_Texture* _t, std::string _s, int _w, int _h)
+		: texture(_t), text(_s), w(_w), h(_h) {}
+};
+
 class UTIL {
 public:
 	// initialization functions to be called in the engine
@@ -39,10 +49,16 @@ public:
 	static void setFont(TTF_Font*);
 	static SDL_Texture * getText(const std::string&, SDL_Renderer*);
 	static void closeFont();
+
+	// text related methods
+	static Text* loadText(SDL_Renderer*, std::string, bool);
+	static void loadText(SDL_Renderer*, std::vector<std::string>);
+	static Text * getTextTexture(std::string);
 private:
 	static std::map<std::string, SDL_Texture*> textureMap;
 	static SDL_Window* gameWindow;
 	static int screenWidth, screenHeight;
 
 	static TTF_Font * gFont;
+	static std::vector<Text*> text;
 };
