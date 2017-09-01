@@ -55,5 +55,8 @@ private:
 	bool pause;
 	bool gameOver;
 
+	Text * currentDialogue;
+	void renderDialogue(SDL_Renderer*);
+
 	void select();
 };

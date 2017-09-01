@@ -133,16 +133,8 @@ void Level::render(SDL_Renderer* renderer) {
     for(unsigned int i = 0; i < entities.size(); i++){
         entities.at(i)->render(renderer, camera);
     }
-	// render dialogue if there is any
-	std::string renderString = player->getHero()->getCurrentDialogue();
-	if (!renderString.empty()) {
-		Text * text = UTIL::getTextTexture(renderString);
-		if (!text) {
-			text = UTIL::loadText(renderer, renderString, true);
-		}
-		SDL_Rect target = { 100, 600, text->w, text->h };
-		SDL_RenderCopy(renderer, text->texture, nullptr, &target);
-	}
+	// render dialogue
+	renderDialogue(renderer);
 	// render the death menu if the game is over
 	if (gameOver) {
 		deathMenuBackground->render(renderer);
@@ -225,5 +217,27 @@ void Level::select() {
 	else if (currentDeathMenuItem->ID == 3) {
 		nextState = nullptr;
 		quit = true;
+	}
+}
+
+void Level::renderDialogue(SDL_Renderer* renderer) {
+	// get the current hero dialogue
+	std::string renderString = player->getHero()->getCurrentDialogue();
+	if (!renderString.empty()) {
+		// TODO : get rid of duplicate code
+		if (!currentDialogue) {
+			currentDialogue = UTIL::getTextTexture(renderString);
+			if (!currentDialogue) {
+				currentDialogue = UTIL::loadText(renderer, renderString, true);
+			}
+		}
+		else if (currentDialogue->text != renderString) {
+			currentDialogue = UTIL::getTextTexture(renderString);
+			if (!currentDialogue) {
+				currentDialogue = UTIL::loadText(renderer, renderString, true);
+			}
+		}
+		SDL_Rect target = { 100, 600, currentDialogue->w, currentDialogue->h };
+		SDL_RenderCopy(renderer, currentDialogue->texture, nullptr, &target);
 	}
 }

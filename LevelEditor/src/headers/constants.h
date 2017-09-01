@@ -2,8 +2,8 @@
 
 #include <string>
 
-std::string const LOAD_FILE_PATH = "levels/test.txt";
-std::string const OUTPUT_FILE_PATH = "levels/test.txt";
+std::string const LOAD_FILE_PATH = "";
+std::string const OUTPUT_FILE_PATH = "levels/test3.txt";
 
 std::string const TILE_SHEET_FILE_PATH = "assets/tiles.png";
 std::string const TILE_SHEET_ID = "TILE001";
@@ -20,8 +20,8 @@ std::string const REFERENCE_FILE_PATH = "assets/reference.png";
 int const TILE_WIDTH = 64;
 int const TILE_HEIGHT = 64;
 
-int const BASE_MAP_WIDTH = 12;
-int const BASE_MAP_HEIGHT = 10;
+int const BASE_MAP_WIDTH = 16;
+int const BASE_MAP_HEIGHT = 16;
 
 int const SCREEN_WIDTH = 1280;
 int const SCREEN_HEIGHT = 720;
