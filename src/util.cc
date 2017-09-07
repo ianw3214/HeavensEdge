@@ -120,3 +120,17 @@ Text * UTIL::getTextTexture(std::string str) {
 	// return a nullptr if the desired string was not found
 	return nullptr;
 }
+
+void UTIL::playTrack(std::string file, int channel, bool repeat) {
+	Mix_Chunk * temp = Mix_LoadWAV(file.c_str());
+	if (Mix_PlayChannel(channel, temp, repeat ? -1 : 0) == -1) {
+		std::cout << "Error playing track: " << file << ", ERROR: " << Mix_GetError() << std::endl;
+	}
+}
+
+void UTIL::playTrack(std::string file, int channel, bool repeat, int ms) {
+	Mix_Chunk * temp = Mix_LoadWAV(file.c_str());
+	if (Mix_FadeInChannel(channel, temp, repeat ? -1 : 0, ms) == -1) {
+		std::cout << "Error playing track: " << file << ", ERROR: " << Mix_GetError() << std::endl;
+	}
+}

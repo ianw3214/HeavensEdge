@@ -9,6 +9,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
+#include <SDL_mixer.h>
 
 #include "collision.h"
 #include "constants.h"
@@ -54,6 +55,10 @@ public:
 	static Text* loadText(SDL_Renderer*, std::string, bool);
 	static void loadText(SDL_Renderer*, std::vector<std::string>);
 	static Text * getTextTexture(std::string);
+
+	// sound related methods
+	static void playTrack(std::string, int, bool);
+	static void playTrack(std::string, int, bool, int);
 private:
 	static std::map<std::string, SDL_Texture*> textureMap;
 	static SDL_Window* gameWindow;

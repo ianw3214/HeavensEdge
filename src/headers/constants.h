@@ -11,6 +11,8 @@ int const CAMERA_MARGIN = 30;
 
 int const FRAME_RATE_CAP = 120;
 
+int const MUSIC_CHANNEL = 1;
+
 std::string const TEXTURE_ID_PATH = "assets/IDs.txt";
 
 // menu constants
@@ -130,6 +132,9 @@ namespace SPRITE_ID {
 
 	std::string const ENEMY = "ENMY001";
 	std::string const CHARGE_ENEMY = "ENMY002";
+
+	std::string const BOSS = "BOS001";
+	std::string const BOSS_PROJECTILE = "BOS002";
 
 	std::string const DEATH_MENU = "DEAD001";
 }

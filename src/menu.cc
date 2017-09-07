@@ -21,6 +21,8 @@ Menu::Menu() {
 	tweenUp = true;
 	tweenStartTime = 0;
 	overlayVerticalPosition = 0;
+	// start playing menu music
+	UTIL::playTrack("assets/music/intro.wav", MUSIC_CHANNEL, true);
 }
 
 /**
@@ -104,6 +106,10 @@ void Menu::render(SDL_Renderer* renderer) {
 		optionOverlay->render(renderer);
 		optionSelectNode->render(renderer);
 	}
+}
+
+void Menu::exit() {
+	Mix_FadeOutChannel(MUSIC_CHANNEL, 500);
 }
 
 /**

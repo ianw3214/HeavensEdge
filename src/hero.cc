@@ -139,8 +139,7 @@ void Hero::key1Attack() {
 	// update animations
 	setAnimations(faceRight ? ATTACK1RIGHT : ATTACK1LEFT, faceRight ? IDLE_RIGHT : IDLE_LEFT);
 	// play a sound
-	Mix_Chunk * temp = Mix_LoadWAV("assets/sounds/atk.wav");
-	Mix_PlayChannel(-1, temp, 0);
+	UTIL::playTrack("assets/sounds/atk.wav", -1, false);
 }
 
 /**

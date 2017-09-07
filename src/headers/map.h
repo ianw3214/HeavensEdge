@@ -15,6 +15,7 @@
 #include "npc.h"
 #include "enemy.h"
 #include "chargeEnemy.h"
+#include "boss.h"
 
 /**
  * Map class representing tile maps

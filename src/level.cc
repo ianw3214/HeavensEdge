@@ -63,6 +63,8 @@ void Level::init() {
 	menuItem * item3 = new menuItem(item2, nullptr, 3);
 	currentDeathMenuItem->next = item2;
 	item2->next = item3;
+	// play the music
+	UTIL::playTrack("assets/music/background.wav", MUSIC_CHANNEL, true);
 }
 
 /**

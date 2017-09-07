@@ -335,6 +335,8 @@ void Map::lineToEnemy(std::string line) {
 	int ID = std::stoi(token, nullptr);
 	if (ID == 0) enemies.push_back(new Enemy(x, y));
 	if (ID == 1) enemies.push_back(new ChargeEnemy(x, y));
+	// if the ID is in the 3 digits then it is a boss
+	if (ID == 101) enemies.push_back(new Boss(x, y));
 
 	return;
 

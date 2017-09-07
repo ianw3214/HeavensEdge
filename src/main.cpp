@@ -14,7 +14,7 @@ int main(int argc, char* argv[]){
     Engine game(WINDOW_WIDTH, WINDOW_HEIGHT);
 	if (!game.init()) { return 1; }
 	Menu* test = new Menu();
-	// Level* test = new Level("levels/test.txt");
+	// Level* test = new Level("levels/test3.txt");
 	game.setState(test);
     while(game.isRunning()){
 		game.update();

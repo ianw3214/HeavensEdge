@@ -22,6 +22,8 @@ public:
 	void update(float);
 	void render(SDL_Renderer*);
 
+	void exit();
+
 private:
 	menuItem * currentMenuItem;
 	menuItem * currentOptionMenuItem;
