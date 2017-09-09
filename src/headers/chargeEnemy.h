@@ -7,6 +7,7 @@
 #include "enemy.h"
 #include "hero.h"
 #include "player.h"
+#include "sprite.h"
 
 #include "constants.h"
 #include "collision.h"
@@ -44,4 +45,6 @@ private:
 	float chargeTimer;
 
 	Hero * hero;
+	
+	Sprite * shadow;
 };

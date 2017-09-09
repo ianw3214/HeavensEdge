@@ -5,6 +5,7 @@
 #include <SDL_mixer.h>
 
 #include "creature.h"
+#include "sprite.h"
 
 #include <vector>
 #include <iostream>
@@ -30,5 +31,7 @@ private:
 
 	void init(std::string);
 	std::vector<std::string> dialogue;
+
+	Sprite * shadow;
 
 };

@@ -27,6 +27,8 @@ void ChargeEnemy::update(float delta) {
 	// update the collision box as well
 	collisionBox->x = x + collisionMarginX;
 	collisionBox->y = y + collisionMarginY;
+	// update the shadow
+	shadow->setPos(x, y + 36);
 	// remove the enemy if it's health is below 0
 	if (health <= 0) {
 		REMOVE = true;
@@ -87,6 +89,8 @@ void ChargeEnemy::update(float delta) {
  * @param camera The Rect representation of the game camera
  */
 void ChargeEnemy::render(SDL_Renderer* renderer, SDL_Rect camera) {
+	// render the shadow first
+	shadow->render(renderer, camera);
 	sprite->render(renderer, camera);
 }
 
@@ -120,4 +124,6 @@ void ChargeEnemy::init(int inpX, int inpY) {
 		}
 	}
 	if (!hero) std::cout << "ERROR: Could not find a hero entity." << std::endl;
+	// intiialize the shadow sprite
+	shadow = new Sprite(SPRITE_ID::CHARGE_ENEMY_SHADOW, 0, 0, 64, 32);
 }

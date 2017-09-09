@@ -132,6 +132,7 @@ namespace SPRITE_ID {
 
 	std::string const ENEMY = "ENMY001";
 	std::string const CHARGE_ENEMY = "ENMY002";
+	std::string const CHARGE_ENEMY_SHADOW = "ENMY003";
 
 	std::string const BOSS = "BOS001";
 	std::string const BOSS_PROJECTILE = "BOS002";
@@ -139,6 +140,8 @@ namespace SPRITE_ID {
 	std::string const DEATH_MENU = "DEAD001";
 
 	std::string const BLACK_OVERLAY = "MISC001";
+
+	std::string const NPC_SHADOW = "NPC000";
 }
 
 namespace PARTICLE_ID{
