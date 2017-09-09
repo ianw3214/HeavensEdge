@@ -65,6 +65,10 @@ void Sprite::render(SDL_Renderer* renderer, SDL_Rect camera){
 	}
 }
 
+void Sprite::setAlpha(int alpha) {
+	SDL_SetTextureAlphaMod(texture, alpha);
+}
+
 /**
  * Sprite initialization function
  * @param _x initial x position of sprite

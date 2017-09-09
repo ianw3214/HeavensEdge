@@ -32,6 +32,8 @@ public:
     void update(float);
 	void render(SDL_Renderer*);
     void render(SDL_Renderer*, SDL_Rect);
+
+	void setAlpha(int);
 protected:
 	SDL_Texture * texture;
 

@@ -58,5 +58,9 @@ private:
 	Text * currentDialogue;
 	void renderDialogue(SDL_Renderer*);
 
+	bool transitioning;
+	float transitionTimer;
+	Sprite * blackOverlay;
+
 	void select();
 };

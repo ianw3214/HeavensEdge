@@ -42,6 +42,9 @@ void Level::init() {
 	pause = false;
 	gameOver = false;
 	player->setPos(map->getStartingX()*map->getTileSize(), map->getStartingY()*map->getTileSize());
+	transitioning = false;
+	transitionTimer = 0.8f;
+	blackOverlay = new Sprite(SPRITE_ID::BLACK_OVERLAY);
 	// set initial camera position to player position
 	camera.x = player->getCenterX() - camera.w / 2;
 	camera.y = player->getCenterY() - camera.h / 2;
@@ -96,6 +99,19 @@ void Level::handleEvents(SDL_Event e) {
  * @param delta Difference in time between last update call and current
  */
 void Level::update(float delta) {
+	// if the map is transitioning, just handle that logic and skip the rest of the update
+	if (transitioning) {
+		transitionTimer -= delta;
+		if (transitionTimer <= 0.0f) {
+			quit = true;
+		}
+		else {
+			// update the alpha of the overlay if not yet transitioned
+			int alpha = static_cast<int>((1.0f - transitionTimer / 1.0f) * 255);
+			blackOverlay->setAlpha(alpha);
+		}
+		return;
+	}
     // update the game if it is not paused
 	if (!pause) {
 		// update the map first
@@ -118,7 +134,7 @@ void Level::update(float delta) {
 	for (auto const & i : transitionTiles) {
 		Shape * playerCollision = player->getHero()->getCollisionBox();
 		if (isColliding(*(i.first), *(playerCollision))) {
-			quit = true;
+			transitioning = true;
 			nextState = new Level(i.second);
 		}
 	}
@@ -140,6 +156,9 @@ void Level::render(SDL_Renderer* renderer) {
 	// render the death menu if the game is over
 	if (gameOver) {
 		deathMenuBackground->render(renderer);
+	}
+	if (transitioning) {
+		blackOverlay->render(renderer);
 	}
 }
 

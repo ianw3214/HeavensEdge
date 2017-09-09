@@ -137,6 +137,8 @@ namespace SPRITE_ID {
 	std::string const BOSS_PROJECTILE = "BOS002";
 
 	std::string const DEATH_MENU = "DEAD001";
+
+	std::string const BLACK_OVERLAY = "MISC001";
 }
 
 namespace PARTICLE_ID{

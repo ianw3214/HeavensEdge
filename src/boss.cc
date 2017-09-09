@@ -9,11 +9,18 @@ Boss::Boss(int _x, int _y) {
 }
 
 void Boss::update(float delta) {
+	// update basic properties of the creature
 	sprite->update(delta);
 	sprite->setPos(x, y);
 	collisionBox->x = x + collisionMarginX;
 	collisionBox->y = y + collisionMarginY;
+	// remove the boss if it is dead
 	if (health <= 0) REMOVE = true;
+	// update movement
+	if (idleTimer > 0.0f) {
+		idleTimer -= delta;
+		if (idleTimer <= 0.0f) idleTimer = 0.0f;
+	}
 	// update projectiles
 	for (int i = projectiles.size() - 1; i >= 0; i--) {
 		Projectile * p = projectiles[i];
@@ -69,6 +76,7 @@ void Boss::init(int _x, int _y) {
 	x = _x, y = _y;
 	health = 50;
 	type = 3;
+	idleTimer = 0.0f;
 	attackTimer = 0.0f;
 	// look for the hero from the entity list
 	for (unsigned int i = 0; i < Creature::entityList->size(); i++) {

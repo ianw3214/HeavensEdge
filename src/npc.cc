@@ -33,8 +33,10 @@ void NPC::render(SDL_Renderer* renderer, SDL_Rect camera) {
 }
 
 void NPC::init(std::string path) {
-	sprite = new AnimatedSprite(path, 64, 64, 1, false);
-	sprite->setAnimationData({ 1 });
+	sprite = new AnimatedSprite(path, 64, 64, 20, false);
+	// assume all NPCs have 20 frame loops for now
+	// TODO: load animation data from a central source
+	sprite->setAnimationData({ 20 });
 	// set the default collision rectangle
 	collisionBox = new Rectangle(x, y, 64, 64);
 }

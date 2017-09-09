@@ -52,7 +52,8 @@ private:
 	void init(int, int);
 
 	std::vector<Projectile*> projectiles;
-
+	
+	float idleTimer;
 	float attackTimer;
 	void projectileAttack();
 	void bigProjectileAttack();
