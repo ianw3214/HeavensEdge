@@ -21,6 +21,9 @@ Menu::Menu() {
 	tweenUp = true;
 	tweenStartTime = 0;
 	overlayVerticalPosition = 0;
+	transitioning = false;
+	transitionTimer = 1.0f;
+	blackOverlay = new Sprite(SPRITE_ID::BLACK_OVERLAY);
 	// start playing menu music
 	UTIL::playTrack("assets/music/intro.wav", MUSIC_CHANNEL, true);
 }
@@ -62,6 +65,18 @@ void Menu::handleEvents(SDL_Event event) {
 * @param delta The difference in time between each update
 */
 void Menu::update(float delta) {
+	if (transitioning) {
+		transitionTimer -= delta;
+		if (transitionTimer <= 0.0f) {
+			quit = true;
+		}
+		else {
+			// update the alpha of the overlay if not yet transitioned
+			int alpha = static_cast<int>((1.0f - transitionTimer / 1.0f) * 255);
+			blackOverlay->setAlpha(alpha);
+		}
+		return;
+	}
 	// update the tween if the sprite is still tweening
 	if (optionOverlayTweening) {
 		// get the difference in time from the start of the tween to now
@@ -106,6 +121,8 @@ void Menu::render(SDL_Renderer* renderer) {
 		optionOverlay->render(renderer);
 		optionSelectNode->render(renderer);
 	}
+	// render the blakc overlay if transitioning
+	if (transitioning) blackOverlay->render(renderer);
 }
 
 void Menu::exit() {
@@ -117,6 +134,8 @@ void Menu::exit() {
 * @param key The key that was pressed
 */
 void Menu::handleKeyPress(SDL_Keycode key) {
+	// don't handle any key presses if the menu is already transitioning
+	if (transitioning) return;
 	if (key == SDLK_SPACE || key == SDLK_RETURN) {
 		select();
 	}
@@ -172,7 +191,7 @@ void Menu::select() {
 		// play the game
 		if (currentMenuItem->ID == 1) {
 			nextState = new Level("levels/test.txt");
-			quit = true;
+			transitioning = true;
 		}
 		// open settings menu
 		if (currentMenuItem->ID == 2) {
@@ -183,7 +202,7 @@ void Menu::select() {
 		// quit the game
 		if (currentMenuItem->ID == 3) {
 			nextState = nullptr;
-			quit = true;
+			transitioning = true;
 		}
 	}
 }

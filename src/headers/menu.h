@@ -45,6 +45,10 @@ private:
 	Uint32 tweenStartTime;
 	int overlayVerticalPosition;
 
+	bool transitioning;
+	float transitionTimer;
+	Sprite * blackOverlay;
+
 	void handleKeyPress(SDL_Keycode);
 	void select();
 	void optionSelect();
