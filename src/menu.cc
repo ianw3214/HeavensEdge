@@ -140,6 +140,8 @@ void Menu::handleKeyPress(SDL_Keycode key) {
 		select();
 	}
 	if (key == SDLK_DOWN) {
+		// play the interact sound
+		UTIL::playTrack("assets/sounds/menu.wav", -1, false);
 		if (onOptions) {
 			if (currentOptionMenuItem->next != nullptr)
 				currentOptionMenuItem = currentOptionMenuItem->next;
@@ -149,6 +151,8 @@ void Menu::handleKeyPress(SDL_Keycode key) {
 		}
 	}
 	if (key == SDLK_UP) {
+		// play the interact sound
+		UTIL::playTrack("assets/sounds/menu.wav", -1, false);
 		if (onOptions) {
 			if (currentOptionMenuItem->previous != nullptr)
 				currentOptionMenuItem = currentOptionMenuItem->previous;
@@ -158,6 +162,8 @@ void Menu::handleKeyPress(SDL_Keycode key) {
 		}
 	}
 	if (key == SDLK_ESCAPE) {
+		// play the interact sound
+		UTIL::playTrack("assets/sounds/menu.wav", -1, false);
 		if (onOptions) {
 			startTween(false);
 			onOptions = false;
@@ -183,6 +189,8 @@ void Menu::handleKeyPress(SDL_Keycode key) {
  * Handles logic when the player presses the select button
  */
 void Menu::select() {
+	// play the settings sound
+	UTIL::playTrack("assets/sounds/menu.wav", -1, false);
 	// handle the select functionality based on what menu the player is currently on
 	if (onOptions) {
 		optionSelect();

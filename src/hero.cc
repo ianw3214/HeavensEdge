@@ -160,6 +160,8 @@ void Hero::key2Attack() {
 	// make the player invulnerable while dashing
 	invulnerable = true;
 	invulnTimer = HERO::ATTACK_2_TIME;
+	// play the dashing sound
+	UTIL::playTrack("assets/sounds/dash.wav", -1, false);
 }
 
 /**
@@ -174,6 +176,10 @@ void Hero::handleDialogue() {
 			inDialogue = false;
 			dialogueIndex = 0;
 			currentDialogue = {};
+		}
+		else {
+			// play the interact sound if there is still dialogue
+			UTIL::playTrack("assets/sounds/interact.wav", -1, false);
 		}
 	}
 	else {
@@ -282,6 +288,8 @@ void Hero::combo1Attack() {
 	effect->setAnimationData({ 8 });
 	effect->setPos(getX() - HERO::COMBO1_MARGIN, getY() - HERO::COMBO1_MARGIN);
 	effects_below.push_back(effect);
+	// play the combo attack sound
+	UTIL::playTrack("assets/sounds/combo1.wav", -1, false);
 }
 
 // HELPER FUNCTIONS ========================================================================
@@ -389,6 +397,8 @@ void Hero::findNPCforDialogue() {
 	// set the dialogue to the NPC if one is found, otherwise quit the function
 	if (minNPC) currentDialogue = minNPC->getDialogue();
 	else return;
+	// play the sound of the interaction if the program has gotten to this point
+	UTIL::playTrack("assets/sounds/interact.wav", -1, false);
 	// if the vector is empty, simply reset and exit
 	if (currentDialogue.size() == 0) {
 		return;
