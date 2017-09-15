@@ -2,6 +2,12 @@
 
 ***
 
+## Project Discontinued
+
+See explanation [here](devlog/list.md)
+
+***
+
 Heaven's Edge is a RPG hack'n'slash game made in C++ with SDL2.
 
 View the [devlog](devlog/list.md).
